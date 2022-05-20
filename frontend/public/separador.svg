@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="395.5" height="10" viewBox="0 0 395.5 10">
+  <g id="Grupo_10" data-name="Grupo 10" transform="translate(-764.5 -438)">
+    <line id="Línea_1" data-name="Línea 1" x2="180" transform="translate(764.5 443.5)" fill="none" stroke="#707070" stroke-width="1"/>
+    <line id="Línea_2" data-name="Línea 2" x2="184.5" transform="translate(975.5 443.5)" fill="none" stroke="#707070" stroke-width="1"/>
+    <g id="Trazado_10" data-name="Trazado 10" transform="translate(955 438)" fill="none">
+      <path d="M5,0A5,5,0,1,1,0,5,5,5,0,0,1,5,0Z" stroke="none"/>
+      <path d="M 5 1 C 2.794390201568604 1 1 2.794390201568604 1 5 C 1 7.205610275268555 2.794390201568604 9 5 9 C 7.205610275268555 9 9 7.205610275268555 9 5 C 9 2.794390201568604 7.205610275268555 1 5 1 M 5 0 C 7.761420249938965 0 10 2.238580226898193 10 5 C 10 7.761420249938965 7.761420249938965 10 5 10 C 2.238580226898193 10 0 7.761420249938965 0 5 C 0 2.238580226898193 2.238580226898193 0 5 0 Z" stroke="none" fill="#707070"/>
+    </g>
+  </g>
+</svg>

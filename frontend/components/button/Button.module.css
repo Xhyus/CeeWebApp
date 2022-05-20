@@ -1,0 +1,41 @@
+.propiedades_Boton {
+    background-color: #428BCA;
+    border-radius: 10px;
+    border: 1px solid #428BCA;
+    height: 50px;
+    margin-top: 20px;
+    font-size: 22px;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+.propiedades_Boton:hover{
+    background-color: #1B6AAA;
+    border: 1px solid #1B6AAA;
+    transition: 0.4s;
+}
+.icon_Boton{
+    padding: 0 15px 0 0;
+}
+
+.propiedades_BotonGoogle {
+    background-color: #9CA3AB;
+    border-radius: 10px;
+    border: 1px solid #9CA3AB;
+    height: 50px;
+    margin-top: 45px;
+    font-size: 22px;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+.propiedades_BotonGoogle:hover{
+    background-color: #E3E5E7;
+    border: 1px solid #E3E5E7;
+    transition: 0.4s;
+    color: #000000;
+}

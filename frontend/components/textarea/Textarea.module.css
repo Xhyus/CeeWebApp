@@ -1,0 +1,25 @@
+.Contenedor_input{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 12px;
+    width: 70%;
+    margin: 0 0 10px 0;
+}
+.Contenedor_input p{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px;
+}
+.Contenedor_input textarea{
+    font-size: 13px;
+    background-color: F2F2F2;
+    margin-bottom: 5px;
+    height: 50px;
+    border-radius: 10px;
+    border: #000000 1px solid;
+    color: grey;
+    font-family: 'Montserrat', sans-serif;
+    padding: 10px 15px;
+    resize: none;
+}

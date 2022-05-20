@@ -1,0 +1,76 @@
+.Contenedor_principal {
+    background-color: #EDF1F7;
+    top: 9vh;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.Contenedor_secundario {
+    background-color: #fff;
+    min-height: 75%;
+    height: auto;
+    width: 80%;
+    border-radius: 60px;
+    position: relative;
+}
+.Contenedor_titulo {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #fff;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+    border-radius: 60px;
+}
+.Propiedades_texto{
+    color: #2F2D2E;
+    font-family: 'Montserrat', sans-serif;
+}
+.Contenedor_contenido {
+    font-family: 'Montserrat', sans-serif;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    top: 20%;
+    align-items: center;
+}
+.Contenedor_input{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 12px;
+    width: 70%;
+    margin: 0 0 10px 0;
+}
+.Contenedor_input p{
+    font-size: 16px;
+    font-weight: bold;
+    margin: 5px;
+}
+.Contenedor_input input{
+    font-family: 'Montserrat', sans-serif;
+    background-color: F2F2F2;
+    margin-bottom: 10px;
+    height: 50px;
+    border-radius: 10px;
+    border: #000000 1px solid;
+    color: grey;
+    padding: 0 15px;
+}
+.Boton{
+    color: #000000;
+    background-color: #EDAE49;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    width: 70%;
+    height: 45px;
+    border-radius: 12px;
+}
