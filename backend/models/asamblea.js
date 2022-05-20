@@ -30,4 +30,4 @@ const asambleaSchema = Schema({
     //     ref:"Acta"
     // },
 })
-module.exports = mongoose.model('asamblea', asambleaSchema)    
+module.exports = mongoose.model('asamblea', asambleaSchema)

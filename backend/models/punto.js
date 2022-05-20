@@ -11,4 +11,4 @@ const puntoSchema = Schema([{
 		required: true
 	}
 }])
-module.exports = mongoose.model('punto', puntoSchema)    
+module.exports = mongoose.model('punto', puntoSchema)

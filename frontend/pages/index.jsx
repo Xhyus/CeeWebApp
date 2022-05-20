@@ -4,6 +4,8 @@ import Button from '../components/button/button'
 import { FaLock, FaUser } from "react-icons/fa"
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
 	const [email, setEmail] = useState('')
@@ -28,31 +30,65 @@ export default function Login() {
 		axios.post('http://localhost:3001/api/usuario/verificacion', {
 			email: email
 		}).then(res => {
-			console.log(res.status)
 			if (res.status === 200) {
-				console.log(res.data)
-				alert('Usuario encontrado')
 				validarPassword()
-			} else {
-				alert('Usuario no encontrado')
+			}
+			if (res.status === 401) {
+				toast.error('Cuenta desactivada', {
+					position: "top-left",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
+			}
+			if (res.status === 404) {
+				toast.error('Usuario no existe', {
+					position: "top-left",
+					autoClose: 5000,
+					hideProgressBar: false,
+					closeOnClick: true,
+					pauseOnHover: true,
+					draggable: true,
+					progress: undefined,
+				});
 			}
 		})
-
 		const validarPassword = () => {
-
 			axios.post('http://localhost:3001/api/usuario/validarPass', {
 				email: email,
 				password: password
 			}).then(res => {
 				console.log("valor validad password : " + res.status)
 				if (res.status === 200) {
-					alert('Contraseña correcta')
-				} else {
-					alert('Contraseña Incorrecta')
+					console.log("Contraseña correcta")
+				}
+				if (res.status === 400) {
+					toast.error('Contraseña incorrecta', {
+						position: "top-left",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
+				}
+				if (res.status === 404) {
+					toast.error('Usuario no encontrado', {
+						position: "top-left",
+						autoClose: 5000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+						progress: undefined,
+					});
 				}
 			})
 		}
-
 	}
 
 	return (
@@ -83,6 +119,17 @@ export default function Login() {
 						{/*
 						<Button text="Loguear con google" />
 						*/}
+						<ToastContainer
+							position="top-left"
+							autoClose={5000}
+							hideProgressBar={false}
+							newestOnTop={false}
+							closeOnClick
+							rtl={false}
+							pauseOnFocusLoss
+							draggable
+							pauseOnHover
+						/>
 					</div>
 				</div>
 			</div>

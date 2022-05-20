@@ -8,6 +8,8 @@ const PuntoRoutes = require('./routes/puntoRoutes')
 const RendicionRoutes = require('./routes/rendicionRoutes')
 const AsambleaRoutes = require('./routes/asambleaRoutes')
 const UsuarioRoutes = require('./routes/usuarioRoutes')
+const AsistenciaRoutes = require('./routes/asistenciaRoutes')
+const ActaRoutes = require('./routes/actaRoutes')
 
 const app = express()
 app.use(express.json())
@@ -17,6 +19,8 @@ app.use('/api', PuntoRoutes)
 app.use('/api', RendicionRoutes)
 app.use('/api', AsambleaRoutes)
 app.use('/api', UsuarioRoutes)
+app.use('/api', AsistenciaRoutes)
+app.use('/api', ActaRoutes)
 
 const options = {
 	useNewUrlParser: true,
