@@ -2,18 +2,18 @@ import React from 'react'
 import styles from './actas_asambleas.module.css'
 import Textarea from '../../components/textarea/Textarea.jsx'
 export default function actas_asambleas() {
-    let testeo = [{
-      punto: 'reunion paro',
-      descripcion: 'Se reunieron para x motivo.'
-    },
-    {
-      punto: 'reunion semana receso',
-      descripcion: 'Se reunieron para discutir por el receso.'
-    },
-    {
-      punto: 'reunion semana vacaciones',
-      descripcion: 'Se reunieron para discutir por el cee que no hace nada.'
-    },
+  let testeo = [{
+    punto: 'reunion paro',
+    descripcion: 'Se reunieron para x motivo.'
+  },
+  {
+    punto: 'reunion semana receso',
+    descripcion: 'Se reunieron para discutir por el receso.'
+  },
+  {
+    punto: 'reunion semana vacaciones',
+    descripcion: 'Se reunieron para discutir por el cee que no hace nada.'
+  },
   ]
   return (
     <>
@@ -25,13 +25,14 @@ export default function actas_asambleas() {
           <nav className={styles.Contenedor_contenido}>
             <div className={styles.Contenedor_input}>
               <p>Titulo del acta</p>
-              <input type="text" placeholder='Ingrese título del acta'/>
+              <input type="text" placeholder='Ingrese título del acta' />
             </div>
             {
               testeo.map((punto) => (
                 <Textarea
-                  punto = {punto.punto}
-                  descripcion = {punto.descripcion}
+                  key={punto.punto}
+                  punto={punto.punto}
+                  descripcion={punto.descripcion}
                 />
               ))
             }
