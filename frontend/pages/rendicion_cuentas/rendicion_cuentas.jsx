@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./rendicion_cuentas.module.css";
 import Card_gasto from "../../components/card_rendicion_cuentas/Card_gasto";
+import Filtro from "../../components/filtro/Filtro";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -21,7 +22,7 @@ export default function rendicion_cuentas() {
 
 		try {
 			
-			const response = await axios.get('http://localhost:4000/api/rendiciones');
+			const response = await axios.get('http://localhost:3001/api/rendiciones');
 
 			// Estado: Ok
 			if(response.status === 200) {
@@ -66,6 +67,18 @@ export default function rendicion_cuentas() {
 
 						<div className = {styles.Contenedor_filtro}>
 							<h2 className = {styles.Propiedades_texto}>Filtros</h2>
+
+							{/* Opciones de filtro */}
+							<div className = {styles.Propiedades_filtro}>
+
+								<Filtro tipo='normal' />
+								<Filtro tipo='normal' />
+								<Filtro tipo='normal' />
+								<Filtro tipo='fecha' />
+								<Filtro tipo='fecha' />
+
+							</div>
+
 						</div>
 
 					</div>
