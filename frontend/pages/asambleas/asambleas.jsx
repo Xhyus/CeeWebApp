@@ -6,15 +6,32 @@ import Filtro from '../../components/filtro/Filtro'
 import { FaPlus } from 'react-icons/fa'
 
 export default function asambleas() {
-	const [asambleas, setAsambleas] = useState([])
+	const [asambleasTerminadas, setAsambleasTerminadas] = useState([])
+	const [asambleasPorRealizar, setAsambleasPorRealizar] = useState([])
+
 	useEffect(() => {
-		(async () => getAsambleas())();
+		(async () => {
+			getAsambleasTerminadas()
+			getAsambleasPorRealizar()
+		})();
 	}, []);
-	const getAsambleas = async () => {
+
+	const getAsambleasTerminadas = async () => {
 		try {
-			const response = await axios.get('http://localhost:3001/api/asambleas');
+			const response = await axios.get('http://localhost:3001/api/asambleas/terminadas');
 			if (response.status === 200) {
-				setAsambleas(response.data);
+				setAsambleasTerminadas(response.data);
+			}
+		} catch (error) {
+			console.log("Error: " + error);
+		}
+	}
+
+	const getAsambleasPorRealizar = async () => {
+		try {
+			const response = await axios.get('http://localhost:3001/api/asambleas/porRealizar');
+			if (response.status === 200) {
+				setAsambleasPorRealizar(response.data);
 			}
 		} catch (error) {
 			console.log("Error: " + error);
@@ -40,13 +57,23 @@ export default function asambleas() {
 				</div>
 				<div className={styles.contenedorSectorDerecho}>
 					<div className={styles.listaCards}>
-						{asambleas.map((asamblea) => {
-							return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} hora={asamblea.hora} id={asamblea.id} number="2" />
+						{asambleasPorRealizar.map((asamblea) => {
+							if (asamblea) {
+								return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea.id} />
+							}
+							if (!asamblea) {
+								return <div><h1>No hay asambleas por realizar</h1></div>
+							}
 						})}
 					</div>
 					<div className={styles.listaCards}>
-						{asambleas.map((asamblea) => {
-							return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} hora={asamblea.hora} id={asamblea.id} number="1" />
+						{asambleasTerminadas.map((asamblea) => {
+							if (asamblea) {
+								return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea.id} />
+							}
+							if (!asamblea) {
+								return <div className={styles.noAsambleas}><h1>No se han realizado asambleas</h1></div>
+							}
 						})}
 					</div>
 				</div>

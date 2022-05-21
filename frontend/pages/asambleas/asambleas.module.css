@@ -41,6 +41,9 @@
     border: none;
     margin-bottom: 5%;
     font-size: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .filtros {
