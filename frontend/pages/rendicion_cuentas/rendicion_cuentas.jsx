@@ -8,7 +8,6 @@ import axios from "axios";
 export default function rendicion_cuentas() {
 
 	const [listaRendiciones, setListaRendiciones] = useState([]);
-	const limiteFiltro = 2000;
 
 	useEffect( () => {
 
@@ -37,33 +36,6 @@ export default function rendicion_cuentas() {
 			
 			console.log("Error: " + error);
 
-		}
-
-	}
-
-	//* .: FILTRO DE GASTOS :. *//
-	/* Esta función se encarga de filtrar los gastos que se
-		mostraran por pantalla. Si cumple la condición retorna la
-		información del gasto */
-		
-	const gastoRealizado = (index) => {
-
-		if(parseInt(listaRendiciones[index].totalGastado, 10) <= limiteFiltro)  {
-			
-			return(
-
-				<Card_gasto
-
-					key = {index}
-				
-					tipo_gasto = {listaRendiciones[index].tipoGasto}
-					asunto_gasto = {listaRendiciones[index].asunto}
-					fecha_gasto = {listaRendiciones[index].fecha}
-					total_gasto = {listaRendiciones[index].totalGastado}
-
-				/>
-
-			)
 		}
 
 	}
@@ -116,7 +88,16 @@ export default function rendicion_cuentas() {
 						
 						{
 							listaRendiciones.map((gasto, index) => (
-								gastoRealizado(index)
+								<Card_gasto
+
+									key = {index}
+								
+									tipo_gasto = {gasto.tipoGasto}
+									asunto_gasto = {gasto.asunto}
+									fecha_gasto = {gasto.fecha}
+									total_gasto = {gasto.totalGastado}
+
+								/>
 							))
 						}
 
