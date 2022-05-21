@@ -89,7 +89,7 @@
     padding: 4%;
     margin-top: 5%;
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 80%;
     text-align: center;
 }
 
@@ -109,3 +109,5 @@
     display: inline-flex;
     align-items: center;
 }
+
+/* *### Responsive ### */
