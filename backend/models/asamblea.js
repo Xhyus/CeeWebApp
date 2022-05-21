@@ -9,10 +9,6 @@ const asambleaSchema = Schema({
         type: Date,
         required: true
     },
-    hora: {
-        type: Date,
-        required: true
-    },
     tipoAsamblea: {
         type: String,
         required: true,

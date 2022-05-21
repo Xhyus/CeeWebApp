@@ -5,7 +5,6 @@ const crearAsamblea = (req, res) => {
     const nuevaAsamblea = new asamblea({
         asunto,
         fecha,
-        hora,
         tipoAsamblea,
         puntos,
         acta
@@ -22,6 +21,30 @@ const listarAsambleas = (req, res) => {
     asamblea.find().populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
         if (err) {
             return res.status(400).send({ message: "Error al obtener" })
+        }
+        res.status(200).send(asamblea)
+    })
+}
+
+const listarAsambleasTerminadas = (req, res) => {
+    asamblea.find({ fecha: { $lt: new Date() } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
+        if (err) {
+            return res.status(400).send({ message: "Error al obtener" })
+        }
+        if (!asamblea) {
+            return res.status(404).send({ message: "No existen asambleas terminadas" })
+        }
+        res.status(200).send(asamblea)
+    })
+}
+
+const listarAsambleasPorRealizar = (req, res) => {
+    asamblea.find({ fecha: { $gte: new Date() } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
+        if (err) {
+            return res.status(400).send({ message: "Error al obtener" })
+        }
+        if (!asamblea) {
+            return res.status(404).send({ message: "No existen asambleas por realizar" })
         }
         res.status(200).send(asamblea)
     })
@@ -71,5 +94,7 @@ module.exports = {
     listarAsambleas,
     modificarAsamblea,
     eliminarAsamblea,
-    buscarAsamblea
+    buscarAsamblea,
+    listarAsambleasTerminadas,
+    listarAsambleasPorRealizar
 }
