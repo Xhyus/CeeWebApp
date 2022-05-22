@@ -1,46 +1,67 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styles from './actas_asambleas.module.css'
-import Textarea from '../../components/textarea/Textarea.jsx'
+import Textarea from '../../components/textarea/Textarea'
+import {FaPaperclip} from 'react-icons/fa'
+import {FiSend} from 'react-icons/fi'
+
 export default function actas_asambleas() {
-  let testeo = [{
-    punto: 'reunion paro',
-    descripcion: 'Se reunieron para x motivo.'
-  },
-  {
-    punto: 'reunion semana receso',
-    descripcion: 'Se reunieron para discutir por el receso.'
-  },
-  {
-    punto: 'reunion semana vacaciones',
-    descripcion: 'Se reunieron para discutir por el cee que no hace nada.'
-  },
-  ]
-  return (
-    <>
-      <div className={styles.Contenedor_principal}>
-        <div className={styles.Contenedor_secundario}>
-          <nav className={styles.Contenedor_titulo}>
-            <h1 className={styles.Propiedades_texto}>Titulo</h1>
-          </nav>
-          <nav className={styles.Contenedor_contenido}>
-            <div className={styles.Contenedor_input}>
-              <p>Titulo del acta</p>
-              <input type="text" placeholder='Ingrese título del acta' />
-            </div>
-            {
-              testeo.map((punto) => (
-                <Textarea
-                  key={punto.punto}
-                  punto={punto.punto}
-                  descripcion={punto.descripcion}
-                />
-              ))
-            }
-            {/* Espacio para componente choto del nachoto */}
-            <button className={styles.Boton}>Enviar</button>
-          </nav>
-        </div>
-      </div>
-    </>
-  )
+
+	const puntosAsambleas = ['Punto1','Punto2'];
+
+	const [acta, setActa] = useState({
+		titulo: '',
+		punto: [],
+	})
+
+	const handleActa = (event) => {
+		setActa({
+			...acta,
+			[event.target.name] : event.target.value
+		})
+	}
+
+	const enviarActa = (event) => {
+		event.preventDefault();
+		console.log(acta.titulo + ' ' + acta.punto);
+		// aca se hace el envio al backend
+	}
+
+	return (
+		<>
+			<div className={styles.fondo}>
+				<div className={styles.contenedor}>
+					<div className={styles.contenedorSuperior}>
+						<div className={styles.contenedorTitulo}>
+							<h1>Titulo de la asamblea</h1>
+						</div>
+						<div className={styles.contenedorIcono}>
+							<FaPaperclip className={styles.iconoClip}/>
+						</div>
+					</div>
+					<div className={styles.contenedorFormulario}>
+						<form className={styles.Form} onSubmit={enviarActa}>
+							<div className={styles.contenedorInput}>
+								<p>Título del acta:</p>
+								<input  type="text"
+										placeholder='Ingrese título del acta'
+										name="titulo"
+										onChange={handleActa}
+								/>
+							</div>
+
+							<div className={styles.contenedorTextArea}>
+								{
+									puntosAsambleas.map((tema, index) =>(
+										<Textarea punto={tema} key={index}/>
+									))
+								}
+							</div>
+
+							<button type="submit" className={styles.boton}>Enviar <FiSend className={styles.iconoSend}/> </button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</>
+	)
 }
