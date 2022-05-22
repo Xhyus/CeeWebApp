@@ -1,13 +1,12 @@
 import React from 'react'
 import styles from './Textarea.module.css'
 
-const Textarea = ({punto, descripcion}) => {
+const Textarea = ({punto}) => {
   return (
     <>
-      <div className={styles.Contenedor_input}>
-        <p>{punto} </p>
-        <textarea type="text" placeholder='Ingrese título del acta'>{descripcion}</textarea>
-      </div>
+        <p className={styles.tituloPunto}>{punto} </p>
+        {/* <input className={styles.bloqueTexto} type="text" placeholder='Ingrese título del acta' /> */}
+        <textarea className={styles.bloqueTexto} type="text" placeholder='Ingrese descripción del punto'></textarea>
     </>
   )
 }

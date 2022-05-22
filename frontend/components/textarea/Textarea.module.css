@@ -1,25 +1,18 @@
-.Contenedor_input{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 12px;
-    width: 70%;
-    margin: 0 0 10px 0;
-}
-.Contenedor_input p{
+.tituloPunto{
     font-size: 16px;
     font-weight: bold;
-    margin: 5px;
+    margin-bottom: 1vh;
 }
-.Contenedor_input textarea{
-    font-size: 13px;
-    background-color: F2F2F2;
-    margin-bottom: 5px;
-    height: 50px;
-    border-radius: 10px;
-    border: #000000 1px solid;
-    color: grey;
-    font-family: 'Montserrat', sans-serif;
-    padding: 10px 15px;
+.bloqueTexto{
+    height: 75px;
+    width: 100%;
+    border-radius: 12px;
+    background-color: #F2F2F2;
+    border: 1px solid #9CA3AB;
+    color: #000000;
+    font-size: 15px;
+    font-family: Montserrat;
+    margin: 0;
+    padding: 10px 0;
     resize: none;
 }
