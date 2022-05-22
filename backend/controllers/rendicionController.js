@@ -114,7 +114,7 @@ const obtenerRendicionesActividades = (req, res) => {
             //? Filtramos las rendiciones.
             rendicion.map((gasto, index) => {
                 
-                if (gasto.tipoGasto === "Actividades") {
+                if (gasto.tipoGasto === "Actividad") {
                     rendicionesFiltradas.push(gasto);
                 }
 
