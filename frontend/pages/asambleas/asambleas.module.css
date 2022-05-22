@@ -62,7 +62,6 @@
 .ContainerFiltro {
     width: 100%;
     height: auto;
-    margin-right: 5%;
     line-height: 0;
 }
 
@@ -77,4 +76,40 @@
 .listaCards {
     width: 100%;
     height: auto;
+
 }
+
+/* *### Responsive ### */
+
+/* Telefono */
+@media (max-width: 480px) {
+    .contenedor {
+        width: 100%;
+        display: inline;
+        border-radius: 0;
+    }
+
+    .contenedorSectorIzquierdo {
+        width: 100%;
+    }
+
+    .contenedorSectorDerecho {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+/* Tablet */
+@media (max-width : 768) {}
+
+/* Pantallas pequeñas */
+@media (max-width: 1024px) {}
+
+/* Pantallas grandes */
+
+@media (max-width: 1200px) {}
+
+/* Pantallas Extra Grandes */
+@media (min-width: 1201px) {}

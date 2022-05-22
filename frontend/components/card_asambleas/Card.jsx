@@ -42,7 +42,7 @@ const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 			</div>
 			<div className={styles.contenedorDerecho}>
 				<section className={styles.realizacion}>
-					<div className={styles.fecha}>
+					<div className={styles.contenedorFecha}>
 						<FaCalendarCheck />
 						<p className={`${styles.texto} ${styles.fecha}`}>{format.fecha}</p>
 					</div>

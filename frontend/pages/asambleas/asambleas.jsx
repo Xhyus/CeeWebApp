@@ -56,24 +56,16 @@ export default function asambleas() {
 					</div>
 				</div>
 				<div className={styles.contenedorSectorDerecho}>
-					<div className={styles.listaCards}>
-						{asambleasPorRealizar.map((asamblea) => {
-							if (asamblea) {
+					{asambleasTerminadas ? (
+						<div className={styles.listaCards}>
+							{asambleasPorRealizar.map((asamblea) => {
 								return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
-							}
-							if (!asamblea) {
-								return <div><h1>No hay asambleas por realizar</h1></div>
-							}
-						})}
-					</div>
+							})}
+						</div>
+					) : (<h1>No hay asambleas por realizar</h1>)}
 					<div className={styles.listaCards}>
 						{asambleasTerminadas.map((asamblea) => {
-							if (asamblea) {
-								return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
-							}
-							if (!asamblea) {
-								return <div className={styles.noAsambleas}><h1>No se han realizado asambleas</h1></div>
-							}
+							return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
 						})}
 					</div>
 				</div>

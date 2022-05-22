@@ -96,18 +96,94 @@
 .realizacion {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
 }
 
 .fecha {
+    padding-left: 5px;
     font-weight: 600;
-    display: inline-flex;
-    align-items: center;
 }
 
 .ContenedorHora {
     display: inline-flex;
+    justify-content: center;
     align-items: center;
 }
 
+.contenedorFecha {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* *### Responsive ### */
+
+/* Telefono */
+@media (max-width: 480px) {
+    .estadoNoTerminado {
+        width: 40%;
+    }
+
+    .estadoTerminado {
+        width: 40%;
+    }
+
+    .fondo {
+        display: inline-block;
+        width: 100%;
+    }
+
+    .realizacion {
+        display: flex;
+        justify-content: space-around;
+        padding: 0%;
+        margin: 0%;
+    }
+
+    .fecha {
+        display: flex;
+        justify-content: center;
+    }
+
+    .ContenedorHora {
+        display: flex;
+        justify-content: center;
+    }
+
+    .contenedorDerecho {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .contenedorIzquierdo {
+        width: 100%;
+    }
+
+    .vermas {
+        width: 80%;
+    }
+
+    .contenedor {
+        width: 100%;
+        display: inline-flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        border-radius: 0px !important;
+    }
+}
+
+
+/* Tablet */
+@media (max-width : 768) {}
+
+/* Pantallas pequeñas */
+@media (max-width: 1024px) {}
+
+/* Pantallas grandes */
+
+@media (max-width: 1200px) {}
+
+/* Pantallas Extra Grandes */
+@media (min-width: 1201px) {}
