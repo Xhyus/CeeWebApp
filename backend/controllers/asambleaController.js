@@ -78,7 +78,7 @@ const eliminarAsamblea = (req, res) => {
 
 const buscarAsamblea = (req, res) => {
     let id = req.params.id;
-    asamblea.findById(id).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
+    asamblea.findById(id, (err, asamblea) => {
         if (err) {
             return res.status(400).send({ message: "Error al buscar" })
         }
