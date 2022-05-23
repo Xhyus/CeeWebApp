@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./rendicion_cuentas.module.css";
 
 export default function crear_gasto() {
+
+    //* .: DATOS DEL GASTO :. *//
+    const [asunto, setAsunto] = useState('');
+    const [totalGastado, setTotalGastado] = useState(0);
+    const [tipoGasto, setTipoGasto] = useState('');
+    const [fechaGasto, setFechaGasto] = useState('');
+    const [detalle, setDetalle] = useState('');
+    const [boleta, setBoleta] = useState('');
 
     return (
 
@@ -23,12 +31,14 @@ export default function crear_gasto() {
                         
                         {/* Ingresar asunto del gasto */}
                         <div>
-                            <p>Asunto</p>
+                            <p className = {styles.Propiedades_texto}>Asunto</p>
+                            <input type="text" />
                         </div>
 
                         {/* Ingresar total del gasto */}
                         <div>
-                            <p>Total</p>
+                            <p className = {styles.Propiedades_texto}>Total</p>
+                            <input type="number" />
                         </div>
                         
                     </div>
@@ -38,29 +48,33 @@ export default function crear_gasto() {
                         
                         {/* Ingresar tipo de gasto (Ingreso o gasto) */}
                         <div>
-                            <p>Tipo</p>
+                            <p className = {styles.Propiedades_texto}>Tipo</p>
+                            <input type="text" />
                         </div>
 
                         {/* Ingresar fecha en que se realizó el gasto */}
                         <div>
-                            <p>Fecha</p>
+                            <p className = {styles.Propiedades_texto}>Fecha</p>
+                            <input type="text" />
                         </div>
 
                     </div>
 
                     {/* .: DETALLE :. */}
                     <div className = {styles.Contenedor_detalle}>
-                        <h3>Detalle</h3>
+                        <h3 className = {styles.Propiedades_texto}>Detalle</h3>
+                        <input type="text" />
                     </div>
 
                     {/* .: BOLETA :. */}
                     <div className = {styles.Contenedor_boleta}>
-                        <h3>Boleta</h3>
+                        <h3 className = {styles.Propiedades_texto}>Boleta</h3>
+                        <input type="file" />
                     </div>
 
                     {/* .: ENVIAR :. */}
                     <div className = {styles.Contenedor_boton}>
-                        <h3>Enviar</h3>
+                        <button className = {styles.Propiedades_texto}>Enviar</button>
                     </div>
 
                 </div>

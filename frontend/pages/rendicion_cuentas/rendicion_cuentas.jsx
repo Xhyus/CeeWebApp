@@ -13,37 +13,26 @@ export default function rendicion_cuentas() {
 
 		console.log(".: Pantalla rendicion_cuentas :.");
 
-		(async () => getRendiciones())();
+		// Tipo de getRendicion por defecto 'rendiciones'
+		(async () => getRendiciones("rendiciones"))();
 
 	}, []);
 
-	//* .: OBTENER GASTOS :. *//
-	const getRendiciones = async () => {
+	//* .: LISTAR GASTOS :. *//
 
-		try {
-			
-			const response = await axios.get('http://localhost:3001/api/rendiciones');
+	const getRendiciones = async (tipoGetRendiciones) => {
+		try {			
+			const response = await axios.get('http://localhost:3001/api/' + tipoGetRendiciones);
 
 			// Estado: Ok
 			if(response.status === 200) {
-
 				setListaRendiciones(response.data);
 				//console.log("Respuesta:\n" + response.data[0].asunto);
-
 			}
 
 		} catch (error) {
-			
-			console.log("Error: " + error);
-
+			console.log("Peticion: " + tipoGetRendiciones + "\nError: " + error);
 		}
-
-	}
-
-	//* .: ABRIR PANTALLA "crear_gasto" :. *//
-	const crearGasto = () => {
-		console.log("Abriendo 'crear gasto' ...");
-
 	}
 
 	return (
@@ -63,7 +52,7 @@ export default function rendicion_cuentas() {
 
 					{/* .: FILTRO DE BÚSQUEDA :. */}
 					<div className = {styles.Contenedor_crearGasto_filtro}>
-						<button onClick={()=> crearGasto()} className = {styles.Propiedades_boton}>Agregar nuevo gasto</button>
+						<button onClick={()=> {console.log("Dirigiendo a página 'crear_gasto'")}} className = {styles.Propiedades_boton}><a href="/rendicion_cuentas/crear_gasto">Agregar nuevo gasto</a></button>
 
 						<div className = {styles.Contenedor_filtro}>
 							<h2 className = {styles.Propiedades_texto}>Filtros</h2>
@@ -71,7 +60,7 @@ export default function rendicion_cuentas() {
 							{/* Opciones de filtro */}
 							<div className = {styles.Propiedades_filtro}>
 
-								<Filtro tipo='normal' />
+								<Filtro onClick={()=>{console.log("Presionaste el filtro")}} tipo='normal' />
 								<Filtro tipo='normal' />
 								<Filtro tipo='normal' />
 								<Filtro tipo='fecha' />
