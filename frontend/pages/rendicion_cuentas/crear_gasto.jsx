@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState } from "react";
 import styles from "./rendicion_cuentas.module.css";
 
@@ -39,6 +40,24 @@ export default function crear_gasto() {
         console.log("Boleta        : " + boletaGasto + "\n");
 
         //* Enviar datos a la API.
+        const datosVerificados = {
+            asunto: datosGasto.asunto,
+            fecha: datosGasto.fecha,
+            totalGastado: datosGasto.total,
+            detalle: datosGasto.detalle,
+            boleta: boletaGasto,
+            tipoGasto: datosGasto.tipo,
+        }
+
+        axios.post('http://localhost:3001/api/rendicion/', datosVerificados)
+        .then((respuesta) => {
+            console.log("Solicitud creación Gasto: " + respuesta);
+        })
+        .catch((error) => {
+            console.log("Error al crear el gasto: " + error);
+        })
+
+        //* Resetear valores de los input.
         
     }
 
