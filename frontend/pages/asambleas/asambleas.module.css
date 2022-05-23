@@ -65,13 +65,11 @@
     line-height: 0;
 }
 
-
 /* *Sector Derecho */
 .contenedorSectorDerecho {
     width: 55%;
     margin-top: 5vh;
 }
-
 
 .listaCards {
     width: 100%;
@@ -79,10 +77,14 @@
 
 }
 
+.Propiedades_icono{
+    margin: 0 1vh;
+}
+
 /* *### Responsive ### */
 
-/* Telefono */
-@media (max-width: 480px) {
+/* Telefono - Tablet */
+@media (max-width: 768px) {
     .contenedor {
         width: 100%;
         display: inline;
@@ -90,7 +92,20 @@
     }
 
     .contenedorSectorIzquierdo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         width: 100%;
+    }
+
+    .Propiedades_boton{
+        width: 80%;
+        height: 5vh;
+    }
+
+    .filtros{
+        width: 80%;
+        padding: 0;
     }
 
     .contenedorSectorDerecho {
@@ -99,17 +114,52 @@
         flex-wrap: wrap;
         justify-content: center;
     }
+
+    .listaCards{
+        width: 100%;
+    }
 }
 
-/* Tablet */
-@media (max-width : 768) {}
-
-/* Pantallas pequeñas */
-@media (max-width: 1024px) {}
-
-/* Pantallas grandes */
-
-@media (max-width: 1200px) {}
+/* Pantallas pequeñas - grandes */
+@media (min-width: 769px) and (max-width: 1199px) {
+    .contenedor{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .contenedorSectorIzquierdo{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+        margin-bottom: 4vh;
+    }
+    .Propiedades_boton{
+        margin: 0 5vh 0 5vh;
+        padding: 3vh;
+        display: flex;
+        flex: row;
+        align-items: center;
+        justify-content: center;
+    }
+    .Propiedades_icono{
+        height: 4.5vh;
+    }
+    .filtros{
+        margin: 0 5vh 0 0;
+        padding: 5vh 0;
+        width: 100%;
+    }
+    .contenedorSectorDerecho{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
+        margin: 0;
+    }
+}
 
 /* Pantallas Extra Grandes */
 @media (min-width: 1201px) {}
