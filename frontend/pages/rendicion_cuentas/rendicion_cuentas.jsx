@@ -4,7 +4,6 @@ import Card_gasto from "../../components/card_rendicion_cuentas/Card_gasto";
 import Filtro from "../../components/filtro/Filtro";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { advancePositionWithClone } from "@vue/compiler-core";
 
 export default function rendicion_cuentas() {
 
