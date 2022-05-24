@@ -4,6 +4,7 @@ import Textarea from '../../components/textarea/Textarea'
 import { FaPaperclip } from 'react-icons/fa'
 import { FiSend } from 'react-icons/fi'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
 export default function actas_asambleas() {
 
@@ -12,13 +13,20 @@ export default function actas_asambleas() {
 	const [acta, setActa] = useState()
 	const [asunto, setAsunto] = useState()
 	const [descripcion, setDescripcion] = useState('')
-
+	const router = useRouter()
 
 	const handleChangeDescripcion = (e) => {
 		setDescripcion(e.target.value)
 	}
 
+	const isLogged = () => {
+		if (localStorage.getItem('token') === null) {
+			router.push('/')
+		}
+	}
+
 	useEffect(() => {
+		isLogged()
 		const obtenerPuntos = async (id) => {
 			const response = await axios.get('http://localhost:3001/api/asamblea/' + id)
 			setPunto(response.data)
@@ -116,7 +124,8 @@ export default function actas_asambleas() {
 
 	const enviarActa = (event) => {
 		event.preventDefault();
-		modificarPuntos()
+		modificarPuntos(punto)
+		crearActa()
 		// aca se hace el envio al backend
 	}
 
