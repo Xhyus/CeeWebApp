@@ -4,17 +4,27 @@ import Card from '../../components/card_asambleas/Card'
 import axios from 'axios'
 import Filtro from '../../components/filtro/Filtro'
 import { FaPlus } from 'react-icons/fa'
+import { useRouter } from 'next/router'
 
 export default function asambleas() {
 	const [asambleasTerminadas, setAsambleasTerminadas] = useState([])
 	const [asambleasPorRealizar, setAsambleasPorRealizar] = useState([])
+	const router = useRouter()
 
 	useEffect(() => {
 		(async () => {
 			getAsambleasTerminadas()
 			getAsambleasPorRealizar()
 		})();
+		isLogged()
+
 	}, []);
+
+	const isLogged = () => {
+		if (localStorage.getItem('token') === null) {
+			router.push('/')
+		}
+	}
 
 	const getAsambleasTerminadas = async () => {
 		try {
@@ -42,7 +52,7 @@ export default function asambleas() {
 		<div className={styles.fondo}>
 			<div className={styles.contenedor}>
 				<div className={styles.contenedorSectorIzquierdo}>
-					<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono}/>Crear asamblea</button>
+					<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
 					<div className={styles.filtros}>
 						<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
 						<div className={styles.ContainerFiltro}>
