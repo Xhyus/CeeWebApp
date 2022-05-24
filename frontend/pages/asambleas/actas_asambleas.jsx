@@ -6,13 +6,14 @@ import { FiSend } from 'react-icons/fi'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 
-export default function actas_asambleas() {
-
+export default function actas_asambleas({ idAsamblea }) {
+	idAsamblea = '62887cbb6f9cba4180f42c19';
 	const [punto, setPunto] = useState([])
 	const [asistencia, setAsistencia] = useState([])
 	const [acta, setActa] = useState()
 	const [asunto, setAsunto] = useState()
 	const [descripcion, setDescripcion] = useState('')
+	const [idActa, setIdActa] = useState('')
 	const router = useRouter()
 
 	const handleChangeDescripcion = (e) => {
@@ -66,14 +67,14 @@ export default function actas_asambleas() {
 	}
 
 	const asistenciaPrueba = [{
-		_id: 'AAAAAAAAAAAAAAAAAAAAAAAA',
+		_id: '6289bcfdc5eaee5de4600531',
 		nombre: 'Juan',
 		apellido: 'Perez',
 		rut: '12345678-9',
 		generacion: 2020,
 	},
 	{
-		_id: 'BBBBBBBBBBBBBBBBBBBBBB',
+		_id: '62873ba908f53f066cfdc23c',
 		nombre: 'Carlos',
 		apellido: 'Pavez',
 		rut: '12345678-9',
@@ -85,7 +86,7 @@ export default function actas_asambleas() {
 		const data = {
 			descripcion: descripcion
 		}
-		axios.put('http://localhost:3001/api/acta/update' / +id, data)
+		axios.put('http://localhost:3001/api/punto/update/' + id, data)
 			.then(res => {
 				console.log(res)
 			})
@@ -93,29 +94,35 @@ export default function actas_asambleas() {
 				console.log(err)
 			})
 	}
+	"{"
 
-	const crearActa = async () => {
+	const crearActa = async (puntos, asistencia) => {
+		let asistencia2 = asistencia.map(asistencia => {
+			return asistencia._id
+		})
+		console.log("puntos dentro de crearActa: " + puntos)
+		console.log("asistencia dentro de crearActa: " + asistencia2)
 		const data = {
-			puntos: punto.puntos,
-			asistencia: asistencia.asistencia,
+			puntos: puntos,
+			asistencia: asistencia2
 		}
 		await axios.post('http://localhost:3001/api/acta', data)
 			.then(res => {
 				console.log("acta: " + res.data.acta._id)
-				setActa(res.data.acta._id)
+				modificarAsamblea(res.data.acta._id)
 			})
 			.catch(err => {
 				console.log(err)
 			})
 	}
 
-	const modificarAsamblea = () => {
+	const modificarAsamblea = (id) => {
 		const data = {
-			acta: acta,
+			acta: id,
 		}
-		axios.put('http://localhost:3001/api/asamblea/update/' + id, data)
+		axios.put('http://localhost:3001/api/asamblea/update/' + idAsamblea, data)
 			.then(res => {
-				console.log(res)
+				console.log(res.data)
 			})
 			.catch(err => {
 				console.log(err)
@@ -123,9 +130,13 @@ export default function actas_asambleas() {
 	}
 
 	const enviarActa = (event) => {
-		event.preventDefault();
-		modificarPuntos(punto)
-		crearActa()
+		event.preventDefault()
+		const puntos = [...punto.puntos];
+		puntos.map(punto => {
+			modificarPuntos(punto)
+		})
+		crearActa(puntos, asistenciaPrueba)
+		// console.log("envio de esta acta: " + acta.data._id)
 		// aca se hace el envio al backend
 	}
 
