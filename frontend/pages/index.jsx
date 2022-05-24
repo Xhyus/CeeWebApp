@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from './login/login.module.css'
+import styles from '../styles/login.module.css'
 import Button from '../components/button/button'
 import { FaLock, FaUser } from "react-icons/fa"
 import axios from 'axios'
@@ -73,7 +73,7 @@ export default function Login() {
 			}).then(res => {
 				if (res.status === 200) {
 					localStorage.setItem('token', res.data.token)
-					router.push("/asambleas/asambleas")
+					router.push("/asambleas")
 				}
 			})
 		}

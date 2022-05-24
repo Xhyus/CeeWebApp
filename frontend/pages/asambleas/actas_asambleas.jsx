@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styles from './actas_asambleas.module.css'
+import styles from '../../styles/actas_asambleas.module.css'
 import Textarea from '../../components/textarea/Textarea'
 import { FaPaperclip } from 'react-icons/fa'
 import { FiSend } from 'react-icons/fi'
@@ -143,10 +143,10 @@ export default function actas_asambleas() {
 							</div>
 
 							<div className={styles.contenedorTextArea}>
-								{
+								{/* {
 									punto.puntos.map(punto => (
 										<Textarea punto={asunto} onchange={handleChangeDescripcion} />
-									))}
+									))} */}
 							</div>
 
 							<button type="submit" className={styles.boton}>Enviar <FiSend className={styles.iconoSend} /> </button>

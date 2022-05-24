@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import styles from './asambleas.module.css'
-import Card from '../../components/card_asambleas/Card'
+import styles from '../styles/asambleas.module.css'
+import Card from './../components/card_asambleas/Card'
 import axios from 'axios'
-import Filtro from '../../components/filtro/Filtro'
+import Filtro from './../components/filtro/Filtro'
 import { FaPlus } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 

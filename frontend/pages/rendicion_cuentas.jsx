@@ -1,7 +1,7 @@
 import React from "react";
-import styles from "./rendicion_cuentas.module.css";
-import Card_gasto from "../../components/card_rendicion_cuentas/Card_gasto";
-import Filtro from "../../components/filtro/Filtro";
+import styles from "../styles/rendicion_cuentas.module.css";
+import Card_gasto from "../components/card_rendicion_cuentas/Card_gasto";
+import Filtro from "../components/filtro/Filtro";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -9,7 +9,7 @@ export default function rendicion_cuentas() {
 
 	const [listaRendiciones, setListaRendiciones] = useState([]);
 
-	useEffect( () => {
+	useEffect(() => {
 
 		console.log(".: Pantalla rendicion_cuentas :.");
 
@@ -25,7 +25,7 @@ export default function rendicion_cuentas() {
 			const response = await axios.get('http://localhost:3001/api/' + tipoGetRendiciones);
 
 			// Estado: Ok
-			if(response.status === 200) {
+			if (response.status === 200) {
 				setListaRendiciones(response.data);
 				//console.log("Respuesta:\n" + response.data[0].asunto);
 			}
@@ -60,11 +60,11 @@ export default function rendicion_cuentas() {
 						{
 							listaRendiciones.map((gasto, index) => (
 								<Card_gasto
-									key = {index}
-									tipo_gasto = {gasto.tipoGasto}
-									asunto_gasto = {gasto.asunto}
-									fecha_gasto = {gasto.fecha}
-									total_gasto = {gasto.totalGastado}
+									key={index}
+									tipo_gasto={gasto.tipoGasto}
+									asunto_gasto={gasto.asunto}
+									fecha_gasto={gasto.fecha}
+									total_gasto={gasto.totalGastado}
 								/>
 							))
 						}
