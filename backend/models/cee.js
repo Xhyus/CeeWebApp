@@ -8,13 +8,19 @@ const ceeSchema = Schema({
 	},
 	asambleas: {
 		type: [Schema.ObjectId],
-		ref: "Asambleas"
+		ref: "asamblea"
 	},
-	// Rendiciones:{
-	//    type:[
-	//       Schema.ObjectId
-	//    ],
-	//    ref:"Rendiciones"
-	// }
+	rendiciones: {
+		type: [
+			Schema.ObjectId
+		],
+		ref: "rendicion"
+	},
+	usuarios: {
+		type: [
+			Schema.ObjectId
+		],
+		ref: "usuario"
+	},
 })
-module.exports = mongoose.model('cee', ceeSchema)    
+module.exports = mongoose.model('cee', ceeSchema)
