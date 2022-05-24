@@ -38,11 +38,12 @@ export default function asambleas() {
 		}
 	}
 
+
 	return (
 		<div className={styles.fondo}>
 			<div className={styles.contenedor}>
 				<div className={styles.contenedorSectorIzquierdo}>
-					<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono}/>Crear asamblea</button>
+					<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
 					<div className={styles.filtros}>
 						<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
 						<div className={styles.ContainerFiltro}>
