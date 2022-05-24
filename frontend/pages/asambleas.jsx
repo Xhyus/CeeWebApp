@@ -56,7 +56,6 @@ export default function asambleas() {
 					<div className={styles.filtros}>
 						<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
 						<div className={styles.ContainerFiltro}>
-
 							<Filtro tipo='normal' />
 							<Filtro tipo='normal' />
 							<Filtro tipo='normal' />
