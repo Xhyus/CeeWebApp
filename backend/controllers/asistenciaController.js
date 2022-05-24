@@ -12,7 +12,7 @@ const crearAsistencia = (req, res) => {
         if (err) {
             return res.status(400).send({ message: "Error al crear asistencia" })
         }
-        return res.status(200).send({ asistencia })
+        return res.status(200).send({ asistencia, id: asistencia._id })
     })
 }
 
