@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import styles from "./rendicion_cuentas.module.css";
+import Swal from "sweetalert2";
 
 export default function crear_gasto() {
 
@@ -16,6 +17,16 @@ export default function crear_gasto() {
     //! Instrucción temporal
     const [boletaGasto, setBoletaGasto] = useState("/carpeta/foto/boleta")
 
+    //* Enviar datos a la API.
+    const datosVerificados = {
+        asunto: datosGasto.asunto,
+        fecha: datosGasto.fecha,
+        totalGastado: datosGasto.total,
+        detalle: datosGasto.detalle,
+        boleta: boletaGasto,
+        tipoGasto: datosGasto.tipo,
+    }
+
     //? Función para capturar cambios en los inputs.
     const handleInputChange = (event) => {
 
@@ -28,33 +39,39 @@ export default function crear_gasto() {
 
     }
 
-    //? Función prueba para evaluar datos ingresados.
+    //? Función para verificar los datos en caso de que hayan campos incorrectos.
+    const verificarDatos = () => {
+        enviarDatos();
+    }
+
+    //? Función para crear gasto enviando los datos verificados.
     const enviarDatos = () => {
 
         //? Bandera de información guardada.
+        console.log("--------------------------------------");
         console.log("Asunto        : " + datosGasto.asunto);
         console.log("Total Gastado : " + datosGasto.total);
         console.log("Tipo Gasto    : " + datosGasto.tipo);
         console.log("Fecha Gasto   : " + datosGasto.fecha);
         console.log("Detalle       : " + datosGasto.detalle);
         console.log("Boleta        : " + boletaGasto + "\n");
+        console.log("--------------------------------------");
 
-        //* Enviar datos a la API.
-        const datosVerificados = {
-            asunto: datosGasto.asunto,
-            fecha: datosGasto.fecha,
-            totalGastado: datosGasto.total,
-            detalle: datosGasto.detalle,
-            boleta: boletaGasto,
-            tipoGasto: datosGasto.tipo,
-        }
+        //? Crear gasto.
+        // axios.post('http://localhost:3001/api/rendicion/', datosVerificados)
+        // .then((respuesta) => {
+        //     console.log("Solicitud creación Gasto: " + respuesta);
+        // })
+        // .catch((error) => {
+        //     console.log("Error al crear el gasto: " + error);
+        // })
 
-        axios.post('http://localhost:3001/api/rendicion/', datosVerificados)
-        .then((respuesta) => {
-            console.log("Solicitud creación Gasto: " + respuesta);
-        })
-        .catch((error) => {
-            console.log("Error al crear el gasto: " + error);
+        //* Mostrar alerta en pantalla.
+        Swal.fire({
+            title: 'Gasto creado',
+            text: datosVerificados.asunto,
+            icon: 'success',
+            confirmButtonText: 'Aceptar'
         })
 
         //* Resetear valores de los input.
@@ -105,7 +122,7 @@ export default function crear_gasto() {
                         {/* Ingresar fecha en que se realizó el gasto */}
                         <div>
                             <p className = {styles.Propiedades_texto}>Fecha</p>
-                            <input type="text" name="fecha" onChange={handleInputChange} />
+                            <input type="date" name="fecha" onChange={handleInputChange} />
                         </div>
 
                     </div>
@@ -124,7 +141,7 @@ export default function crear_gasto() {
 
                     {/* .: ENVIAR :. */}
                     <div className = {styles.Contenedor_boton}>
-                        <button className = {styles.Propiedades_texto} onClick = {() => enviarDatos()}>Enviar</button>
+                        <button className = {styles.Propiedades_texto} onClick = {() => verificarDatos()}>Enviar</button>
                     </div>
 
                 </div>
