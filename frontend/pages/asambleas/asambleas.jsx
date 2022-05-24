@@ -38,7 +38,6 @@ export default function asambleas() {
 		}
 	}
 
-
 	return (
 		<div className={styles.fondo}>
 			<div className={styles.contenedor}>
