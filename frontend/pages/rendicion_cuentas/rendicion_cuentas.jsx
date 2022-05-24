@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./rendicion_cuentas.module.css";
 import Card_gasto from "../../components/card_rendicion_cuentas/Card_gasto";
+import Filtro from "../../components/filtro/Filtro";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -12,91 +13,98 @@ export default function rendicion_cuentas() {
 
 		console.log(".: Pantalla rendicion_cuentas :.");
 
-		(async () => getRendiciones())();
+		// Tipo de getRendicion por defecto 'rendiciones'
+		(async () => getRendiciones("rendiciones"))();
 
 	}, []);
 
-	//* .: OBTENER GASTOS :. *//
-	const getRendiciones = async () => {
+	//* .: LISTAR GASTOS :. *//
 
+	const getRendiciones = async (tipoGetRendiciones) => {
 		try {
-			
-			const response = await axios.get('http://localhost:4000/api/rendiciones');
+			const response = await axios.get('http://localhost:3001/api/' + tipoGetRendiciones);
 
 			// Estado: Ok
 			if(response.status === 200) {
-
 				setListaRendiciones(response.data);
 				//console.log("Respuesta:\n" + response.data[0].asunto);
-
 			}
 
 		} catch (error) {
-			
-			console.log("Error: " + error);
-
+			console.log("Peticion: " + tipoGetRendiciones + "\nError: " + error);
 		}
-
-	}
-
-	//* .: ABRIR PANTALLA "crear_gasto" :. *//
-	const crearGasto = () => {
-		console.log("Abriendo 'crear gasto' ...");
-
 	}
 
 	return (
-
-		//* .: CONTENEDOR PRINCIPAL :. *//
-		<div className = {styles.Contenedor_principal}>
-
-			{/* .: CONTENEDOR DE GASTOS :. */}
-			<div className = {styles.Contenedor_secundario}>
-
-				{/* .: TITULO :. */}
-				<div className = {styles.Contenedor_titulo}>
-					<h1 className = {styles.Propiedades_texto}>Informe de gastos</h1>
+		<div className={styles.fondo}>
+			<div className={styles.contenedor}>
+				<div className={styles.contenedorTitulo}>
+					<h1>Informe de gastos</h1>
 				</div>
+				<div className={styles.contenedorInferior}>
+					<div className={styles.contenedorSectorIzquierdo}>
+						<button className={styles.Propiedades_boton} >Crear asamblea</button>
+						<div className={styles.filtros}>
+							<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
+							<div className={styles.ContainerFiltro}>
 
-				<div className = {styles.Contenedor_contenido}>
-
-					{/* .: FILTRO DE BÚSQUEDA :. */}
-					<div className = {styles.Contenedor_crearGasto_filtro}>
-						<button onClick={()=> crearGasto()} className = {styles.Propiedades_boton}>Agregar nuevo gasto</button>
-
-						<div className = {styles.Contenedor_filtro}>
-							<h2 className = {styles.Propiedades_texto}>Filtros</h2>
+								<Filtro tipo='normal' />
+								<Filtro tipo='normal' />
+								<Filtro tipo='normal' />
+								<Filtro tipo='fecha' />
+								<Filtro tipo='fecha' />
+							</div>
 						</div>
-
 					</div>
-
-					{/* .: LISTA DE GASTOS :. */}
-					<div className = {styles.Contenedor_card}>
-						
+					<div className={styles.contenedorSectorDerecho}>
 						{
 							listaRendiciones.map((gasto, index) => (
-
 								<Card_gasto
-
 									key = {index}
-								
 									tipo_gasto = {gasto.tipoGasto}
 									asunto_gasto = {gasto.asunto}
 									fecha_gasto = {gasto.fecha}
 									total_gasto = {gasto.totalGastado}
-
 								/>
-
 							))
-
 						}
-
 					</div>
-
 				</div>
-
 			</div>
-
 		</div>
-	);
+	)
+
+
+
+	// <meter todo lo de dentro en tu jsx>
+	// 	<div className = {styles.contenedorSectorIzquierdo}>
+	// 								<button onClick={()=> {console.log("Dirigiendo a página 'crear_gasto'")}} className = {styles.Propiedades_boton }><a href="/rendicion_cuentas/crear_gasto">Agregar nuevo gasto</a></button>
+	// 								<div className={styles.filtros}>
+	// 									<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
+	// 									<div className={styles.ContainerFiltro}>
+	// 										<Filtro tipo='normal' />
+	// 										<Filtro tipo='normal' />
+	// 										<Filtro tipo='normal' />
+	// 										<Filtro tipo='fecha' />
+	// 										<Filtro tipo='fecha' />
+	// 									</div>
+	// 								</div>
+	// 						</div>
+
+	// 						<div className = {styles.contenedorSectorDerecho}>
+	// 								{
+	// 									listaRendiciones.map((gasto, index) => (
+	// 										<Card_gasto
+	// 											key = {index}
+	// 											tipo_gasto = {gasto.tipoGasto}
+	// 											asunto_gasto = {gasto.asunto}
+	// 											fecha_gasto = {gasto.fecha}
+	// 											total_gasto = {gasto.totalGastado}
+	// 										/>
+	// 									))
+	// 								}
+	// 						</div>
+	// </meter>
+
+
 }
