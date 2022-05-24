@@ -76,6 +76,7 @@ export default function crear_gasto() {
 
         //* Resetear valores de los input.
         
+        //* Enviar al usuario a pantalla "rendicion_cuentas".
     }
 
     return (
