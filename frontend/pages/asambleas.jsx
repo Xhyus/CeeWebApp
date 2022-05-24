@@ -3,6 +3,7 @@ import styles from '../styles/asambleas.module.css'
 import Card from './../components/card_asambleas/Card'
 import axios from 'axios'
 import Filtro from './../components/filtro/Filtro'
+import Navbar from '../components/navbar/Navbar'
 import { FaPlus } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 
@@ -49,7 +50,9 @@ export default function asambleas() {
 	}
 
 	return (
-		<div className={styles.fondo}>
+		<>
+			<Navbar/>
+			<div className={styles.fondo}>
 			<div className={styles.contenedor}>
 				<div className={styles.contenedorSectorIzquierdo}>
 					<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
@@ -80,5 +83,7 @@ export default function asambleas() {
 				</div>
 			</div>
 		</div>
+		</>
+		
 	)
 }
