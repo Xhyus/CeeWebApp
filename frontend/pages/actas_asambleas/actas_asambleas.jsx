@@ -13,28 +13,83 @@ export default function actas_asambleas() {
 	const [asunto, setAsunto] = useState()
 	const [descripcion, setDescripcion] = useState('')
 
+
+	const handleChangeDescripcion = (e) => {
+		setDescripcion(e.target.value)
+	}
+
 	useEffect(() => {
-		(async () => {
-			obtenerPuntos('62887cbb6f9cba4180f42c19')
-			crearActa()
-		})();
+		const obtenerPuntos = async (id) => {
+			const response = await axios.get('http://localhost:3001/api/asamblea/' + id)
+			setPunto(response.data)
+			const puntos = [...response.data.puntos]
+			puntos.map(punto => {
+				obtenerPunto(punto)
+			})
+		}
+		obtenerPuntos('62887cbb6f9cba4180f42c19')
 	}, []);
 
-	const obtenerPuntos = async (id) => {
-		const response = await axios.get('http://localhost:3001/api/asamblea/' + id)
-		setPunto(response.data)
-		for (const [key, value] of Object.entries(response.data.puntos)) {
-			setPunto(prevState => ({
-				...prevState,
-				[key]: value
-			}))
+	const obtenerPunto = (id) => {
+		axios.get('http://localhost:3001/api/punto/' + id)
+			.then(res => {
+				console.log(res.data.asunto)
+				setAsunto(res.data.asunto)
+			})
+	}
+
+
+	const crearAsistencia = (id) => {
+		const data = {
+			nombre: asistencia.nombre,
+			apellido: asistencia.apellido,
+			rut: asistencia.rut,
+			generacion: asistencia.generacion,
 		}
+		axios.post('http://localhost:3001/api/asistencia/' + id, data)
+			.then(res => {
+				console.log(res)
+			}
+			)
+			.catch(err => {
+				console.log(err)
+			}
+			)
+	}
+
+	const asistenciaPrueba = [{
+		_id: 'AAAAAAAAAAAAAAAAAAAAAAAA',
+		nombre: 'Juan',
+		apellido: 'Perez',
+		rut: '12345678-9',
+		generacion: 2020,
+	},
+	{
+		_id: 'BBBBBBBBBBBBBBBBBBBBBB',
+		nombre: 'Carlos',
+		apellido: 'Pavez',
+		rut: '12345678-9',
+		generacion: 2019,
+	},
+	]
+
+	const modificarPuntos = (id) => {
+		const data = {
+			descripcion: descripcion
+		}
+		axios.put('http://localhost:3001/api/acta/update' / +id, data)
+			.then(res => {
+				console.log(res)
+			})
+			.catch(err => {
+				console.log(err)
+			})
 	}
 
 	const crearActa = async () => {
 		const data = {
 			puntos: punto.puntos,
-			asistencia: ['AAAAAAAAAAAAAAAAAAAAAAAA'],
+			asistencia: asistencia.asistencia,
 		}
 		await axios.post('http://localhost:3001/api/acta', data)
 			.then(res => {
@@ -46,10 +101,22 @@ export default function actas_asambleas() {
 			})
 	}
 
+	const modificarAsamblea = () => {
+		const data = {
+			acta: acta,
+		}
+		axios.put('http://localhost:3001/api/asamblea/update/' + id, data)
+			.then(res => {
+				console.log(res)
+			})
+			.catch(err => {
+				console.log(err)
+			})
+	}
 
 	const enviarActa = (event) => {
 		event.preventDefault();
-		console.log(asamblea.asunto + ' ' + asamblea.puntos[1].asunto);
+		modificarPuntos()
 		// aca se hace el envio al backend
 	}
 
@@ -76,7 +143,10 @@ export default function actas_asambleas() {
 							</div>
 
 							<div className={styles.contenedorTextArea}>
-
+								{
+									punto.puntos.map(punto => (
+										<Textarea punto={asunto} onchange={handleChangeDescripcion} />
+									))}
 							</div>
 
 							<button type="submit" className={styles.boton}>Enviar <FiSend className={styles.iconoSend} /> </button>
