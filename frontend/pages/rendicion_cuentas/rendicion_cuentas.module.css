@@ -1,146 +1,137 @@
-/** .: CONTENEDORES GENERALES :. **/
-
-.Contenedor_principal {
+.fondo {
     background-color: #EDF1F7;
-    top: 9vh;
-    height: 100%;
     width: 100%;
-    position: absolute;
-    margin: 0px;
+    height: auto;
+    min-height: 91vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
 }
 
-.Contenedor_secundario {
-    background-color: #fff;
-    /* background-color: burlywood; */
-    height: 85%;
-    width: 80%;
-    border-radius: 60px;
-    position: relative;
-}
-
-.Contenedor_titulo {
-    background-color: #fff;
-    /* background-color: green; PRUEBAS */
-    position: absolute;
+.contenedor {
+    width: 75%;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    height: auto;
+    background-color: #FFF;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
-    width: 100%;
-    height: 20%;
+    overflow: hidden;
     border-radius: 60px;
 }
 
-.Contenedor_contenido {
-    /* background-color: #fff; */
-    background-color: blue;
-    position: absolute;
+.contenedorInferior{
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
     width: 100%;
-    height: 80%;
-    top: 20%;
 }
 
-/** .: CONTENEDORES "rendicion_cuentas" :. **/
-
-.Contenedor_crearGasto_filtro {
-    background-color: #fff;
-    /* background-color: yellow; */
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 40%;
-    height: 100%;
-}
-
-.Contenedor_filtro {
-    background-color: #EDF1F7;
-    width: 70%;
-    height: 70%;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.Contenedor_card {
-    background-color: #fff;
-    /* background-color: aqua; PRUEBAS */
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 60%;
-    height: 100%;
-    margin-left: 40%;
-}
-
-/** .: CONTENEDORES "crear_gasto" **/
-
-.Contenedor_asunto_total {
-    background-color: #72A98F;
-    width: 100%;
-    height: 20%;
-    display: flex;
-    flex-direction: row;
-}
-
-.Contenedor_tipo_fecha {
-    background-color: aqua;
-    width: 100%;
-    height: 20%;
-    display: flex;
-    flex-direction: row;
-}
-
-.Contenedor_detalle {
-    background-color: azure;
-    width: 100%;
-    height: 30%;
-}
-
-.Contenedor_boleta {
-    background-color: brown;
-    width: 100%;
-    height: 20%;
-}
-
-.Contenedor_boton {
-    background-color: wheat;
-    width: 100%;
-    height: 10%;
-}
-
-/** .: PROPIEDADES :. **/
-
-.Propiedades_texto{
-    color: #2F2D2E;
-    font-family: 'Montserrat', sans-serif;
+/* * Sector Izquierdo */
+.contenedorSectorIzquierdo {
+    margin-top: 5vh;
+    width: 25%;
+    height: auto;
 }
 
 .Propiedades_boton {
-    background-color: #72A98F;
-    color:#FFFFFF;
-    /* margin-top: -10%; */
-    width: 70%;
-    height: 9%;
+    background-color: #20ac6b;
+    color: #FFFFFF;
+    width: 100%;
+    height: auto;
+    padding: 3.5%;
     font-weight: 600;
     border-radius: 10px;
-    margin-bottom: 25px;
     border: none;
+    margin-bottom: 5%;
+    font-size: 1.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.Propiedades_filtro {
+.filtros {
+    background-color: #EDF1F7;
+    width: auto;
+    height: auto;
+    border-radius: 24px;
+    padding: 10% 20%;
+}
+
+.titulo_filtro {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.ContainerFiltro {
     width: 100%;
     height: auto;
     line-height: 0;
+}
+
+/* *Sector Derecho */
+.contenedorSectorDerecho {
+    width: 55%;
+    margin-top: 5vh;
+    height: 100%;
+}
+
+.listaCards {
+    width: 100%;
+    height: auto;
+
+}
+
+.Propiedades_icono{
+    margin: 0 1vh;
+}
+
+@media (max-width: 768px){
+    .contenedor{
+        width: 100%;
+    }
+    .contenedorInferior{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .contenedorSectorIzquierdo{
+        width: 90%;
+    }
+    .Propiedades_boton{
+        padding: 2vh;
+    }
+    .contenedorSectorDerecho{
+        width: 90%;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1199px){
+    .contenedorInferior{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .contenedorSectorIzquierdo{
+        display: flex;
+        flex-direction: row;
+        width: 90%;
+        margin: 0;
+        height: 70%;
+        align-items: center;
+    }
+    .Propiedades_boton{
+        margin: 0 4vh 0 0;
+        padding: 0;
+        height: 9vh;
+        width: 50%;
+    }
+    .contenedorSectorDerecho{
+        width: 90%;
+    }
 }
