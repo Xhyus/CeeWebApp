@@ -1,7 +1,7 @@
 .fondo {
     background-color: #EDF1F7;
-    width: 100vw;
-    height: 100%;
+    width: 100%;
+    height: auto;
     min-height: 91vh;
     display: flex;
     justify-content: center;
@@ -10,18 +10,102 @@
 }
 .contenedor {
     width: 75%;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
     padding-top: 2%;
     padding-bottom: 2%;
     height: auto;
     background-color: #FFF;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
+    align-items: center;
     overflow: hidden;
     border-radius: 60px;
-    flex-direction: column;
-    align-items: center;
 }
 .contenedorSuperior{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.contenedorTitulo h1{
+    font-size: 30px;
+}
+.contenedorIcono{
+    background-color: #20ac6b;
+    display: flex;
+    color: white;
+    border-radius: 999px;
+    align-items: center;
+    justify-content: center;
+    padding: 1.9vh;
+    margin-left: 3vh;
+}
+.contenedorFormulario{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.Form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.contenedorInput{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+.textTitulo{
+    margin: 0 0 1vh 0;
+    font-size: 16px;
+    font-weight: bold;
+}
+.Input{
+    padding: 1vh 4vh ;
+    height: 45px;
+    border-radius: 12px;
+    background-color: #F2F2F2;
+    border: 1px solid #9CA3AB;
+    color: #000000;
+    font-size: 16px;
+}
+.boton{
+    margin: 4vh 0;
+    width: 90%;
+    background-color: #FEB172;
+    border: none;
+    height: 6vh;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 18px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.boton:hover{
+    background-color: #FE9A48;
+}
+.iconoSend{
+    margin-left: 2vh;
+}
+@media (max-width: 768px){
+    .contenedorTitulo h1{
+        text-align: center;
+    }
+    .contenedorIcono{
+        display: none;
+    }
+}
+
+/* .contenedorSuperior{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -68,7 +152,6 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-
 }
 .contenedorInput p{
     font-size: 16px;
@@ -92,12 +175,9 @@
     font-size: 16px;
     color: #000000;
 }
-
 .contenedorTextArea{
     width: 100%;
 }
-
-
 .boton{
     margin: 2vh 0;
     width: 100%;
@@ -118,4 +198,4 @@
 }
 .iconoSend{
     margin-left: 1vh;
-}
+} */

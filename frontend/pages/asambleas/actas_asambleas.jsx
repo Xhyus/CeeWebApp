@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../../styles/actas_asambleas.module.css'
 import Textarea from '../../components/textarea/Textarea'
+import Navbar from '../../components/navbar/Navbar'
 import { FaPaperclip } from 'react-icons/fa'
 import { FiSend } from 'react-icons/fi'
 import axios from 'axios'
@@ -122,6 +123,7 @@ export default function actas_asambleas() {
 
 	return (
 		<>
+			<Navbar/>
 			<div className={styles.fondo}>
 				<div className={styles.contenedor}>
 					<div className={styles.contenedorSuperior}>
@@ -135,20 +137,19 @@ export default function actas_asambleas() {
 					<div className={styles.contenedorFormulario}>
 						<form className={styles.Form} onSubmit={enviarActa}>
 							<div className={styles.contenedorInput}>
-								<p>Título del acta:</p>
+								<p className={styles.textTitulo}>Título del acta:</p>
 								<input type="text"
-									placeholder='Ingrese título del acta'
-									name="titulo"
+										className={styles.Input}
+										placeholder='Ingrese título del acta'
+										name="titulo"
 								/>
 							</div>
-
 							<div className={styles.contenedorTextArea}>
-								{/* {
-									punto.puntos.map(punto => (
-										<Textarea punto={asunto} onchange={handleChangeDescripcion} />
-									))} */}
+									{/* {
+										punto.puntos.map(punto => (
+											<Textarea punto={asunto} onchange={handleChangeDescripcion} />
+										))} */}
 							</div>
-
 							<button type="submit" className={styles.boton}>Enviar <FiSend className={styles.iconoSend} /> </button>
 						</form>
 					</div>
