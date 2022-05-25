@@ -1,0 +1,15 @@
+.fondo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    background-color: #fff;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.contenedorSpinner{
+    padding: 3vh;
+    border-radius: 20px;
+}
