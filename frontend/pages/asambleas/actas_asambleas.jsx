@@ -13,6 +13,7 @@ export default function actas_asambleas() {
 	const [acta, setActa] = useState()
 	const [asunto, setAsunto] = useState()
 	const [descripcion, setDescripcion] = useState('')
+	const [asamblea, setAsamblea] = useState()
 
 
 	const handleChangeDescripcion = (e) => {
@@ -20,6 +21,7 @@ export default function actas_asambleas() {
 	}
 
 	useEffect(() => {
+		const idAsamblea = localStorage.getItem('id_asamblea')
 		const obtenerPuntos = async (id) => {
 			const response = await axios.get('http://localhost:3001/api/asamblea/' + id)
 			setPunto(response.data)
@@ -28,14 +30,18 @@ export default function actas_asambleas() {
 				obtenerPunto(punto)
 			})
 		}
-		obtenerPuntos('62887cbb6f9cba4180f42c19')
+		setAsamblea(idAsamblea)
+		obtenerPuntos(idAsamblea)
 	}, []);
+
 
 	const obtenerPunto = (id) => {
 		axios.get('http://localhost:3001/api/punto/' + id)
 			.then(res => {
-				console.log(res.data.asunto)
 				setAsunto(res.data.asunto)
+			})
+			.catch(err => {
+				throw err
 			})
 	}
 
@@ -78,12 +84,12 @@ export default function actas_asambleas() {
 		const data = {
 			descripcion: descripcion
 		}
-		axios.put('http://localhost:3001/api/acta/update' / +id, data)
+		axios.put('http://localhost:3001/api/punto/update/' + id, data)
 			.then(res => {
-				console.log(res)
+				console.log("se modificaron los puntos")
 			})
 			.catch(err => {
-				console.log(err)
+				console.log("error al modificar los puntos")
 			})
 	}
 
@@ -102,7 +108,7 @@ export default function actas_asambleas() {
 			})
 	}
 
-	const modificarAsamblea = () => {
+	const modificarAsamblea = (id) => {
 		const data = {
 			acta: acta,
 		}
@@ -116,14 +122,20 @@ export default function actas_asambleas() {
 	}
 
 	const enviarActa = (event) => {
-		event.preventDefault();
-		modificarPuntos()
-		// aca se hace el envio al backend
+		event.preventDefault()
+		const puntos = [...punto.puntos];
+		console.log(punto)
+		puntos.map(punto => {
+			console.log("punto: " + punto)
+			modificarPuntos(punto)
+		})
+		crearActa(puntos, asistenciaPrueba)
+		modificarAsamblea(asamblea)
 	}
 
 	return (
 		<>
-			<Navbar/>
+			<Navbar />
 			<div className={styles.fondo}>
 				<div className={styles.contenedor}>
 					<div className={styles.contenedorSuperior}>
@@ -139,13 +151,13 @@ export default function actas_asambleas() {
 							<div className={styles.contenedorInput}>
 								<p className={styles.textTitulo}>Título del acta:</p>
 								<input type="text"
-										className={styles.Input}
-										placeholder='Ingrese título del acta'
-										name="titulo"
+									className={styles.Input}
+									placeholder='Ingrese título del acta'
+									name="titulo"
 								/>
 							</div>
 							<div className={styles.contenedorTextArea}>
-									{/* {
+								{/* {
 										punto.puntos.map(punto => (
 											<Textarea punto={asunto} onchange={handleChangeDescripcion} />
 										))} */}
