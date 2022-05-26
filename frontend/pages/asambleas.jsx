@@ -22,6 +22,7 @@ export default function asambleas() {
 	}, []);
 
 	const isLogged = () => {
+		localStorage.removeItem('id_asamblea')
 		if (localStorage.getItem('token') === null) {
 			router.push('/')
 		}

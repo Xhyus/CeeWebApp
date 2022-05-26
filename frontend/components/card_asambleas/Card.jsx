@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styles from './Card.module.css'
 import { FaClock, FaTag, FaCalendarCheck } from 'react-icons/fa'
 import { compararFechas, formateoFechaBD } from '../../utils/handleDates'
+import { useRouter } from 'next/router'
 
 const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 	const [estado, setEstado] = useState('')
@@ -9,6 +10,7 @@ const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 	const ahora = new Date()
 	const tipoAsambleaUp = tipoAsamblea.charAt(0).toUpperCase() + tipoAsamblea.slice(1)
 	const tituloAsambleaUp = asunto.charAt(0).toUpperCase() + asunto.slice(1)
+	const router = useRouter()
 
 	useEffect(() => {
 		setFormat(formateoFechaBD(fecha))
@@ -33,6 +35,11 @@ const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 		}
 	}
 
+	const generarActa = (id) => {
+		localStorage.setItem('id_asamblea', id)
+		router.push('/asambleas/actas_asambleas')
+	}
+
 	return (
 		<div className={styles.fondo}>
 			<div className={styles.contenedorIzquierdo}>
@@ -51,7 +58,7 @@ const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 						<p className={`${styles.texto} ${styles.fecha}`}>{format.hora}</p>
 					</div>
 				</section>
-				<a className={styles.vermas} onClick={() => console.log(id)}>Ver más</a>
+				<a className={styles.vermas} onClick={() => generarActa(id)}>Ver más</a>
 			</div>
 		</div>
 	)
