@@ -29,7 +29,7 @@ export default function asambleas() {
 
 	const getAsambleasTerminadas = async () => {
 		try {
-			const response = await axios.get(process.env.servidor + '/asambleas/terminadas');
+			const response = await axios.get(process.env.SERVIDOR + '/asambleas/terminadas');
 			if (response.status === 200) {
 				setAsambleasTerminadas(response.data);
 			}
@@ -40,7 +40,7 @@ export default function asambleas() {
 
 	const getAsambleasPorRealizar = async () => {
 		try {
-			const response = await axios.get(process.env.servidor + '/asambleas/porRealizar');
+			const response = await axios.get(process.env.SERVIDOR + '/asambleas/porRealizar');
 			if (response.status === 200) {
 				setAsambleasPorRealizar(response.data);
 			}

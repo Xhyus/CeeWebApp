@@ -33,7 +33,7 @@ export default function crear_gasto() {
         setDatosGasto({
 
             ...datosGasto,
-            [event.target.name] : event.target.value
+            [event.target.name]: event.target.value
 
         })
 
@@ -58,7 +58,7 @@ export default function crear_gasto() {
         console.log("--------------------------------------");
 
         //? Crear gasto.
-        // axios.post('http://localhost:3001/api/rendicion/', datosVerificados)
+        // axios.post(process.env.SERVIDOR +'/rendicion/', datosVerificados)
         // .then((respuesta) => {
         //     console.log("Solicitud creación Gasto: " + respuesta);
         // })
@@ -75,78 +75,78 @@ export default function crear_gasto() {
         })
 
         //* Resetear valores de los input.
-        
+
         //* Enviar al usuario a pantalla "rendicion_cuentas".
     }
 
     return (
 
         //* .: CONTENEDOR PRINCIPAL :. *//
-		<div className = {styles.Contenedor_principal}>
+        <div className={styles.Contenedor_principal}>
 
             {/* .: CONTENEDOR DEL FORMULARIO :. */}
-            <div className = {styles.Contenedor_secundario}>
-                
-                {/* .: TITULO :. */}
-				<div className = {styles.Contenedor_titulo}>
-					<h1 className = {styles.Propiedades_texto}>Agregar gasto</h1>
-				</div>
+            <div className={styles.Contenedor_secundario}>
 
-                <div className = {styles.Contenedor_contenido}>
+                {/* .: TITULO :. */}
+                <div className={styles.Contenedor_titulo}>
+                    <h1 className={styles.Propiedades_texto}>Agregar gasto</h1>
+                </div>
+
+                <div className={styles.Contenedor_contenido}>
 
                     {/* .: ASUNTO y TOTAL :. */}
-                    <div className = {styles.Contenedor_asunto_total}>
-                        
+                    <div className={styles.Contenedor_asunto_total}>
+
                         {/* Ingresar asunto del gasto */}
                         <div>
-                            <p className = {styles.Propiedades_texto}>Asunto</p>
+                            <p className={styles.Propiedades_texto}>Asunto</p>
                             <input type="text" name="asunto" onChange={handleInputChange} />
                         </div>
 
                         {/* Ingresar total del gasto */}
                         <div>
-                            <p className = {styles.Propiedades_texto}>Total</p>
+                            <p className={styles.Propiedades_texto}>Total</p>
                             <input type="number" name="total" onChange={handleInputChange} />
                         </div>
-                        
+
                     </div>
 
                     {/* .: TIPO y FECHA :. */}
-                    <div className = {styles.Contenedor_tipo_fecha}>
-                        
+                    <div className={styles.Contenedor_tipo_fecha}>
+
                         {/* Ingresar tipo de gasto (Ingreso o gasto) */}
                         <div>
-                            <p className = {styles.Propiedades_texto}>Tipo</p>
+                            <p className={styles.Propiedades_texto}>Tipo</p>
                             <input type="text" name="tipo" onChange={handleInputChange} />
                         </div>
 
                         {/* Ingresar fecha en que se realizó el gasto */}
                         <div>
-                            <p className = {styles.Propiedades_texto}>Fecha</p>
+                            <p className={styles.Propiedades_texto}>Fecha</p>
                             <input type="date" name="fecha" onChange={handleInputChange} />
                         </div>
 
                     </div>
 
                     {/* .: DETALLE :. */}
-                    <div className = {styles.Contenedor_detalle}>
-                        <h3 className = {styles.Propiedades_texto}>Detalle</h3>
+                    <div className={styles.Contenedor_detalle}>
+                        <h3 className={styles.Propiedades_texto}>Detalle</h3>
                         <input type="text" name="detalle" onChange={handleInputChange} />
                     </div>
 
                     {/* .: BOLETA :. */}
-                    <div className = {styles.Contenedor_boleta}>
-                        <h3 className = {styles.Propiedades_texto}>Boleta</h3>
+                    <div className={styles.Contenedor_boleta}>
+                        <h3 className={styles.Propiedades_texto}>Boleta</h3>
                         <input type="file" name="boleta" onChange={handleInputChange} />
                     </div>
 
                     {/* .: ENVIAR :. */}
-                    <div className = {styles.Contenedor_boton}>
-                        <button className = {styles.Propiedades_texto} onClick = {() => verificarDatos()}>Enviar</button>
+                    <div className={styles.Contenedor_boton}>
+                        <button className={styles.Propiedades_texto} onClick={() => verificarDatos()}>Enviar</button>
                     </div>
 
                 </div>
-                
+
             </div>
 
         </div>

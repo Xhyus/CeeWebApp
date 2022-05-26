@@ -23,7 +23,7 @@ export default function rendicion_cuentas() {
 
 	const getRendiciones = async (tipoGetRendiciones) => {
 		try {
-			const response = await axios.get('http://localhost:3001/api/' + tipoGetRendiciones);
+			const response = await axios.get(process.env.SERVIDOR + "/" + tipoGetRendiciones);
 
 			// Estado: Ok
 			if (response.status === 200) {

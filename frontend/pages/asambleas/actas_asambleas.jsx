@@ -21,7 +21,7 @@ export default function actas_asambleas() {
 
 	useEffect(() => {
 		const obtenerPuntos = async (id) => {
-			const response = await axios.get('http://localhost:3001/api/asamblea/' + id)
+			const response = await axios.get(process.env.SERVIDOR + '/asamblea/' + id)
 			setPunto(response.data)
 			const puntos = [...response.data.puntos]
 			puntos.map(punto => {
@@ -32,7 +32,7 @@ export default function actas_asambleas() {
 	}, []);
 
 	const obtenerPunto = (id) => {
-		axios.get('http://localhost:3001/api/punto/' + id)
+		axios.get(process.env.SERVIDOR + '/punto/' + id)
 			.then(res => {
 				console.log(res.data.asunto)
 				setAsunto(res.data.asunto)
@@ -47,7 +47,7 @@ export default function actas_asambleas() {
 			rut: asistencia.rut,
 			generacion: asistencia.generacion,
 		}
-		axios.post('http://localhost:3001/api/asistencia/' + id, data)
+		axios.post(process.env.SERVIDOR + '/asistencia/' + id, data)
 			.then(res => {
 				console.log(res)
 			}
@@ -78,7 +78,7 @@ export default function actas_asambleas() {
 		const data = {
 			descripcion: descripcion
 		}
-		axios.put('http://localhost:3001/api/acta/update' / +id, data)
+		axios.put(process.env.SERVIDOR + '/acta/update' / +id, data)
 			.then(res => {
 				console.log(res)
 			})
@@ -92,7 +92,7 @@ export default function actas_asambleas() {
 			puntos: punto.puntos,
 			asistencia: asistencia.asistencia,
 		}
-		await axios.post('http://localhost:3001/api/acta', data)
+		await axios.post(process.env.SERVIDOR + '/acta', data)
 			.then(res => {
 				console.log("acta: " + res.data.acta._id)
 				setActa(res.data.acta._id)
@@ -106,7 +106,7 @@ export default function actas_asambleas() {
 		const data = {
 			acta: acta,
 		}
-		axios.put('http://localhost:3001/api/asamblea/update/' + id, data)
+		axios.put(process.env.SERVIDOR + '/asamblea/update/' + id, data)
 			.then(res => {
 				console.log(res)
 			})
@@ -123,7 +123,7 @@ export default function actas_asambleas() {
 
 	return (
 		<>
-			<Navbar/>
+			<Navbar />
 			<div className={styles.fondo}>
 				<div className={styles.contenedor}>
 					<div className={styles.contenedorSuperior}>
@@ -139,13 +139,13 @@ export default function actas_asambleas() {
 							<div className={styles.contenedorInput}>
 								<p className={styles.textTitulo}>Título del acta:</p>
 								<input type="text"
-										className={styles.Input}
-										placeholder='Ingrese título del acta'
-										name="titulo"
+									className={styles.Input}
+									placeholder='Ingrese título del acta'
+									name="titulo"
 								/>
 							</div>
 							<div className={styles.contenedorTextArea}>
-									{/* {
+								{/* {
 										punto.puntos.map(punto => (
 											<Textarea punto={asunto} onchange={handleChangeDescripcion} />
 										))} */}

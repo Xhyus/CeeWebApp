@@ -8,6 +8,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'
 
+
 export default function Login() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
@@ -15,6 +16,7 @@ export default function Login() {
 
 	useEffect(() => {
 		localStorage.removeItem('token')
+		console.log(process.env.SERVIDOR)
 	}, []);
 
 	const handleInputChangeCorreo = (event) => {
@@ -37,7 +39,7 @@ export default function Login() {
 			email: email,
 			password: password
 		}
-		axios.post(process.env.servidor + '/usuario/verificacion', data)
+		axios.post(process.env.SERVIDOR + '/usuario/verificacion', data)
 			.then(res => {
 				if (res.status == 200) {
 					console.log("La cuenta esta activa")
@@ -67,7 +69,7 @@ export default function Login() {
 				}
 			})
 		const validarPassword = () => {
-			axios.post(process.env.servidor + '/usuario/validarPass', {
+			axios.post(process.env.SERVIDOR + '/usuario/validarPass', {
 				email: email,
 				password: password
 			}).then(res => {
