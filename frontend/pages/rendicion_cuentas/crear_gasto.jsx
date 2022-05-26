@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import styles from "./rendicion_cuentas.module.css";
+import styles from "../../styles/rendicion_cuentas.module.css";
 import Swal from "sweetalert2";
 
 export default function crear_gasto() {

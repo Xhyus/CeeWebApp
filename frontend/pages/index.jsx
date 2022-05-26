@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../styles/login.module.css'
-import Button from '../components/button/button'
+import Button from '../components/button/Button'
 import { FaLock, FaUser } from "react-icons/fa"
 import axios from 'axios'
 import Swal from 'sweetalert2'
