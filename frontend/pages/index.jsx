@@ -19,16 +19,16 @@ export default function Login() {
 
 	const handleInputChangeCorreo = (event) => {
 		setEmail(event.target.value)
-		console.log(email)
+		// console.log(email)
 	}
 
 	const handleInputChangePassword = (event) => {
 		setPassword(event.target.value)
-		console.log(password)
+		// console.log(password)
 	}
 
 	const enviarDatos = () => {
-		console.log(`Enviando datos Correo:${email} y Password:${password}`)
+		// console.log(`Enviando datos Correo:${email} y Password:${password}`)
 		validarLogin();
 	}
 
