@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../styles/login.module.css'
-import Button from '../components/button/button'
+import Button from '../components/button/Button'
 import { FaLock, FaUser } from "react-icons/fa"
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'
+
 
 export default function Login() {
 	const [email, setEmail] = useState('')
@@ -19,16 +20,16 @@ export default function Login() {
 
 	const handleInputChangeCorreo = (event) => {
 		setEmail(event.target.value)
-		console.log(email)
+		// console.log(email)
 	}
 
 	const handleInputChangePassword = (event) => {
 		setPassword(event.target.value)
-		console.log(password)
+		// console.log(password)
 	}
 
 	const enviarDatos = () => {
-		console.log(`Enviando datos Correo:${email} y Password:${password}`)
+		// console.log(`Enviando datos Correo:${email} y Password:${password}`)
 		validarLogin();
 	}
 
@@ -37,7 +38,7 @@ export default function Login() {
 			email: email,
 			password: password
 		}
-		axios.post('http://localhost:3001/api/usuario/verificacion', data)
+		axios.post(process.env.SERVIDOR + '/usuario/verificacion', data)
 			.then(res => {
 				if (res.status == 200) {
 					console.log("La cuenta esta activa")
@@ -67,7 +68,7 @@ export default function Login() {
 				}
 			})
 		const validarPassword = () => {
-			axios.post('http://localhost:3001/api/usuario/validarPass', {
+			axios.post(process.env.SERVIDOR + '/usuario/validarPass', {
 				email: email,
 				password: password
 			}).then(res => {

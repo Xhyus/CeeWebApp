@@ -89,6 +89,25 @@ const buscarAsamblea = (req, res) => {
     })
 }
 
+const filtrarAsambleaPorCarrera = (req, res) => {
+    let id = req.params.id;
+    asamblea.find({ acta: { $elemMatch: { carrera: id } } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
+        if (err) {
+            return res.status(400).send({ message: "Error al buscar" })
+        }
+        if (!asamblea) {
+            return res.status(404).send({ message: "No existe" })
+        }
+        res.status(200).send(asamblea)
+    })
+}
+
+// const filtrarAsambleasTerminadas = (req, res) => {
+
+// }
+
+
+
 module.exports = {
     crearAsamblea,
     listarAsambleas,

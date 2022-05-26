@@ -22,7 +22,7 @@ export default function actas_asambleas() {
 	useEffect(() => {
 		const idAsamblea = localStorage.getItem('id_asamblea')
 		const obtenerPuntos = async (id) => {
-			const response = await axios.get('http://localhost:3001/api/asamblea/' + id)
+			const response = await axios.get(process.env.SERVIDOR + '/asamblea/' + id)
 			setPunto(response.data)
 			const puntos = [...response.data.puntos]
 			puntos.map(punto => {
@@ -35,7 +35,7 @@ export default function actas_asambleas() {
 
 
 	const obtenerPunto = (id) => {
-		axios.get('http://localhost:3001/api/punto/' + id)
+		axios.get(process.env.SERVIDOR + '/punto/' + id)
 			.then(res => {
 				setAsunto(res.data.asunto)
 			})
@@ -51,7 +51,7 @@ export default function actas_asambleas() {
 	// 		rut: asistencia.rut,
 	// 		generacion: asistencia.generacion,
 	// 	}
-	// 	axios.post('http://localhost:3001/api/asistencia/' + id, data)
+	// axios.post(process.env.SERVIDOR + '/asistencia/' + id, data)
 	// 		.then(res => {
 	// 			console.log(res)
 	// 		}
@@ -84,13 +84,12 @@ export default function actas_asambleas() {
 			rut: "20.259.152-3",
 			generacion: 2018,
 		}
-	]
-
+  }
 	const modificarPuntos = (id) => {
 		const data = {
 			descripcion: descripcion
 		}
-		axios.put('http://localhost:3001/api/punto/update/' + id, data)
+		axios.put(process.env.SERVIDOR + '/acta/update' / +id, data)
 			.then(res => {
 				console.log("se modificaron los puntos")
 			})
@@ -104,7 +103,7 @@ export default function actas_asambleas() {
 			puntos: punto.puntos,
 			asistencia: asistenciaPrueba
 		}
-		await axios.post('http://localhost:3001/api/acta', data)
+		await axios.post(process.env.SERVIDOR + '/acta', data)
 			.then(res => {
 				modificarAsamblea(asamblea, res.data.acta._id)
 			})
@@ -117,7 +116,7 @@ export default function actas_asambleas() {
 		const data = {
 			acta: acta,
 		}
-		axios.put('http://localhost:3001/api/asamblea/update/' + id, data)
+		axios.put(process.env.SERVIDOR + '/asamblea/update/' + id, data)
 			.then(res => {
 				console.log("Se modifico la asamblea")
 			})

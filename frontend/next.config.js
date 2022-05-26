@@ -2,5 +2,11 @@
 const nextConfig = {
   reactStrictMode: true,
 }
-
-module.exports = nextConfig
+module.exports = {
+  env: {
+    SERVIDOR: process.env.SERVIDOR,
+    SERVIDOR2: process.env.SERVIDOR2,
+    PORT: process.env.PORT,
+  },
+  nextConfig
+};
