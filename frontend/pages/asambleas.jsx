@@ -29,7 +29,7 @@ export default function asambleas() {
 
 	const getAsambleasTerminadas = async () => {
 		try {
-			const response = await axios.get('http://localhost:3001/api/asambleas/terminadas');
+			const response = await axios.get(process.env.servidor + '/asambleas/terminadas');
 			if (response.status === 200) {
 				setAsambleasTerminadas(response.data);
 			}
@@ -40,7 +40,7 @@ export default function asambleas() {
 
 	const getAsambleasPorRealizar = async () => {
 		try {
-			const response = await axios.get('http://localhost:3001/api/asambleas/porRealizar');
+			const response = await axios.get(process.env.servidor + '/asambleas/porRealizar');
 			if (response.status === 200) {
 				setAsambleasPorRealizar(response.data);
 			}
@@ -51,39 +51,39 @@ export default function asambleas() {
 
 	return (
 		<>
-			<Navbar/>
+			<Navbar />
 			<div className={styles.fondo}>
-			<div className={styles.contenedor}>
-				<div className={styles.contenedorSectorIzquierdo}>
-					<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
-					<div className={styles.filtros}>
-						<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
-						<div className={styles.ContainerFiltro}>
-							<Filtro tipo='normal' />
-							<Filtro tipo='normal' />
-							<Filtro tipo='normal' />
-							<Filtro tipo='fecha' />
-							<Filtro tipo='fecha' />
+				<div className={styles.contenedor}>
+					<div className={styles.contenedorSectorIzquierdo}>
+						<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
+						<div className={styles.filtros}>
+							<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
+							<div className={styles.ContainerFiltro}>
+								<Filtro tipo='normal' />
+								<Filtro tipo='normal' />
+								<Filtro tipo='normal' />
+								<Filtro tipo='fecha' />
+								<Filtro tipo='fecha' />
+							</div>
 						</div>
 					</div>
-				</div>
-				<div className={styles.contenedorSectorDerecho}>
-					{asambleasTerminadas ? (
+					<div className={styles.contenedorSectorDerecho}>
+						{asambleasTerminadas ? (
+							<div className={styles.listaCards}>
+								{asambleasPorRealizar.map((asamblea) => {
+									return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
+								})}
+							</div>
+						) : (<h1>No hay asambleas por realizar</h1>)}
 						<div className={styles.listaCards}>
-							{asambleasPorRealizar.map((asamblea) => {
+							{asambleasTerminadas.map((asamblea) => {
 								return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
 							})}
 						</div>
-					) : (<h1>No hay asambleas por realizar</h1>)}
-					<div className={styles.listaCards}>
-						{asambleasTerminadas.map((asamblea) => {
-							return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
-						})}
 					</div>
 				</div>
 			</div>
-		</div>
 		</>
-		
+
 	)
 }
