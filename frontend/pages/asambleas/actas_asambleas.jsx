@@ -5,21 +5,30 @@ import Navbar from '../../components/navbar/Navbar'
 import { FaPaperclip } from 'react-icons/fa'
 import { FiSend } from 'react-icons/fi'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
-export default function actas_asambleas() {
-
+export default function actas_asambleas({ idAsamblea }) {
+	idAsamblea = '62887cbb6f9cba4180f42c19';
 	const [punto, setPunto] = useState([])
 	// const [asistencia, setAsistencia] = useState([])
 	const [asunto, setAsunto] = useState()
 	const [descripcion, setDescripcion] = useState('')
+	const [idActa, setIdActa] = useState('')
+	const router = useRouter()
 	const [asamblea, setAsamblea] = useState()
-
 
 	const handleChangeDescripcion = (e) => {
 		setDescripcion(e.target.value)
 	}
 
+	const isLogged = () => {
+		if (localStorage.getItem('token') === null) {
+			router.push('/')
+		}
+	}
+
 	useEffect(() => {
+		isLogged()
 		const idAsamblea = localStorage.getItem('id_asamblea')
 		const obtenerPuntos = async (id) => {
 			const response = await axios.get(process.env.SERVIDOR + '/asamblea/' + id)
@@ -97,8 +106,14 @@ export default function actas_asambleas() {
 				console.log("error al modificar los puntos")
 			})
 	}
+	"{"
 
-	const crearActa = async () => {
+	const crearActa = async (puntos, asistencia) => {
+		let asistencia2 = asistencia.map(asistencia => {
+			return asistencia._id
+		})
+		console.log("puntos dentro de crearActa: " + puntos)
+		console.log("asistencia dentro de crearActa: " + asistencia2)
 		const data = {
 			puntos: punto.puntos,
 			asistencia: asistenciaPrueba
@@ -112,10 +127,12 @@ export default function actas_asambleas() {
 			})
 	}
 
+
 	const modificarAsamblea = (id, acta) => {
 		const data = {
-			acta: acta,
+			acta: id,
 		}
+
 		axios.put(process.env.SERVIDOR + '/asamblea/update/' + id, data)
 			.then(res => {
 				console.log("Se modifico la asamblea")
