@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../../styles/actas_asambleas.module.css'
 import Textarea from '../../components/textarea/Textarea'
+import Navbar from '../../components/navbar/Navbar'
 import { FaPaperclip } from 'react-icons/fa'
 import { FiSend } from 'react-icons/fi'
 import axios from 'axios'
@@ -9,12 +10,12 @@ import { useRouter } from 'next/router'
 export default function actas_asambleas({ idAsamblea }) {
 	idAsamblea = '62887cbb6f9cba4180f42c19';
 	const [punto, setPunto] = useState([])
-	const [asistencia, setAsistencia] = useState([])
-	const [acta, setActa] = useState()
+	// const [asistencia, setAsistencia] = useState([])
 	const [asunto, setAsunto] = useState()
 	const [descripcion, setDescripcion] = useState('')
 	const [idActa, setIdActa] = useState('')
 	const router = useRouter()
+	const [asamblea, setAsamblea] = useState()
 
 	const handleChangeDescripcion = (e) => {
 		setDescripcion(e.target.value)
@@ -28,6 +29,7 @@ export default function actas_asambleas({ idAsamblea }) {
 
 	useEffect(() => {
 		isLogged()
+		const idAsamblea = localStorage.getItem('id_asamblea')
 		const obtenerPuntos = async (id) => {
 			const response = await axios.get('http://localhost:3001/api/asamblea/' + id)
 			setPunto(response.data)
@@ -36,50 +38,61 @@ export default function actas_asambleas({ idAsamblea }) {
 				obtenerPunto(punto)
 			})
 		}
-		obtenerPuntos('62887cbb6f9cba4180f42c19')
+		setAsamblea(idAsamblea)
+		obtenerPuntos(idAsamblea)
 	}, []);
+
 
 	const obtenerPunto = (id) => {
 		axios.get('http://localhost:3001/api/punto/' + id)
 			.then(res => {
-				console.log(res.data.asunto)
 				setAsunto(res.data.asunto)
+			})
+			.catch(err => {
+				console.log("error al obtener un solo punto")
 			})
 	}
 
+	// const crearAsistencia = (id) => {
+	// 	const data = {
+	// 		nombre: asistencia.nombre,
+	// 		apellido: asistencia.apellido,
+	// 		rut: asistencia.rut,
+	// 		generacion: asistencia.generacion,
+	// 	}
+	// 	axios.post('http://localhost:3001/api/asistencia/' + id, data)
+	// 		.then(res => {
+	// 			console.log(res)
+	// 		}
+	// 		)
+	// 		.catch(err => {
+	// 			console.log(err)
+	// 		}
+	// 		)
+	// }
 
-	const crearAsistencia = (id) => {
-		const data = {
-			nombre: asistencia.nombre,
-			apellido: asistencia.apellido,
-			rut: asistencia.rut,
-			generacion: asistencia.generacion,
+	const asistenciaPrueba = [
+		{
+			_id: "6287375e1d98212c343c288c",
+			nombre: "Ignacio",
+			apellido: "Gonzalez",
+			rut: "15.200.947-k",
+			generacion: 2019,
+		},
+		{
+			_id: "62873ba908f53f066cfdc23c",
+			nombre: "Francisco",
+			apellido: "Ojeda",
+			rut: "19.533.298-3",
+			generacion: 2017,
+		},
+		{
+			_id: "6289bcfdc5eaee5de4600531",
+			nombre: "Pablo",
+			apellido: "Montoya",
+			rut: "20.259.152-3",
+			generacion: 2018,
 		}
-		axios.post('http://localhost:3001/api/asistencia/' + id, data)
-			.then(res => {
-				console.log(res)
-			}
-			)
-			.catch(err => {
-				console.log(err)
-			}
-			)
-	}
-
-	const asistenciaPrueba = [{
-		_id: '6289bcfdc5eaee5de4600531',
-		nombre: 'Juan',
-		apellido: 'Perez',
-		rut: '12345678-9',
-		generacion: 2020,
-	},
-	{
-		_id: '62873ba908f53f066cfdc23c',
-		nombre: 'Carlos',
-		apellido: 'Pavez',
-		rut: '12345678-9',
-		generacion: 2019,
-	},
 	]
 
 	const modificarPuntos = (id) => {
@@ -88,10 +101,10 @@ export default function actas_asambleas({ idAsamblea }) {
 		}
 		axios.put('http://localhost:3001/api/punto/update/' + id, data)
 			.then(res => {
-				console.log(res)
+				console.log("se modificaron los puntos")
 			})
 			.catch(err => {
-				console.log(err)
+				console.log("error al modificar los puntos")
 			})
 	}
 	"{"
@@ -103,29 +116,29 @@ export default function actas_asambleas({ idAsamblea }) {
 		console.log("puntos dentro de crearActa: " + puntos)
 		console.log("asistencia dentro de crearActa: " + asistencia2)
 		const data = {
-			puntos: puntos,
-			asistencia: asistencia2
+			puntos: punto.puntos,
+			asistencia: asistenciaPrueba
 		}
 		await axios.post('http://localhost:3001/api/acta', data)
 			.then(res => {
-				console.log("acta: " + res.data.acta._id)
-				modificarAsamblea(res.data.acta._id)
+				modificarAsamblea(asamblea, res.data.acta._id)
 			})
 			.catch(err => {
-				console.log(err)
+				console.log("error al crear acta")
 			})
 	}
 
-	const modificarAsamblea = (id) => {
+
+	const modificarAsamblea = (id, acta) => {
 		const data = {
 			acta: id,
 		}
 		axios.put('http://localhost:3001/api/asamblea/update/' + idAsamblea, data)
 			.then(res => {
-				console.log(res.data)
+				console.log("Se modifico la asamblea")
 			})
 			.catch(err => {
-				console.log(err)
+				console.log("error al modificar la asamblea")
 			})
 	}
 
@@ -136,12 +149,11 @@ export default function actas_asambleas({ idAsamblea }) {
 			modificarPuntos(punto)
 		})
 		crearActa(puntos, asistenciaPrueba)
-		// console.log("envio de esta acta: " + acta.data._id)
-		// aca se hace el envio al backend
 	}
 
 	return (
 		<>
+			<Navbar />
 			<div className={styles.fondo}>
 				<div className={styles.contenedor}>
 					<div className={styles.contenedorSuperior}>
@@ -155,20 +167,19 @@ export default function actas_asambleas({ idAsamblea }) {
 					<div className={styles.contenedorFormulario}>
 						<form className={styles.Form} onSubmit={enviarActa}>
 							<div className={styles.contenedorInput}>
-								<p>Título del acta:</p>
+								<p className={styles.textTitulo}>Título del acta:</p>
 								<input type="text"
+									className={styles.Input}
 									placeholder='Ingrese título del acta'
 									name="titulo"
 								/>
 							</div>
-
 							<div className={styles.contenedorTextArea}>
 								{/* {
-									punto.puntos.map(punto => (
-										<Textarea punto={asunto} onchange={handleChangeDescripcion} />
-									))} */}
+										punto.puntos.map(punto => (
+											<Textarea punto={asunto} onchange={handleChangeDescripcion} />
+										))} */}
 							</div>
-
 							<button type="submit" className={styles.boton}>Enviar <FiSend className={styles.iconoSend} /> </button>
 						</form>
 					</div>

@@ -3,6 +3,7 @@ import styles from '../styles/asambleas.module.css'
 import Card from './../components/card_asambleas/Card'
 import axios from 'axios'
 import Filtro from './../components/filtro/Filtro'
+import Navbar from '../components/navbar/Navbar'
 import { FaPlus } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 
@@ -21,6 +22,7 @@ export default function asambleas() {
 	}, []);
 
 	const isLogged = () => {
+		localStorage.removeItem('id_asamblea')
 		if (localStorage.getItem('token') === null) {
 			router.push('/')
 		}
@@ -49,37 +51,40 @@ export default function asambleas() {
 	}
 
 	return (
-		<div className={styles.fondo}>
-			<div className={styles.contenedor}>
-				<div className={styles.contenedorSectorIzquierdo}>
-					<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
-					<div className={styles.filtros}>
-						<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
-						<div className={styles.ContainerFiltro}>
-
-							<Filtro tipo='normal' />
-							<Filtro tipo='normal' />
-							<Filtro tipo='normal' />
-							<Filtro tipo='fecha' />
-							<Filtro tipo='fecha' />
+		<>
+			<Navbar />
+			<div className={styles.fondo}>
+				<div className={styles.contenedor}>
+					<div className={styles.contenedorSectorIzquierdo}>
+						<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
+						<div className={styles.filtros}>
+							<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
+							<div className={styles.ContainerFiltro}>
+								<Filtro tipo='normal' />
+								<Filtro tipo='normal' />
+								<Filtro tipo='normal' />
+								<Filtro tipo='fecha' />
+								<Filtro tipo='fecha' />
+							</div>
 						</div>
 					</div>
-				</div>
-				<div className={styles.contenedorSectorDerecho}>
-					{asambleasTerminadas ? (
+					<div className={styles.contenedorSectorDerecho}>
+						{asambleasTerminadas ? (
+							<div className={styles.listaCards}>
+								{asambleasPorRealizar.map((asamblea) => {
+									return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
+								})}
+							</div>
+						) : (<h1>No hay asambleas por realizar</h1>)}
 						<div className={styles.listaCards}>
-							{asambleasPorRealizar.map((asamblea) => {
+							{asambleasTerminadas.map((asamblea) => {
 								return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
 							})}
 						</div>
-					) : (<h1>No hay asambleas por realizar</h1>)}
-					<div className={styles.listaCards}>
-						{asambleasTerminadas.map((asamblea) => {
-							return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
-						})}
 					</div>
 				</div>
 			</div>
-		</div>
+		</>
+
 	)
 }
