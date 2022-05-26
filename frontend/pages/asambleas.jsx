@@ -22,6 +22,7 @@ export default function asambleas() {
 	}, []);
 
 	const isLogged = () => {
+		localStorage.removeItem('id_asamblea')
 		if (localStorage.getItem('token') === null) {
 			router.push('/')
 		}
@@ -51,39 +52,39 @@ export default function asambleas() {
 
 	return (
 		<>
-			<Navbar/>
+			<Navbar />
 			<div className={styles.fondo}>
-			<div className={styles.contenedor}>
-				<div className={styles.contenedorSectorIzquierdo}>
-					<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
-					<div className={styles.filtros}>
-						<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
-						<div className={styles.ContainerFiltro}>
-							<Filtro tipo='normal' />
-							<Filtro tipo='normal' />
-							<Filtro tipo='normal' />
-							<Filtro tipo='fecha' />
-							<Filtro tipo='fecha' />
+				<div className={styles.contenedor}>
+					<div className={styles.contenedorSectorIzquierdo}>
+						<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
+						<div className={styles.filtros}>
+							<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
+							<div className={styles.ContainerFiltro}>
+								<Filtro tipo='normal' />
+								<Filtro tipo='normal' />
+								<Filtro tipo='normal' />
+								<Filtro tipo='fecha' />
+								<Filtro tipo='fecha' />
+							</div>
 						</div>
 					</div>
-				</div>
-				<div className={styles.contenedorSectorDerecho}>
-					{asambleasTerminadas ? (
+					<div className={styles.contenedorSectorDerecho}>
+						{asambleasTerminadas ? (
+							<div className={styles.listaCards}>
+								{asambleasPorRealizar.map((asamblea) => {
+									return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
+								})}
+							</div>
+						) : (<h1>No hay asambleas por realizar</h1>)}
 						<div className={styles.listaCards}>
-							{asambleasPorRealizar.map((asamblea) => {
+							{asambleasTerminadas.map((asamblea) => {
 								return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
 							})}
 						</div>
-					) : (<h1>No hay asambleas por realizar</h1>)}
-					<div className={styles.listaCards}>
-						{asambleasTerminadas.map((asamblea) => {
-							return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
-						})}
 					</div>
 				</div>
 			</div>
-		</div>
 		</>
-		
+
 	)
 }
