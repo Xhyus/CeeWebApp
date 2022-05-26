@@ -9,8 +9,7 @@ import axios from 'axios'
 export default function actas_asambleas() {
 
 	const [punto, setPunto] = useState([])
-	const [asistencia, setAsistencia] = useState([])
-	const [acta, setActa] = useState()
+	// const [asistencia, setAsistencia] = useState([])
 	const [asunto, setAsunto] = useState()
 	const [descripcion, setDescripcion] = useState('')
 	const [asamblea, setAsamblea] = useState()
@@ -41,43 +40,50 @@ export default function actas_asambleas() {
 				setAsunto(res.data.asunto)
 			})
 			.catch(err => {
-				throw err
+				console.log("error al obtener un solo punto")
 			})
 	}
 
+	// const crearAsistencia = (id) => {
+	// 	const data = {
+	// 		nombre: asistencia.nombre,
+	// 		apellido: asistencia.apellido,
+	// 		rut: asistencia.rut,
+	// 		generacion: asistencia.generacion,
+	// 	}
+	// 	axios.post('http://localhost:3001/api/asistencia/' + id, data)
+	// 		.then(res => {
+	// 			console.log(res)
+	// 		}
+	// 		)
+	// 		.catch(err => {
+	// 			console.log(err)
+	// 		}
+	// 		)
+	// }
 
-	const crearAsistencia = (id) => {
-		const data = {
-			nombre: asistencia.nombre,
-			apellido: asistencia.apellido,
-			rut: asistencia.rut,
-			generacion: asistencia.generacion,
+	const asistenciaPrueba = [
+		{
+			_id: "6287375e1d98212c343c288c",
+			nombre: "Ignacio",
+			apellido: "Gonzalez",
+			rut: "15.200.947-k",
+			generacion: 2019,
+		},
+		{
+			_id: "62873ba908f53f066cfdc23c",
+			nombre: "Francisco",
+			apellido: "Ojeda",
+			rut: "19.533.298-3",
+			generacion: 2017,
+		},
+		{
+			_id: "6289bcfdc5eaee5de4600531",
+			nombre: "Pablo",
+			apellido: "Montoya",
+			rut: "20.259.152-3",
+			generacion: 2018,
 		}
-		axios.post('http://localhost:3001/api/asistencia/' + id, data)
-			.then(res => {
-				console.log(res)
-			}
-			)
-			.catch(err => {
-				console.log(err)
-			}
-			)
-	}
-
-	const asistenciaPrueba = [{
-		_id: 'AAAAAAAAAAAAAAAAAAAAAAAA',
-		nombre: 'Juan',
-		apellido: 'Perez',
-		rut: '12345678-9',
-		generacion: 2020,
-	},
-	{
-		_id: 'BBBBBBBBBBBBBBBBBBBBBB',
-		nombre: 'Carlos',
-		apellido: 'Pavez',
-		rut: '12345678-9',
-		generacion: 2019,
-	},
 	]
 
 	const modificarPuntos = (id) => {
@@ -96,41 +102,37 @@ export default function actas_asambleas() {
 	const crearActa = async () => {
 		const data = {
 			puntos: punto.puntos,
-			asistencia: asistencia.asistencia,
+			asistencia: asistenciaPrueba
 		}
 		await axios.post('http://localhost:3001/api/acta', data)
 			.then(res => {
-				console.log("acta: " + res.data.acta._id)
-				setActa(res.data.acta._id)
+				modificarAsamblea(asamblea, res.data.acta._id)
 			})
 			.catch(err => {
-				console.log(err)
+				console.log("error al crear acta")
 			})
 	}
 
-	const modificarAsamblea = (id) => {
+	const modificarAsamblea = (id, acta) => {
 		const data = {
 			acta: acta,
 		}
 		axios.put('http://localhost:3001/api/asamblea/update/' + id, data)
 			.then(res => {
-				console.log(res)
+				console.log("Se modifico la asamblea")
 			})
 			.catch(err => {
-				console.log(err)
+				console.log("error al modificar la asamblea")
 			})
 	}
 
 	const enviarActa = (event) => {
 		event.preventDefault()
 		const puntos = [...punto.puntos];
-		console.log(punto)
 		puntos.map(punto => {
-			console.log("punto: " + punto)
 			modificarPuntos(punto)
 		})
 		crearActa(puntos, asistenciaPrueba)
-		modificarAsamblea(asamblea)
 	}
 
 	return (
