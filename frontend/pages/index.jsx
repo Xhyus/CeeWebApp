@@ -37,7 +37,7 @@ export default function Login() {
 			email: email,
 			password: password
 		}
-		axios.post('http://localhost:3001/api/usuario/verificacion', data)
+		axios.post('http://146.83.198.35:1130/api/usuario/verificacion', data)
 			.then(res => {
 				if (res.status == 200) {
 					console.log("La cuenta esta activa")
