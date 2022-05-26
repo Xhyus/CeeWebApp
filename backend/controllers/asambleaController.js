@@ -1,4 +1,5 @@
 const asamblea = require('../models/asamblea.js')
+const cee = require('../models/cee.js')
 
 const crearAsamblea = (req, res) => {
     const { asunto, fecha, hora, tipoAsamblea, puntos, acta } = req.body;
@@ -21,6 +22,19 @@ const listarAsambleas = (req, res) => {
     asamblea.find().populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
         if (err) {
             return res.status(400).send({ message: "Error al obtener" })
+        }
+        res.status(200).send(asamblea)
+    })
+}
+
+const listarAsambleasTerminadasId = (req, res) => {
+    let id = req.params.id;
+    asamblea.find({ id: id, fecha: { $lt: new Date() } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
+        if (err) {
+            return res.status(400).send({ message: "Error al obtener" })
+        }
+        if (!asamblea) {
+            return res.status(404).send({ message: "No existen asambleas terminadas" })
         }
         res.status(200).send(asamblea)
     })
@@ -89,22 +103,19 @@ const buscarAsamblea = (req, res) => {
     })
 }
 
-const filtrarAsambleaPorCarrera = (req, res) => {
-    let id = req.params.id;
-    asamblea.find({ acta: { $elemMatch: { carrera: id } } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
-        if (err) {
-            return res.status(400).send({ message: "Error al buscar" })
-        }
-        if (!asamblea) {
-            return res.status(404).send({ message: "No existe" })
-        }
-        res.status(200).send(asamblea)
+const filtrarAsambleasTerminadas = (req, res) => {
+    cee.find({ carrera: req.headers.carrera }).exec((err, cee) => {
+        asamblea.find({ fecha: { $lt: new Date() }, id: { $elemMatch: { carrera: cee._id } } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
+            if (err) {
+                return res.status(400).send({ message: "Error al buscar" })
+            }
+            if (!asamblea) {
+                return res.status(404).send({ message: "No existe" })
+            }
+            res.status(200).send(asamblea)
+        })
     })
 }
-
-// const filtrarAsambleasTerminadas = (req, res) => {
-
-// }
 
 
 
@@ -115,5 +126,6 @@ module.exports = {
     eliminarAsamblea,
     buscarAsamblea,
     listarAsambleasTerminadas,
-    listarAsambleasPorRealizar
+    listarAsambleasPorRealizar,
+    listarAsambleasTerminadasId
 }

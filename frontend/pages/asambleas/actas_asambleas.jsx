@@ -84,7 +84,7 @@ export default function actas_asambleas() {
 			rut: "20.259.152-3",
 			generacion: 2018,
 		}
-  }
+	]
 	const modificarPuntos = (id) => {
 		const data = {
 			descripcion: descripcion
