@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../styles/login.module.css'
-import Button from '../components/button/button'
+import Button from '../components/button/Button'
 import { FaLock, FaUser } from "react-icons/fa"
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'
+
 
 export default function Login() {
 	const [email, setEmail] = useState('')
@@ -19,16 +20,16 @@ export default function Login() {
 
 	const handleInputChangeCorreo = (event) => {
 		setEmail(event.target.value)
-		console.log(email)
+		// console.log(email)
 	}
 
 	const handleInputChangePassword = (event) => {
 		setPassword(event.target.value)
-		console.log(password)
+		// console.log(password)
 	}
 
 	const enviarDatos = () => {
-		console.log(`Enviando datos Correo:${email} y Password:${password}`)
+		// console.log(`Enviando datos Correo:${email} y Password:${password}`)
 		validarLogin();
 	}
 
@@ -37,7 +38,7 @@ export default function Login() {
 			email: email,
 			password: password
 		}
-		axios.post('http://localhost:3001/api/usuario/verificacion', data)
+		axios.post(process.env.SERVIDOR + '/usuario/verificacion', data)
 			.then(res => {
 				if (res.status == 200) {
 					console.log("La cuenta esta activa")
@@ -67,7 +68,7 @@ export default function Login() {
 				}
 			})
 		const validarPassword = () => {
-			axios.post('http://localhost:3001/api/usuario/validarPass', {
+			axios.post(process.env.SERVIDOR + '/usuario/validarPass', {
 				email: email,
 				password: password
 			}).then(res => {
@@ -80,28 +81,27 @@ export default function Login() {
 	}
 
 	return (
-		<div id={styles.fondo}>
-			<div className={styles.container}>
-				<div className={styles.logo_u}>
-					<img src="/logo-ubb-blanco.png" alt="ubb-logo" />
+		<div className={styles.fondo}>
+			<div className={styles.contenedor}>
+				<div className={styles.contenedorLogo_u}>
+					<img className={styles.logo_u} src="/logo-ubb-blanco.png" alt="ubb-logo" />
 				</div>
-				<div className={styles.login}>
-					<div className={styles.form_login}>
-						<nav className={styles.titulo}>
-							<h1>Bienvenido a</h1>
-							<h1>CEE WEB</h1>
-							<h1>FACE</h1>
+				<div className={styles.contenedorLogin}>
+					<div className={styles.formLogin}>
+						<nav className={styles.contenedorTitulo}>
+							<h1 className={styles.titulo}>Bienvenido a</h1>
+							<h1 className={styles.titulo}>CEE WEB</h1>
+							<h1 className={styles.titulo}>FACE</h1>
 						</nav>
-						<Button icon_button="Google" text="Continuar con Google" />
+						{/* <Button icon_button="Google" text="Continuar con Google" /> */}
 						<img src="/separador.svg" alt="ubb-logo" className={styles.separador} />
-
-						<nav className={styles.icons}>
+						<nav className={styles.contenedorInput}>
 							<FaUser className={styles.iconInput} />
-							<input type="email" autoComplete="new-password" placeholder="Ingrese su email" onChange={handleInputChangeCorreo} className={styles.propiedades_Input} />
+							<input type="email" autoComplete="new-password" placeholder="Ingrese su email" onChange={handleInputChangeCorreo} className={styles.propiedadesInput} />
 						</nav>
-						<nav className={styles.icons}>
+						<nav className={styles.contenedorInput}>
 							<FaLock className={styles.iconInput} />
-							<input type="password" autoComplete="new-password" placeholder="Ingrese su contraseña" onChange={handleInputChangePassword} className={styles.propiedades_Input} />
+							<input type="password" autoComplete="new-password" placeholder="Ingrese su contraseña" onChange={handleInputChangePassword} className={styles.propiedadesInput} />
 						</nav>
 						<Button icon_button="Lock" text="Ingresar" enviar={enviarDatos} />
 						{/*

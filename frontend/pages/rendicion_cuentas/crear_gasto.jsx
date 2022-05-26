@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import styles from "./rendicion_cuentas.module.css";
+import styles from "../../styles/rendicion_cuentas.module.css";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import { useEffect } from "react/cjs/react.production.min";
@@ -73,7 +73,7 @@ export default function crear_gasto() {
         console.log("--------------------------------------");
 
         //? Crear gasto.
-        // axios.post('http://localhost:3001/api/rendicion/', datosVerificados)
+        // axios.post(process.env.SERVIDOR +'/rendicion/', datosVerificados)
         // .then((respuesta) => {
         //     console.log("Solicitud creación Gasto: " + respuesta);
         // })

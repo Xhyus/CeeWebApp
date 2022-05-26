@@ -12,8 +12,14 @@ const AsistenciaRoutes = require('./routes/asistenciaRoutes')
 const ActaRoutes = require('./routes/actaRoutes')
 const CEERoutes = require('./routes/ceeRoutes')
 const app = express()
-app.use(express.json())
+app.use(function (req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+	res.header("Access-Control-Allow-Headers", "x-access-token, Origin, X-Requested-With, Content-Type, Accept, XMLHttpRequest");
+	next();
+})
 app.use(cors())
+app.use(express.json())
 app.options('*', cors())
 app.use('/api', PuntoRoutes)
 app.use('/api', RendicionRoutes)
