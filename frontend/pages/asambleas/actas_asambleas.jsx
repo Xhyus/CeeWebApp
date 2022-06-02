@@ -106,6 +106,7 @@ export default function actas_asambleas({ idAsamblea }) {
 				console.log("error al modificar los puntos")
 			})
 	}
+	"{"
 
 	const crearActa = async (puntos, asistencia) => {
 		let asistencia2 = asistencia.map(asistencia => {
