@@ -22,6 +22,7 @@ export default function asambleas() {
 	}, []);
 
 	const isLogged = () => {
+		localStorage.removeItem('id_asamblea')
 		if (localStorage.getItem('token') === null) {
 			router.push('/')
 		}
@@ -29,7 +30,7 @@ export default function asambleas() {
 
 	const getAsambleasTerminadas = async () => {
 		try {
-			const response = await axios.get(process.env.SERVIDOR + '/asambleas/terminadas');
+			const response = await axios.get('http://localhost:3001/api/asambleas/terminadas');
 			if (response.status === 200) {
 				setAsambleasTerminadas(response.data);
 			}
@@ -40,7 +41,7 @@ export default function asambleas() {
 
 	const getAsambleasPorRealizar = async () => {
 		try {
-			const response = await axios.get(process.env.SERVIDOR + '/asambleas/porRealizar');
+			const response = await axios.get('http://localhost:3001/api/asambleas/porRealizar');
 			if (response.status === 200) {
 				setAsambleasPorRealizar(response.data);
 			}

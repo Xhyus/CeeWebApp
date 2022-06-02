@@ -16,7 +16,6 @@ export default function Login() {
 
 	useEffect(() => {
 		localStorage.removeItem('token')
-		console.log(process.env.SERVIDOR)
 	}, []);
 
 	const handleInputChangeCorreo = (event) => {
