@@ -106,7 +106,6 @@ export default function actas_asambleas({ idAsamblea }) {
 				console.log("error al modificar los puntos")
 			})
 	}
-	"{"
 
 	const crearActa = async (puntos, asistencia) => {
 		let asistencia2 = asistencia.map(asistencia => {
@@ -121,6 +120,7 @@ export default function actas_asambleas({ idAsamblea }) {
 		await axios.post(process.env.SERVIDOR + '/acta', data)
 			.then(res => {
 				modificarAsamblea(asamblea, res.data.acta._id)
+				console.log("Acta creada con exito")
 			})
 			.catch(err => {
 				console.log("error al crear acta")
