@@ -5,21 +5,31 @@ import Navbar from '../../components/navbar/Navbar'
 import { FaPaperclip } from 'react-icons/fa'
 import { FiSend } from 'react-icons/fi'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
-export default function actas_asambleas() {
-
+export default function actas_asambleas({ idAsamblea }) {
+	idAsamblea = '62887cbb6f9cba4180f42c19';
 	const [punto, setPunto] = useState([])
-	const [asistencia, setAsistencia] = useState([])
-	const [acta, setActa] = useState()
+	// const [asistencia, setAsistencia] = useState([])
 	const [asunto, setAsunto] = useState()
 	const [descripcion, setDescripcion] = useState('')
-
+	const [idActa, setIdActa] = useState('')
+	const router = useRouter()
+	const [asamblea, setAsamblea] = useState()
 
 	const handleChangeDescripcion = (e) => {
 		setDescripcion(e.target.value)
 	}
 
+	const isLogged = () => {
+		if (localStorage.getItem('token') === null) {
+			router.push('/')
+		}
+	}
+
 	useEffect(() => {
+		isLogged()
+		const idAsamblea = localStorage.getItem('id_asamblea')
 		const obtenerPuntos = async (id) => {
 			const response = await axios.get(process.env.SERVIDOR + '/asamblea/' + id)
 			setPunto(response.data)
@@ -28,97 +38,116 @@ export default function actas_asambleas() {
 				obtenerPunto(punto)
 			})
 		}
-		obtenerPuntos('62887cbb6f9cba4180f42c19')
+		setAsamblea(idAsamblea)
+		obtenerPuntos(idAsamblea)
 	}, []);
+
 
 	const obtenerPunto = (id) => {
 		axios.get(process.env.SERVIDOR + '/punto/' + id)
 			.then(res => {
-				console.log(res.data.asunto)
 				setAsunto(res.data.asunto)
+			})
+			.catch(err => {
+				console.log("error al obtener un solo punto")
 			})
 	}
 
+	// const crearAsistencia = (id) => {
+	// 	const data = {
+	// 		nombre: asistencia.nombre,
+	// 		apellido: asistencia.apellido,
+	// 		rut: asistencia.rut,
+	// 		generacion: asistencia.generacion,
+	// 	}
+	// axios.post(process.env.SERVIDOR + '/asistencia/' + id, data)
+	// 		.then(res => {
+	// 			console.log(res)
+	// 		}
+	// 		)
+	// 		.catch(err => {
+	// 			console.log(err)
+	// 		}
+	// 		)
+	// }
 
-	const crearAsistencia = (id) => {
-		const data = {
-			nombre: asistencia.nombre,
-			apellido: asistencia.apellido,
-			rut: asistencia.rut,
-			generacion: asistencia.generacion,
+	const asistenciaPrueba = [
+		{
+			_id: "6287375e1d98212c343c288c",
+			nombre: "Ignacio",
+			apellido: "Gonzalez",
+			rut: "15.200.947-k",
+			generacion: 2019,
+		},
+		{
+			_id: "62873ba908f53f066cfdc23c",
+			nombre: "Francisco",
+			apellido: "Ojeda",
+			rut: "19.533.298-3",
+			generacion: 2017,
+		},
+		{
+			_id: "6289bcfdc5eaee5de4600531",
+			nombre: "Pablo",
+			apellido: "Montoya",
+			rut: "20.259.152-3",
+			generacion: 2018,
 		}
-		axios.post(process.env.SERVIDOR + '/asistencia/' + id, data)
-			.then(res => {
-				console.log(res)
-			}
-			)
-			.catch(err => {
-				console.log(err)
-			}
-			)
-	}
-
-	const asistenciaPrueba = [{
-		_id: 'AAAAAAAAAAAAAAAAAAAAAAAA',
-		nombre: 'Juan',
-		apellido: 'Perez',
-		rut: '12345678-9',
-		generacion: 2020,
-	},
-	{
-		_id: 'BBBBBBBBBBBBBBBBBBBBBB',
-		nombre: 'Carlos',
-		apellido: 'Pavez',
-		rut: '12345678-9',
-		generacion: 2019,
-	},
 	]
-
 	const modificarPuntos = (id) => {
 		const data = {
 			descripcion: descripcion
 		}
 		axios.put(process.env.SERVIDOR + '/acta/update' / +id, data)
 			.then(res => {
-				console.log(res)
+				console.log("se modificaron los puntos")
 			})
 			.catch(err => {
-				console.log(err)
+				console.log("error al modificar los puntos")
 			})
 	}
 
-	const crearActa = async () => {
+	const crearActa = async (puntos, asistencia) => {
+		let asistencia2 = asistencia.map(asistencia => {
+			return asistencia._id
+		})
+		console.log("puntos dentro de crearActa: " + puntos)
+		console.log("asistencia dentro de crearActa: " + asistencia2)
 		const data = {
 			puntos: punto.puntos,
-			asistencia: asistencia.asistencia,
+			asistencia: asistenciaPrueba
 		}
 		await axios.post(process.env.SERVIDOR + '/acta', data)
 			.then(res => {
-				console.log("acta: " + res.data.acta._id)
-				setActa(res.data.acta._id)
+				modificarAsamblea(asamblea, res.data.acta._id)
 			})
 			.catch(err => {
-				console.log(err)
+				console.log("error al crear acta")
 			})
 	}
 
-	const modificarAsamblea = () => {
+
+	const modificarAsamblea = (id, acta) => {
 		const data = {
-			acta: acta,
+			acta: id,
 		}
+
 		axios.put(process.env.SERVIDOR + '/asamblea/update/' + id, data)
 			.then(res => {
-				console.log(res)
+				console.log("Se modifico la asamblea")
 			})
 			.catch(err => {
-				console.log(err)
+				console.log("error al modificar la asamblea")
 			})
 	}
 
 	const enviarActa = (event) => {
-		event.preventDefault();
-		modificarPuntos()
-		// aca se hace el envio al backend
+		event.preventDefault()
+		const puntos = [...punto.puntos];
+		puntos.map(punto => {
+			modificarPuntos(punto)
+		})
+		crearActa(puntos, asistenciaPrueba)
 	}
 
 	return (

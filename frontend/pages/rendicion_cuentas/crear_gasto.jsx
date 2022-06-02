@@ -2,8 +2,23 @@ import axios from "axios";
 import React, { useState } from "react";
 import styles from "../../styles/rendicion_cuentas.module.css";
 import Swal from "sweetalert2";
+import { useRouter } from "next/router";
+import { useEffect } from "react/cjs/react.production.min";
 
 export default function crear_gasto() {
+
+    const router = useRouter()
+
+    useEffect(() => {
+        isLogged()
+    }, [])
+
+
+    const isLogged = () => {
+        if (localStorage.getItem('token') === null) {
+            router.push('/')
+        }
+    }
 
     //* .: DATOS DEL GASTO :. *//
     const [datosGasto, setDatosGasto] = useState({

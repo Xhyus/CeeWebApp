@@ -4,20 +4,28 @@ import Card_gasto from "../components/card_rendicion_cuentas/Card_gasto";
 import Filtro from "../components/filtro/Filtro";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
 import Navbar from "../components/navbar/Navbar";
 
 export default function rendicion_cuentas() {
 
 	const [listaRendiciones, setListaRendiciones] = useState([]);
+	const router = useRouter()
 
 	useEffect(() => {
-
+		isLogged()
 		console.log(".: Pantalla rendicion_cuentas :.");
 
 		// Tipo de getRendicion por defecto 'rendiciones'
 		(async () => getRendiciones("rendiciones"))();
 
 	}, []);
+
+	const isLogged = () => {
+		if (localStorage.getItem('token') === null) {
+			router.push('/')
+		}
+	}
 
 	//* .: LISTAR GASTOS :. *//
 
