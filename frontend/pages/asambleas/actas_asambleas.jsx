@@ -127,7 +127,6 @@ export default function actas_asambleas({ idAsamblea }) {
 			})
 	}
 
-
 	const modificarAsamblea = (id, acta) => {
 		const data = {
 			acta: id,
