@@ -176,7 +176,7 @@ export default function actas_asambleas({ idAsamblea }) {
 								{/* {
 										punto.puntos.map(punto => (
 											<Textarea punto={asunto} onchange={handleChangeDescripcion} />
-										))} */}
+									))} */}
 							</div>
 							<button type="submit" className={styles.boton}>Enviar <FiSend className={styles.iconoSend} /> </button>
 						</form>
