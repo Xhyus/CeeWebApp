@@ -2,16 +2,27 @@ import React, { useEffect, useState } from 'react'
 import styles from '../../styles/actas_asambleas.module.css'
 import Textarea from '../../components/textarea/Textarea'
 import Navbar from '../../components/navbar/Navbar'
+import Spinner from '../../components/spinner/Spinner'
 import { FaPaperclip } from 'react-icons/fa'
 import { FiSend } from 'react-icons/fi'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 
 export default function actas_asambleas({ idAsamblea }) {
-	idAsamblea = '62887cbb6f9cba4180f42c19';
+	
+	//? Hooks para Spinner.
+	const [cargandoInfo, setCargandoInfo] = useState(false);
+	const [cargandoPuntos, setCargandoPuntos] = useState(false);
+
+	const idAsambleaPRUEBA = '62887cab6f9cba4180f42c17';
+	// const idAsambleaPRUEBA = '62887cbb6f9cba4180f42c19';
+	// const idAsambleaPRUEBA = '6289c3fcc5eaee5de4600601';
+
+	//? Hooks para el formulario.
 	const [punto, setPunto] = useState([])
 	// const [asistencia, setAsistencia] = useState([])
-	const [asunto, setAsunto] = useState()
+	const [asunto, setAsunto] = useState([])
+	const listaAsuntos = [];
 	const [descripcion, setDescripcion] = useState('')
 	const [idActa, setIdActa] = useState('')
 	const router = useRouter()
@@ -28,29 +39,49 @@ export default function actas_asambleas({ idAsamblea }) {
 	}
 
 	useEffect(() => {
+		setCargandoInfo(true);
+
 		isLogged()
-		const idAsamblea = localStorage.getItem('id_asamblea')
+		// const idAsamblea = localStorage.getItem('id_asamblea')
+		
 		const obtenerPuntos = async (id) => {
+			setCargandoPuntos(true);
+
 			const response = await axios.get(process.env.SERVIDOR + '/asamblea/' + id)
-			setPunto(response.data)
 			const puntos = [...response.data.puntos]
+
 			puntos.map(punto => {
 				obtenerPunto(punto)
 			})
+
+			//console.log("Hook Punto: ", punto);
+			console.log("Array Asunto: ", listaAsuntos)
+			console.log("Hook Asunto: ", asunto)
+
+			setCargandoPuntos(false);
 		}
+
 		setAsamblea(idAsamblea)
-		obtenerPuntos(idAsamblea)
+		obtenerPuntos(idAsambleaPRUEBA)
+
+		setCargandoInfo(false);
 	}, []);
 
+	const obtenerPunto = async (id) => {
 
-	const obtenerPunto = (id) => {
-		axios.get(process.env.SERVIDOR + '/punto/' + id)
-			.then(res => {
-				setAsunto(res.data.asunto)
-			})
-			.catch(err => {
-				console.log("error al obtener un solo punto")
-			})
+		try {
+			const response = await axios.get(process.env.SERVIDOR + '/punto/' + id)
+			
+			listaAsuntos.push(response.data.asunto)
+			setAsunto(listaAsuntos);
+				
+			setPunto(response.data);
+			console.log("Hook Punto: ", punto);
+
+		} catch(error) {
+			console.log("error al obtener un solo punto")
+		}
+
 	}
 
 	// const crearAsistencia = (id) => {
@@ -94,6 +125,7 @@ export default function actas_asambleas({ idAsamblea }) {
 			generacion: 2018,
 		}
 	]
+
 	const modificarPuntos = (id) => {
 		const data = {
 			descripcion: descripcion
@@ -149,40 +181,52 @@ export default function actas_asambleas({ idAsamblea }) {
 		crearActa(puntos, asistenciaPrueba)
 	}
 
-	return (
-		<>
-			<Navbar />
-			<div className={styles.fondo}>
-				<div className={styles.contenedor}>
-					<div className={styles.contenedorSuperior}>
-						<div className={styles.contenedorTitulo}>
-							<h1>Titulo de la asamblea</h1>
-						</div>
-						<div className={styles.contenedorIcono}>
-							<FaPaperclip className={styles.iconoClip} />
-						</div>
-					</div>
-					<div className={styles.contenedorFormulario}>
-						<form className={styles.Form} onSubmit={enviarActa}>
-							<div className={styles.contenedorInput}>
-								<p className={styles.textTitulo}>Título del acta:</p>
-								<input type="text"
-									className={styles.Input}
-									placeholder='Ingrese título del acta'
-									name="titulo"
-								/>
+	if(cargandoInfo === true || cargandoPuntos === true) {
+		<Spinner/>
+	}
+	else {
+
+		return (
+			<>
+				<Navbar />
+				<div className={styles.fondo}>
+					<div className={styles.contenedor}>
+						<div className={styles.contenedorSuperior}>
+							<div className={styles.contenedorTitulo}>
+								<h1>Titulo de la asamblea</h1>
 							</div>
-							<div className={styles.contenedorTextArea}>
-								{/* {
-										punto.puntos.map(punto => (
-											<Textarea punto={asunto} onchange={handleChangeDescripcion} />
-									))} */}
+							<div className={styles.contenedorIcono}>
+								<FaPaperclip className={styles.iconoClip} />
 							</div>
-							<button type="submit" className={styles.boton}>Enviar <FiSend className={styles.iconoSend} /> </button>
-						</form>
+						</div>
+						<div className={styles.contenedorFormulario}>
+							<form className={styles.Form} onSubmit={enviarActa}>
+								<div className={styles.contenedorInput}>
+									<p className={styles.textTitulo}>Título del acta:</p>
+									<input type="text"
+										className={styles.Input}
+										placeholder='Ingrese título del acta'
+										name="titulo"
+									/>
+								</div>
+								<div className={styles.contenedorTextArea}>
+									{
+										// asunto.map((punto, index) => (
+										// 	<Textarea key={index} punto={punto} onchange={handleChangeDescripcion} />
+										// ))
+
+										asunto.map((punto, index) => (
+											<Textarea key={index} punto={punto} onchange={handleChangeDescripcion} />
+										))
+									}
+								</div>
+								<button type="submit" className={styles.boton}>Enviar <FiSend className={styles.iconoSend} /> </button>
+							</form>
+						</div>
 					</div>
 				</div>
-			</div>
-		</>
-	)
+			</>
+		)
+
+	}
 }
