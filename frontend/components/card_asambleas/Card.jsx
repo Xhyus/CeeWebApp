@@ -35,6 +35,10 @@ const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 		}
 	}
 
+	const verAsamblea = (id) => {
+		router.push(`/asambleas/${id}`)
+	}
+
 	const generarActa = (id) => {
 		localStorage.setItem('id_asamblea', id)
 		router.push('/asambleas/actas_asambleas')
@@ -58,7 +62,7 @@ const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 						<p className={`${styles.texto} ${styles.fecha}`}>{format.hora}</p>
 					</div>
 				</section>
-				<a className={styles.vermas} onClick={() => generarActa(id)}>Ver más</a>
+				<a className={styles.vermas} onClick={() => verAsamblea(id)}>Ver más</a>
 			</div>
 		</div>
 	)
