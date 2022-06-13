@@ -23,13 +23,15 @@ export default function actas_asambleas({ idAsamblea }) {
 	// const [asistencia, setAsistencia] = useState([])
 	const [asunto, setAsunto] = useState([])
 	const listaAsuntos = [];
-	const [descripcion, setDescripcion] = useState('')
+	const [descripcion, setDescripcion] = useState([])
 	const [idActa, setIdActa] = useState('')
 	const router = useRouter()
 	const [asamblea, setAsamblea] = useState()
 
-	const handleChangeDescripcion = (e) => {
-		setDescripcion(e.target.value)
+	const handleChangeDescripcion = (event) => {
+		setDescripcion(event.target.value)
+
+		console.log("Input modificado: ", event.target.name)
 	}
 
 	const isLogged = () => {
@@ -74,7 +76,6 @@ export default function actas_asambleas({ idAsamblea }) {
 			
 			listaAsuntos.push(response.data.asunto)
 			setAsunto(listaAsuntos);
-				
 			setPunto(response.data);
 			console.log("Hook Punto: ", punto);
 
@@ -211,12 +212,8 @@ export default function actas_asambleas({ idAsamblea }) {
 								</div>
 								<div className={styles.contenedorTextArea}>
 									{
-										// asunto.map((punto, index) => (
-										// 	<Textarea key={index} punto={punto} onchange={handleChangeDescripcion} />
-										// ))
-
 										asunto.map((punto, index) => (
-											<Textarea key={index} punto={punto} onchange={handleChangeDescripcion} />
+											<Textarea key={index} punto={punto} name={index} />
 										))
 									}
 								</div>
