@@ -18,52 +18,6 @@ const crearAsamblea = (req, res) => {
     })
 }
 
-const listarAsambleas = (req, res) => {
-    asamblea.find().populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
-        if (err) {
-            return res.status(400).send({ message: "Error al obtener" })
-        }
-        res.status(200).send(asamblea)
-    })
-}
-
-const listarAsambleasTerminadasId = (req, res) => {
-    let id = req.params.id;
-    asamblea.find({ id: id, fecha: { $lt: new Date() } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
-        if (err) {
-            return res.status(400).send({ message: "Error al obtener" })
-        }
-        if (!asamblea) {
-            return res.status(404).send({ message: "No existen asambleas terminadas" })
-        }
-        res.status(200).send(asamblea)
-    })
-}
-
-const listarAsambleasTerminadas = (req, res) => {
-    asamblea.find({ fecha: { $lt: new Date() } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
-        if (err) {
-            return res.status(400).send({ message: "Error al obtener" })
-        }
-        if (!asamblea) {
-            return res.status(404).send({ message: "No existen asambleas terminadas" })
-        }
-        res.status(200).send(asamblea)
-    })
-}
-
-const listarAsambleasPorRealizar = (req, res) => {
-    asamblea.find({ fecha: { $gte: new Date() } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
-        if (err) {
-            return res.status(400).send({ message: "Error al obtener" })
-        }
-        if (!asamblea) {
-            return res.status(404).send({ message: "No existen asambleas por realizar" })
-        }
-        res.status(200).send(asamblea)
-    })
-}
-
 const modificarAsamblea = (req, res) => {
     let id = req.params.id;
     asamblea.findByIdAndUpdate(id, req.body, (err, asamblea) => {
@@ -103,29 +57,69 @@ const buscarAsamblea = (req, res) => {
     })
 }
 
-const filtrarAsambleasTerminadas = (req, res) => {
-    cee.find({ carrera: req.headers.carrera }).exec((err, cee) => {
-        asamblea.find({ fecha: { $lt: new Date() }, id: { $elemMatch: { carrera: cee._id } } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
+const asambleasTerminadas = (req, res) => {
+    if (req.params.carrera === null || req.params.carrera === undefined) {
+        res.status(400).send({ message: "No se ha especificado la carrera" })
+    }
+    asamblea.find({ fecha: { $lt: new Date() } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
+        if (err) {
+            return res.status(400).send({ message: "Error al buscar" })
+        }
+        if (!asamblea) {
+            return res.status(404).send({ message: "No existen asambleas terminadas" })
+        }
+        cee.find({ carrera: req.params.carrera }).populate({ path: 'asamblea' }).exec((err, cee) => {
+            if (cee.length === 0) {
+                return res.status(404).send({ message: "No existen el cee" })
+            }
             if (err) {
                 return res.status(400).send({ message: "Error al buscar" })
             }
-            if (!asamblea) {
-                return res.status(404).send({ message: "No existe" })
+            if (!cee) {
+                return res.status(404).send({ message: "No existen cee" })
             }
-            res.status(200).send(asamblea)
+            let asambleas = asamblea.filter(asamblea => {
+                return cee[0].asambleas.includes(asamblea._id)
+            })
+            res.status(200).send(asambleas)
         })
     })
 }
 
-
+const asambleasNoTerminadas = (req, res) => {
+    if (req.params.carrera === null || req.params.carrera === undefined) {
+        res.status(400).send({ message: "No se ha especificado la carrera" })
+    }
+    asamblea.find({ fecha: { $gte: new Date() } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
+        if (err) {
+            return res.status(400).send({ message: "Error al buscar" })
+        }
+        if (!asamblea) {
+            return res.status(404).send({ message: "No existen asambleas terminadas" })
+        }
+        cee.find({ carrera: req.params.carrera }).populate({ path: 'asamblea' }).exec((err, cee) => {
+            if (cee.length === 0) {
+                return res.status(404).send({ message: "No existen el cee" })
+            }
+            if (err) {
+                return res.status(400).send({ message: "Error al buscar" })
+            }
+            if (!cee) {
+                return res.status(404).send({ message: "No existen cee" })
+            }
+            let asambleas = asamblea.filter(asamblea => {
+                return cee[0].asambleas.includes(asamblea._id)
+            })
+            res.status(200).send(asambleas)
+        })
+    })
+}
 
 module.exports = {
     crearAsamblea,
-    listarAsambleas,
     modificarAsamblea,
     eliminarAsamblea,
     buscarAsamblea,
-    listarAsambleasTerminadas,
-    listarAsambleasPorRealizar,
-    listarAsambleasTerminadasId
+    asambleasTerminadas,
+    asambleasNoTerminadas
 }
