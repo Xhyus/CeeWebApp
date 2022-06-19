@@ -5,6 +5,10 @@ const asambleaSchema = Schema({
         type: String,
         required: true
     },
+    contexto: {
+        type: String,
+        required: true
+    },
     fecha: {
         type: Date,
         required: true
@@ -19,11 +23,13 @@ const asambleaSchema = Schema({
     },
     puntos: [{
         type: [Schema.Types.ObjectId],
-        ref: 'punto'
+        ref: 'punto',
+        default: null
     }],
     acta: {
         type: Schema.ObjectId,
-        ref: 'acta'
+        ref: 'acta',
+        default: null
     },
 })
 module.exports = mongoose.model('asamblea', asambleaSchema)

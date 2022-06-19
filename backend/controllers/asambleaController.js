@@ -2,10 +2,11 @@ const asamblea = require('../models/asamblea.js')
 const cee = require('../models/cee.js')
 
 const crearAsamblea = (req, res) => {
-    const { asunto, fecha, hora, tipoAsamblea, puntos, acta } = req.body;
+    const { asunto, fecha, contexto, tipoAsamblea, puntos, acta } = req.body;
     const nuevaAsamblea = new asamblea({
         asunto,
         fecha,
+        contexto,
         tipoAsamblea,
         puntos,
         acta
