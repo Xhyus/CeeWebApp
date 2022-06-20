@@ -6,6 +6,8 @@ import Filtro from './../components/filtro/Filtro'
 import Navbar from '../components/navbar/Navbar'
 import { FaPlus } from 'react-icons/fa'
 import { useRouter } from 'next/router'
+import jwt_decode from "jwt-decode";
+
 
 export default function asambleas() {
 	const [asambleasTerminadas, setAsambleasTerminadas] = useState([])
@@ -14,10 +16,10 @@ export default function asambleas() {
 
 	useEffect(() => {
 		(async () => {
-			getAsambleasTerminadas()
-			getAsambleasPorRealizar()
+			let carrera = isLogged()
+			getAsambleasTerminadas(carrera)
+			getAsambleasPorRealizar(carrera)
 		})();
-		isLogged()
 
 	}, []);
 
@@ -27,11 +29,14 @@ export default function asambleas() {
 		if (localStorage.getItem('token') === null) {
 			router.push('/')
 		}
+		let token = localStorage.getItem('token')
+		let tokenDecoded = jwt_decode(token)
+		return tokenDecoded.carrera
 	}
 
-	const getAsambleasTerminadas = async () => {
+	const getAsambleasTerminadas = async (carrera) => {
 		try {
-			const response = await axios.get('http://localhost:3001/api/asambleas/terminadas');
+			const response = await axios.get(process.env.SERVIDOR + '/asambleas/terminadas/' + carrera);
 			if (response.status === 200) {
 				setAsambleasTerminadas(response.data);
 			}
@@ -40,9 +45,9 @@ export default function asambleas() {
 		}
 	}
 
-	const getAsambleasPorRealizar = async () => {
+	const getAsambleasPorRealizar = async (carrera) => {
 		try {
-			const response = await axios.get('http://localhost:3001/api/asambleas/porRealizar');
+			const response = await axios.get(process.env.SERVIDOR + '/asambleas/noTerminadas/' + carrera);
 			if (response.status === 200) {
 				setAsambleasPorRealizar(response.data);
 			}
@@ -73,13 +78,13 @@ export default function asambleas() {
 						{asambleasTerminadas ? (
 							<div className={styles.listaCards}>
 								{asambleasPorRealizar.map((asamblea) => {
-									return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
+									return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" />
 								})}
 							</div>
 						) : (<h1>No hay asambleas por realizar</h1>)}
 						<div className={styles.listaCards}>
 							{asambleasTerminadas.map((asamblea) => {
-								return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
+								return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" />
 							})}
 						</div>
 					</div>

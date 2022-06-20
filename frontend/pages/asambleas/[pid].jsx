@@ -7,60 +7,83 @@ import { formateoFechaBD } from '../../utils/handleDates'
 
 const verAsamblea = () => {
     const router = useRouter()
-    console.log("path: " + router.asPath.split("/")[2])
     const { pid } = router.query
     const [asunto, setAsunto] = useState('')
     const [fecha, setFecha] = useState('')
     const [tipoAsamblea, setTipoAsamblea] = useState('')
     const [acta, setActa] = useState('')
-    const [puntos, setPuntos] = useState()
+    const [puntos, setPuntos] = useState([])
 
-
+    console.log(router.route)
     useEffect(() => {
-        let idAsamblea = chequearPID()
-        getAsamblea(idAsamblea)
-
+        if (pid) {
+            getAsamblea(pid)
+        }
+        if (!pid) {
+            getAsamblea(router.asPath.split("/")[2])
+        }
     }, [])
 
-    const chequearPID = () => {
-        if (pid) {
-            localStorage.setItem('pidAsamblea', pid)
-            return pid
-        }
-        if (!pid && localStorage.getItem('pidAsamblea')) {
-            return localStorage.getItem('pidAsamblea')
-        }
-        if (!pid && !localStorage.getItem('pidAsamblea')) {
-            router.push('/404')
-        }
-    }
-
     const getAsamblea = (pid) => {
-        axios.get(`http://localhost:3001/api/asamblea/${pid}`)
+        axios.get(process.env.SERVIDOR + '/asamblea/' + pid)
             .then(res => {
                 setAsunto(res.data.asunto)
                 setTipoAsamblea(res.data.tipoAsamblea)
                 setActa(res.data.acta)
-                setPuntos(res.data.puntos)
                 setFecha(formateoFechaBD(res.data.fecha))
+                let puntos = [...res.data.puntos]
+                puntos.map(punto => {
+                    obtenerPunto(punto)
+                })
             })
             .catch(err => {
-                console.log(err)
+                console.log("Error al obtener una asamblea")
+                // router.push("/404")
             })
     }
+
+    const obtenerPunto = (id) => {
+        axios.get(process.env.SERVIDOR + '/punto/' + id)
+            .then(res => {
+                setPuntos(puntos => [...puntos, res.data])
+            })
+            .catch(err => {
+                console.log("Error al obtener un solo punto")
+            })
+    }
+
     console.log(puntos)
-    console.log(acta)
-    console.log(fecha)
+    // console.log(acta)
+    // console.log(fecha)
 
     return (
         <>
             <Navbar />
             <div className={styles.fondo}>
-                <div className={styles.contenedor}>
-                    <h1>{asunto}</h1>
-                    <p>{fecha.fecha}</p>
-                    <p>{fecha.hora}</p>
-                    <p>{tipoAsamblea}</p>
+                <div className={styles.contenedorAsamblea}>
+                    <div className={styles.subContenedor}>
+                        <h1 className={styles.titulo_filtro}>{asunto}</h1>
+                        <div className={styles.contenedorInformacion}>
+                            <p className={styles.tipoAsamblea}>Tipo de asamblea: {tipoAsamblea}</p>
+                            <h3 className={styles.titulo_filtro}>Puntos a tratar:</h3>
+                            <div>
+                                {puntos.map((punto, key) => {
+                                    return (
+                                        <div key={key}>
+                                            <p>{key + 1}: {punto.asunto}</p>
+                                        </div>
+                                    )
+                                })}
+                            </div>
+                            <p>Fecha: {fecha.fecha}</p>
+                            <p>Hora: {fecha.hora}</p>
+                            <div className={styles.botones}>
+                                <button className={styles.Propiedades_boton}>Crear Acta</button>
+                                <button className={styles.Propiedades_boton}>Crear puntos</button>
+                                <button className={styles.Propiedades_boton} onClick={() => router.push("/asambleas")}>Atras</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </>

@@ -5,8 +5,7 @@ import { compararFechas, formateoFechaBD } from '../../utils/handleDates'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 
-const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
-	const [estado, setEstado] = useState('')
+const Card = ({ id, asunto, fecha, tipoAsamblea, estado }) => {
 	const [format, setFormat] = useState('')
 	const ahora = new Date()
 	const tipoAsambleaUp = tipoAsamblea.charAt(0).toUpperCase() + tipoAsamblea.slice(1)
@@ -15,11 +14,10 @@ const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 
 	useEffect(() => {
 		setFormat(formateoFechaBD(fecha))
-		setEstado(compararFechas(fecha, ahora))
 	}, [])
 
 	const getEstadoAsamblea = () => {
-		if (estado === true) {
+		if (estado === "Terminadas") {
 			return (
 				<nav className={styles.estadoTerminado}>
 					<p className={styles.textoEstado}>Terminada</p>
@@ -37,7 +35,7 @@ const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 	}
 
 	const verAsamblea = (id) => {
-		axios.get(`http://localhost:3001/api/asamblea/${id}`)
+		axios.get(process.env.SERVIDOR + '/asamblea/' + id)
 			.then(res => {
 				router.push(`/asambleas/${id}`)
 			})
