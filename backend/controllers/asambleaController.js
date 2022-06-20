@@ -116,11 +116,41 @@ const asambleasNoTerminadas = (req, res) => {
     })
 }
 
+const asambleasPorCarrera = (req, res) => {
+    if (req.params.carrera === null || req.params.carrera === undefined) {
+        res.status(400).send({ message: "No se ha especificado la carrera" })
+    }
+    asamblea.find({}, (err, asamblea) => {
+        if (err) {
+            return res.status(400).send({ message: "Error al buscar" })
+        }
+        if (!asamblea) {
+            return res.status(404).send({ message: "No existen asambleas terminadas" })
+        }
+        cee.find({ carrera: req.params.carrera }).populate({ path: 'asamblea' }).exec((err, cee) => {
+            if (cee.length === 0) {
+                return res.status(404).send({ message: "No existen el cee" })
+            }
+            if (err) {
+                return res.status(400).send({ message: "Error al buscar" })
+            }
+            if (!cee) {
+                return res.status(404).send({ message: "No existe el cee" })
+            }
+            let asambleas = asamblea.filter(asamblea => {
+                return cee[0].asambleas.includes(asamblea._id)
+            })
+            res.status(200).send(asambleas)
+        })
+    })
+}
+
 module.exports = {
     crearAsamblea,
     modificarAsamblea,
     eliminarAsamblea,
     buscarAsamblea,
     asambleasTerminadas,
-    asambleasNoTerminadas
+    asambleasNoTerminadas,
+    asambleasPorCarrera
 }

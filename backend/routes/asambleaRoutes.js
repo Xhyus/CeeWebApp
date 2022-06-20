@@ -4,6 +4,7 @@ const asambleaController = require("../controllers/asambleaController");
 
 const api = express.Router();
 api.post("/asamblea", asambleaController.crearAsamblea);
+api.get("/asambleas/:carrera", asambleaController.asambleasPorCarrera);
 api.get("/asambleas/terminadas/:carrera", asambleaController.asambleasTerminadas);
 api.get("/asambleas/noTerminadas/:carrera", asambleaController.asambleasNoTerminadas);
 api.get("/asamblea/:id", asambleaController.buscarAsamblea);

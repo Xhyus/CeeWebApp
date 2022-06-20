@@ -7,7 +7,6 @@ function isAuth(req, res, next) {
         return res.status(403).send({ message: 'No tienes autorizacion' })
     }
     const token = req.headers.authorization.split(" ")[1]
-
     try {
         const payload = jwt.decode(token, process.env.SECRET_TOKEN)
         if (payload.exp < moment().unix()) {

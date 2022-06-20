@@ -12,6 +12,7 @@ const verAsamblea = () => {
     const [fecha, setFecha] = useState('')
     const [tipoAsamblea, setTipoAsamblea] = useState('')
     const [acta, setActa] = useState('')
+    const [contexto, setContexto] = useState('')
     const [puntos, setPuntos] = useState([])
 
     console.log(router.route)
@@ -30,6 +31,7 @@ const verAsamblea = () => {
                 setAsunto(res.data.asunto)
                 setTipoAsamblea(res.data.tipoAsamblea)
                 setActa(res.data.acta)
+                setContexto(res.data.contexto)
                 setFecha(formateoFechaBD(res.data.fecha))
                 let puntos = [...res.data.puntos]
                 puntos.map(punto => {
@@ -64,6 +66,7 @@ const verAsamblea = () => {
                     <div className={styles.subContenedor}>
                         <h1 className={styles.titulo_filtro}>{asunto}</h1>
                         <div className={styles.contenedorInformacion}>
+                            <p className={styles.contexto}>Contexto Asamblea: {contexto}</p>
                             <p className={styles.tipoAsamblea}>Tipo de asamblea: {tipoAsamblea}</p>
                             <h3 className={styles.titulo_filtro}>Puntos a tratar:</h3>
                             <div>

@@ -42,15 +42,17 @@ const options = {
 	useFindAndModify: false,
 	useUnifiedTopology: true
 }
-
-mongoose.connect(`mongodb://ceewebapp:gF6eKxsEez6cnKj@ceewebapp-shard-00-00.eziad.mongodb.net:27017,ceewebapp-shard-00-01.eziad.mongodb.net:27017,ceewebapp-shard-00-02.eziad.mongodb.net:27017/ceewebapp?ssl=true&replicaSet=atlas-li16kg-shard-0&authSource=admin&retryWrites=true&w=majority`, options, function (error) {
+mongoose.connect(process.env.DB, options, function (error) {
 	if (error) {
 		console.log(error)
 	}
+	if (!error) {
+		console.log('Conexion a la base de datos exitosa')
+	}
 })
 
-app.listen(3001, () => {
-	console.log("Server running on PORT " + 3001)
+app.listen(process.env.PORT, () => {
+	console.log("Server running on PORT " + process.env.PORT)
 })
 
 module.exports = app;

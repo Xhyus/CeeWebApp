@@ -122,6 +122,6 @@ module.exports = {
     modificarEstado,
     verificacion,
     // obtenerUsuarioCorreo,
-    validarPass
+    validarPass,
 
 }
