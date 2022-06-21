@@ -77,14 +77,14 @@ export default function asambleas() {
 					<div className={styles.contenedorSectorDerecho}>
 						{asambleasTerminadas ? (
 							<div className={styles.listaCards}>
-								{asambleasPorRealizar.map((asamblea) => {
-									return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" />
+								{asambleasPorRealizar.map((asamblea, key) => {
+									return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" />
 								})}
 							</div>
 						) : (<h1>No hay asambleas por realizar</h1>)}
 						<div className={styles.listaCards}>
-							{asambleasTerminadas.map((asamblea) => {
-								return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" />
+							{asambleasTerminadas.map((asamblea, key) => {
+								return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" />
 							})}
 						</div>
 					</div>
