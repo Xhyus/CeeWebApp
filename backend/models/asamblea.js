@@ -31,5 +31,16 @@ const asambleaSchema = Schema({
         ref: 'acta',
         default: null
     },
+    archivos: [{
+        ruta: {
+            type: String,
+            default: null
+        },
+        nombre: {
+            type: String,
+            required: true
+        }
+    }],
+
 })
 module.exports = mongoose.model('asamblea', asambleaSchema)

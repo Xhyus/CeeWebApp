@@ -1,16 +1,20 @@
 const asamblea = require('../models/asamblea.js')
 const cee = require('../models/cee.js')
 const moment = require('moment');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
+const auth = require('../middlewares/auth');
 
 const crearAsamblea = (req, res) => {
-    const { asunto, fecha, contexto, tipoAsamblea, puntos, acta } = req.body;
+    const { asunto, fecha, contexto, tipoAsamblea, puntos, acta, archivos } = req.body;
     const nuevaAsamblea = new asamblea({
         asunto,
         fecha,
         contexto,
         tipoAsamblea,
         puntos,
-        acta
+        acta,
+        archivos
     })
     nuevaAsamblea.save((err, asamblea) => {
         if (err) {
@@ -206,11 +210,18 @@ const filtrarPorTipoDeAsamblea = (req, res) => {
                 return cee[0].asambleas.includes(asamblea._id)
             })
             res.status(200).send(asambleas)
-        }
-        )
-    }
-    )
+        })
+    })
 }
+
+const subirArchivos = (req, res) => {
+    console.log(req.params.id)
+    console.log(req.body.carrera)
+    let archivos = req.files
+    console.log(archivos)
+
+}
+
 
 module.exports = {
     crearAsamblea,
@@ -221,5 +232,6 @@ module.exports = {
     asambleasNoTerminadas,
     asambleasPorCarrera,
     filtrarAsambleaPorFecha,
-    filtrarPorTipoDeAsamblea
+    filtrarPorTipoDeAsamblea,
+    subirArchivos
 }

@@ -49,4 +49,4 @@ const usuarioSchema = Schema({
         ]
     }
 })
-module.exports = mongoose.model('usuario', usuarioSchema)    
+module.exports = mongoose.model('usuario', usuarioSchema)
