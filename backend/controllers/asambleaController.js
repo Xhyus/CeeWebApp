@@ -1,9 +1,6 @@
 const asamblea = require('../models/asamblea.js')
 const cee = require('../models/cee.js')
 const moment = require('moment');
-const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
-const auth = require('../middlewares/auth');
 
 const crearAsamblea = (req, res) => {
     const { asunto, fecha, contexto, tipoAsamblea, puntos, acta, archivos } = req.body;
@@ -215,13 +212,16 @@ const filtrarPorTipoDeAsamblea = (req, res) => {
 }
 
 const subirArchivos = (req, res) => {
-    console.log(req.params.id)
-    console.log(req.body.carrera)
     let archivos = req.files
     console.log(archivos)
+    if (archivos.length === 0) {
+        return res.status(400).send({ message: "No se ha subido ningun archivo" })
+    }
+    archivos.forEach(archivo => {
+        console.log(archivo.originalname)
+    })
 
 }
-
 
 module.exports = {
     crearAsamblea,

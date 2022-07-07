@@ -11,6 +11,7 @@ const UsuarioRoutes = require('./routes/usuarioRoutes')
 const AsistenciaRoutes = require('./routes/asistenciaRoutes')
 const ActaRoutes = require('./routes/actaRoutes')
 const CEERoutes = require('./routes/ceeRoutes')
+const ArchivoRoutes = require('./routes/archivoRoutes')
 const app = express()
 app.use(function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -28,6 +29,7 @@ app.use('/api', UsuarioRoutes)
 app.use('/api', AsistenciaRoutes)
 app.use('/api', ActaRoutes)
 app.use('/api', CEERoutes)
+app.use('/api', ArchivoRoutes)
 
 const options = {
 	useNewUrlParser: true,

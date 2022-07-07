@@ -1,18 +1,18 @@
-const path = require('path');
-const fs = require('fs');
 const multer = require('multer');
+const fs = require('fs')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './uploads/')
+        const ruta = './uploads/' + req.params.carrera + '/' + req.params.asunto + '/' + req.params.id;
+        if (!fs.existsSync(ruta)) {
+            fs.mkdirSync(ruta, { recursive: true });
+        }
+        cb(null, ruta)
     },
     filename: function (req, file, cb) {
         let fecha = new Date();
         fecha = fecha.getFullYear() + '_' + (fecha.getMonth() + 1) + '_' + fecha.getDate() + '_' + fecha.getHours() + '_' + fecha.getMinutes() + '_' + fecha.getSeconds()
-        console.log(fecha)
-        let nombreArchivo = req.params.carrera + '_' + req.params.id + '_' + fecha + '_' + file.originalname.replace(/\s/g, '_', file.originalname);
-        console.log(nombreArchivo)
-
+        let nombreArchivo = fecha + '_' + file.originalname.replace(/\s/g, '_', file.originalname);
         cb(null, nombreArchivo);
     }
 })
@@ -21,10 +21,21 @@ const upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "application/pdf" || file.mimetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || file.mimetype == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.mimetype == "text/csv") {
-            cb(null, true);
+            req.archivoValido = true;
+            cb(null, req.archivoValido);
         } else {
-            cb(null, false);
-            return cb('Only .png, .jpg and .jpeg format allowed!');
+            req.archivoValido = false;
+            cb(null, req.archivoValido);
+        }
+    },
+    limits: (req, file, cb) => {
+        const fileSize = 5 * 1024 * 1024
+        if (file.size > fileSize) {
+            req.sizeFile = false;
+            cb(null, req.sizeFile);
+        } else {
+            req.sizeFile = true;
+            cb(null, req.sizeFile);
         }
     }
 });

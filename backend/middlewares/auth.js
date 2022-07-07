@@ -10,8 +10,8 @@ const isAuth = (req, res, next) => {
     if (req.params.carrera == 'ieci') {
         secretToken = process.env.SECRET_TOKEN_IECI
     }
-    if (req.params.carrera == 'ica') {
-        secretToken = process.env.SECRET_TOKEN_ICA
+    if (req.params.carrera == 'cpa') {
+        secretToken = process.env.SECRET_TOKEN_CPA
     }
     if (req.params.carrera == 'comercial') {
         secretToken = process.env.SECRET_TOKEN_COMERCIAL
