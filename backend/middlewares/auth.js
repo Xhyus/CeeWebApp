@@ -6,23 +6,8 @@ const isAuth = (req, res, next) => {
     if (!req.headers.authorization) {
         return res.status(403).send({ message: 'No tienes autorizacion' })
     }
-    let secretToken = null
-    if (req.params.carrera == 'ieci') {
-        secretToken = process.env.SECRET_TOKEN_IECI
-    }
-    if (req.params.carrera == 'cpa') {
-        secretToken = process.env.SECRET_TOKEN_CPA
-    }
-    if (req.params.carrera == 'comercial') {
-        secretToken = process.env.SECRET_TOKEN_COMERCIAL
-    }
-    if (req.params.carrera == 'icinf') {
-        secretToken = process.env.SECRET_TOKEN_ICINF
-    }
-    const token = req.headers.authorization.split(" ")[1]
     try {
-        console.log(secretToken)
-        const payload = jwt.decode(token, secretToken)
+        const payload = jwt.decode(req.headers.authorization.split(" ")[1], process.env.SECRET_TOKEN)
         if (payload.exp < moment().unix()) {
             return res.status(401).send({ message: 'El token ha expirado' })
         }
