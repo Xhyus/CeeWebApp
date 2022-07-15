@@ -9,6 +9,10 @@ const Textarea = ({ punto, index, onchange }) => {
     setDescripcion(event.target.value)
   }
 
+  const imprimirMensaje = () => {
+    console.log("Bandera");
+  }
+
   return (
     <>
       <p className={styles.tituloPunto}>{punto} </p>

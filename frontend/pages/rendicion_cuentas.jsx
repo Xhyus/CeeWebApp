@@ -44,6 +44,15 @@ export default function rendicion_cuentas() {
 		}
 	}
 
+	//* .: CREAR GASTO :. *//
+	const crearGasto = () => {
+
+		console.log(".: Redirigiendo a pantalla crear_gasto :.");
+
+		router.push('/rendicion_cuentas/crear_gasto');
+
+	}
+
 	return (
 		<>
 			<Navbar />
@@ -54,11 +63,10 @@ export default function rendicion_cuentas() {
 					</div>
 					<div className={styles.contenedorInferior}>
 						<div className={styles.contenedorSectorIzquierdo}>
-							<button className={styles.Propiedades_boton} >Crear asamblea</button>
+							<button onClick={()=>{crearGasto()}} className={styles.Propiedades_boton} >Crear gasto</button>
 							<div className={styles.filtros}>
 								<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
 								<div className={styles.ContainerFiltro}>
-
 									<Filtro tipo='normal' />
 									<Filtro tipo='normal' />
 									<Filtro tipo='normal' />
