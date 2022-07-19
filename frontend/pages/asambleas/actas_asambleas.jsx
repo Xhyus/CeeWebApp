@@ -14,11 +14,17 @@ export default function actas_asambleas({ idAsamblea }) {
 	const [cargandoInfo, setCargandoInfo] = useState(false);
 	const [cargandoPuntos, setCargandoPuntos] = useState(false);
 
-	const idAsambleaPRUEBA = '62887cab6f9cba4180f42c17';
-	// const idAsambleaPRUEBA = '62887cbb6f9cba4180f42c19';
+	// const idAsambleaPRUEBA = '62887cab6f9cba4180f42c17';
+	const idAsambleaPRUEBA = '6289c3fcc5eaee5de4600601';
 	// const idAsambleaPRUEBA = '6289c3fcc5eaee5de4600601';
 
 	//? Hooks para el formulario.
+	const [puntoActa, setPuntoActa] = useState([{
+		id: '',
+		asunto: '',
+		descripcion: '',
+	}]);
+
 	const [punto, setPunto] = useState([])
 	// const [asistencia, setAsistencia] = useState([])
 	const [asunto, setAsunto] = useState([])
@@ -28,10 +34,18 @@ export default function actas_asambleas({ idAsamblea }) {
 	const router = useRouter()
 	const [asamblea, setAsamblea] = useState()
 
-	const handleChangeDescripcion = (event) => {
+	const handleChangeDescripcion = index => event => {
 		setDescripcion(event.target.value)
+		//setPuntoActa(puntoActa[event.target.name].descripcion = event.target.value);
 
 		console.log("Input modificado: ", event.target.name)
+		console.log("Texto modificado: ", event.target.value)
+
+		let actualizarDescripcion = [...puntoActa];
+
+		actualizarDescripcion[index].descripcion = event.target.value;
+
+		setPuntoActa(actualizarDescripcion);
 	}
 
 	const isLogged = () => {
@@ -52,11 +66,13 @@ export default function actas_asambleas({ idAsamblea }) {
 			const response = await axios.get(process.env.SERVIDOR + '/asamblea/' + id)
 			const puntos = [...response.data.puntos]
 
+			console.log("Puntos: ", puntos)
+
 			puntos.map(punto => {
 				obtenerPunto(punto)
 			})
 
-			//console.log("Hook Punto: ", punto);
+			console.log("Hook Punto: ", puntoActa);
 			console.log("Array Asunto: ", listaAsuntos)
 			console.log("Hook Asunto: ", asunto)
 
@@ -74,6 +90,13 @@ export default function actas_asambleas({ idAsamblea }) {
 		try {
 			const response = await axios.get(process.env.SERVIDOR + '/punto/' + id)
 			
+			//! PRUEBA PARA LLENAR HOOK PUNTO.
+			setPuntoActa((prevState) => [...prevState, {
+				id: id,
+				asunto: response.data.asunto,
+				descripcion: response.data.descripcion,
+			}]);
+
 			listaAsuntos.push(response.data.asunto)
 			setAsunto(listaAsuntos);
 			setPunto(response.data);
@@ -173,13 +196,43 @@ export default function actas_asambleas({ idAsamblea }) {
 			})
 	}
 
-	const enviarActa = (event) => {
-		event.preventDefault()
-		const puntos = [...punto.puntos];
-		puntos.map(punto => {
-			modificarPuntos(punto)
+	const enviarActa = () => {
+		// event.preventDefault()
+		// const puntos = [...punto.puntos];
+		// puntos.map(punto => {
+		// 	modificarPuntos(punto)
+		// })
+		// crearActa(puntos, asistenciaPrueba)
+
+		//? Actualizamos puntos mediante PUT.
+		puntoActa.map(punto => {
+
+			const data = {
+				descripcion: punto.descripcion
+			}
+			axios.put(process.env.SERVIDOR + '/punto/update/' + punto.id, data)
+				.then(res => {
+					console.log("se modificaron los puntos")
+				}
+				)
+				.catch(err => {
+					console.log("error al modificar los puntos")
+				}
+				)
+
 		})
-		crearActa(puntos, asistenciaPrueba)
+
+		//? Bandera de información guardada.
+        console.log("--------------------------------------");
+
+		puntoActa.map(punto => {
+
+			console.log("\nID: ", punto.id);
+			console.log("ASUNTO: ", punto.asunto);
+			console.log("DESCRIPCION: ", punto.descripcion);
+
+		})
+        console.log("--------------------------------------");
 	}
 
 	if(cargandoInfo === true || cargandoPuntos === true) {
@@ -212,12 +265,21 @@ export default function actas_asambleas({ idAsamblea }) {
 								</div>
 								<div className={styles.contenedorTextArea}>
 									{
-										asunto.map((punto, index) => (
-											<Textarea key={index} punto={punto} name={index} />
+										puntoActa.map((punto, index) => (
+											<>
+											<p>{punto.asunto} </p>
+											<textarea 
+												name={index}
+												onChange={handleChangeDescripcion(index)}
+												type="text" 
+												placeholder='Ingrese descripción del punto'>
+
+											</textarea>
+											</>
 										))
 									}
 								</div>
-								<button type="submit" className={styles.boton}>Enviar <FiSend className={styles.iconoSend} /> </button>
+								<button type="submit" className={styles.boton} onClick={() => enviarActa()}>Enviar <FiSend className={styles.iconoSend} /> </button>
 							</form>
 						</div>
 					</div>
