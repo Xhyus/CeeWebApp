@@ -36,7 +36,8 @@ export default function rendicion_cuentas() {
 			// Estado: Ok
 			if (response.status === 200) {
 				setListaRendiciones(response.data);
-				//console.log("Respuesta:\n" + response.data[0].asunto);
+
+				//console.log("Lista de rendiciones: " + listaRendiciones);
 			}
 
 		} catch (error) {
@@ -76,14 +77,12 @@ export default function rendicion_cuentas() {
 							</div>
 						</div>
 						<div className={styles.contenedorSectorDerecho}>
+							{console.log(listaRendiciones[0])}
 							{
 								listaRendiciones.map((gasto, index) => (
 									<Card_gasto
 										key={index}
-										tipo_gasto={gasto.tipoGasto}
-										asunto_gasto={gasto.asunto}
-										fecha_gasto={gasto.fecha}
-										total_gasto={gasto.totalGastado}
+										datos_gasto={gasto}
 									/>
 								))
 							}

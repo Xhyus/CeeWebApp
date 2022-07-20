@@ -32,6 +32,24 @@ const obtenerRendiciones = (req, res) => {
     })
 }
 
+//* .: OBTENER RENDICIÓN POR ID :. *//
+
+const obtenerRendicionPorID = (req, res) => {
+
+    let id = req.params.id;
+
+    rendicion.findById(id, (err, rendicion) => {
+        if (err) {
+            return res.status(400).send({message: "Error al obtener rendición por ID"})
+        }
+        if(!rendicion){
+            return res.status(404).send({message: "No existe gasto"})
+        }
+        res.status(200).send(rendicion)
+    })
+
+}
+
 //* .: FILTROS :. *//
 
 const obtenerRendicionesMenor10K = (req, res) => {
@@ -180,6 +198,7 @@ const eliminarRendicion = (req, res) => {
 module.exports = {
     crearRendicion,
     obtenerRendiciones,
+    obtenerRendicionPorID,
     obtenerRendicionesMenor10K,
     obtenerRendicionesMenor3K,
     obtenerRendicionesOficina,
