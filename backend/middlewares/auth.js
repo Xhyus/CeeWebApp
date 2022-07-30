@@ -9,11 +9,11 @@ const isAuth = (req, res, next) => {
     try {
         const payload = jwt.decode(req.headers.authorization.split(" ")[1], process.env.SECRET_TOKEN)
         if (payload.exp < moment().unix()) {
-            return res.status(401).send({ message: 'El token ha expirado' })
+            return res.status(401).send({ message: 'El token ha expirado', error: "token expirado" })
         }
         req.user = payload.sub
     } catch (err) {
-        return res.status(401).send({ message: 'El token no es valido' })
+        return res.status(401).send({ message: 'El token no es valido', error: "token invalido" })
     }
     next()
 }

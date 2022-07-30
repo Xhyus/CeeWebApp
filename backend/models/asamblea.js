@@ -3,15 +3,17 @@ const Schema = mongoose.Schema
 const asambleaSchema = Schema({
     asunto: {
         type: String,
-        required: true
+        required: true,
+        match: /^[a-zA-Z\s]{3,}$/
     },
     contexto: {
         type: String,
-        required: true
+        required: true,
+        match: /^[a-zA-Z0-9\s\.\,\;\:\!\?\¿\¡\(\)\[\]\{\}]{3,}$/
     },
     fecha: {
         type: Date,
-        required: true
+        required: true,
     },
     tipoAsamblea: {
         type: String,
@@ -24,22 +26,17 @@ const asambleaSchema = Schema({
     puntos: [{
         type: [Schema.Types.ObjectId],
         ref: 'punto',
-        default: null
+        default: []
     }],
     acta: {
         type: Schema.ObjectId,
         ref: 'acta',
-        default: null
+        default: ''
     },
     archivos: [{
-        ruta: {
-            type: String,
-            default: null
-        },
-        nombre: {
-            type: String,
-            required: true
-        }
+        type: Schema.Types.ObjectId,
+        ref: 'archivo',
+        default: []
     }],
 
 })

@@ -1,8 +1,10 @@
 const asamblea = require('../models/asamblea.js')
 const cee = require('../models/cee.js')
 const moment = require('moment');
+const { now } = require('mongoose');
 
 const crearAsamblea = (req, res) => {
+    const carrera = req.params.carrera
     const { asunto, fecha, contexto, tipoAsamblea, puntos, acta, archivos } = req.body;
     const nuevaAsamblea = new asamblea({
         asunto,
@@ -17,7 +19,12 @@ const crearAsamblea = (req, res) => {
         if (err) {
             return res.status(400).send({ message: "Error al guardar" })
         }
-        res.status(201).send(asamblea)
+        cee.updateOne({ carrera }, { $push: { asambleas: asamblea._id } }, (err, cee) => {
+            if (err) {
+                return res.status(400).send({ message: "Error al guardar" })
+            }
+            res.status(201).send(asamblea)
+        })
     })
 }
 
@@ -60,64 +67,6 @@ const buscarAsamblea = (req, res) => {
     })
 }
 
-const asambleasTerminadas = (req, res) => {
-    if (req.params.carrera === null || req.params.carrera === undefined) {
-        res.status(400).send({ message: "No se ha especificado la carrera" })
-    }
-    asamblea.find({ fecha: { $lt: new Date() } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
-        if (err) {
-            return res.status(400).send({ message: "Error al buscar" })
-        }
-        if (!asamblea) {
-            return res.status(404).send({ message: "No existen asambleas terminadas" })
-        }
-        cee.find({ carrera: req.params.carrera }).populate({ path: 'asamblea' }).exec((err, cee) => {
-            if (cee.length === 0) {
-                return res.status(404).send({ message: "No existen el cee" })
-            }
-            if (err) {
-                return res.status(400).send({ message: "Error al buscar" })
-            }
-            if (!cee) {
-                return res.status(404).send({ message: "No existen cee" })
-            }
-            let asambleas = asamblea.filter(asamblea => {
-                return cee[0].asambleas.includes(asamblea._id)
-            })
-            res.status(200).send(asambleas)
-        })
-    })
-}
-
-const asambleasNoTerminadas = (req, res) => {
-    if (req.params.carrera === null || req.params.carrera === undefined) {
-        res.status(400).send({ message: "No se ha especificado la carrera" })
-    }
-    asamblea.find({ fecha: { $gte: new Date() } }).populate({ path: 'acta puntos', populate: { path: 'asistencia puntos' } }).exec((err, asamblea) => {
-        if (err) {
-            return res.status(400).send({ message: "Error al buscar" })
-        }
-        if (!asamblea) {
-            return res.status(404).send({ message: "No existen asambleas terminadas" })
-        }
-        cee.find({ carrera: req.params.carrera }).populate({ path: 'asamblea' }).exec((err, cee) => {
-            if (cee.length === 0) {
-                return res.status(404).send({ message: "No existen el cee" })
-            }
-            if (err) {
-                return res.status(400).send({ message: "Error al buscar" })
-            }
-            if (!cee) {
-                return res.status(404).send({ message: "No existen cee" })
-            }
-            let asambleas = asamblea.filter(asamblea => {
-                return cee[0].asambleas.includes(asamblea._id)
-            })
-            res.status(200).send(asambleas)
-        })
-    })
-}
-
 const asambleasPorCarrera = (req, res) => {
     if (req.params.carrera === null || req.params.carrera === undefined) {
         res.status(400).send({ message: "No se ha especificado la carrera" })
@@ -142,7 +91,17 @@ const asambleasPorCarrera = (req, res) => {
             let asambleas = asamblea.filter(asamblea => {
                 return cee[0].asambleas.includes(asamblea._id)
             })
-            res.status(200).send(asambleas)
+            let asambleasTerminadas = asambleas.filter(asamblea => {
+                return asamblea.fecha < new Date()
+            })
+            let asambleasNoTerminadas = asambleas.filter(asamblea => {
+                return asamblea.fecha > new Date()
+            })
+            asambleas = {
+                asambleasTerminadas: asambleasTerminadas,
+                asambleasNoTerminadas: asambleasNoTerminadas
+            }
+            res.status(200).json(asambleas)
         })
     })
 }
@@ -211,16 +170,50 @@ const filtrarPorTipoDeAsamblea = (req, res) => {
     })
 }
 
-const subirArchivos = (req, res) => {
-    let archivos = req.files
-    console.log(archivos)
-    if (archivos.length === 0) {
-        return res.status(400).send({ message: "No se ha subido ningun archivo" })
+const filtroAsambleas = (req, res) => {
+    if (req.params.carrera === null || req.params.carrera === undefined) {
+        return res.status(400).send({ message: "No se ha especificado la carrera" })
     }
-    archivos.forEach(archivo => {
-        console.log(archivo.originalname)
-    })
+    let inicio = new Date(req.body.inicio), fin = new Date(req.body.fin), tipoAsamblea = req.body.tipoAsamblea;
+    if (!req.body.inicio) {
+        inicio = new Date(2020, 0, 1)
+    }
+    if (!req.body.fin) {
+        fin = new Date()
+    }
+    if (!req.body.tipoAsamblea) {
+        tipoAsamblea = null
+    }
 
+    cee.find({ carrera: req.params.carrera }).populate({ path: 'asamblea' }).exec((err, cee) => {
+        if (cee.length === 0) {
+            return res.status(404).send({ message: "No existen el cee" })
+        }
+        if (err) {
+            return res.status(400).send({ message: "Error al buscar" })
+        }
+        if (!cee) {
+            return res.status(404).send({ message: "No existe el cee" })
+        }
+        asamblea.find({ _id: { $in: cee[0].asambleas } }, (err, asambleas) => {
+            if (err) {
+                return res.status(400).send({ message: "Error al buscar" })
+            }
+            if (!asambleas) {
+                return res.status(404).send({ message: "No existen asambleas terminadas" })
+            }
+            let asamblea = []
+            asamblea = asambleas.map(asamblea => {
+                if ((asamblea.fecha >= inicio && asamblea.fecha <= fin) || (asamblea.tipoAsamblea == req.body.tipoAsamblea)) {
+                    console.log("Cumple requisito: ", asamblea)
+                }
+            })
+        })
+    })
+}
+
+const Filtro = (req, res) => {
+    console.log("filtro: " + req.asamblea)
 }
 
 module.exports = {
@@ -228,10 +221,9 @@ module.exports = {
     modificarAsamblea,
     eliminarAsamblea,
     buscarAsamblea,
-    asambleasTerminadas,
-    asambleasNoTerminadas,
     asambleasPorCarrera,
     filtrarAsambleaPorFecha,
     filtrarPorTipoDeAsamblea,
-    subirArchivos
+    filtroAsambleas,
+    Filtro
 }

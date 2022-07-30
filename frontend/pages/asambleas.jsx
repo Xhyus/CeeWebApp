@@ -6,8 +6,6 @@ import Filtro from './../components/filtro/Filtro'
 import Navbar from '../components/navbar/Navbar'
 import { FaPlus } from 'react-icons/fa'
 import { useRouter } from 'next/router'
-import jwt_decode from "jwt-decode";
-
 
 export default function asambleas() {
 	const [asambleasTerminadas, setAsambleasTerminadas] = useState([])
@@ -16,43 +14,55 @@ export default function asambleas() {
 
 	useEffect(() => {
 		(async () => {
-			let carrera = isLogged()
-			getAsambleasTerminadas(carrera)
-			getAsambleasPorRealizar(carrera)
+			isLogged()
+			getAsambleas()
 		})();
-
 	}, []);
 
 	const isLogged = () => {
-		localStorage.removeItem('id_asamblea')
-		localStorage.removeItem('pidAsamblea')
 		if (localStorage.getItem('token') === null) {
 			router.push('/')
 		}
-		let token = localStorage.getItem('token')
-		let tokenDecoded = jwt_decode(token)
-		return tokenDecoded.carrera
 	}
 
-	const getAsambleasTerminadas = async (carrera) => {
+	const getAsambleas = async () => {
+		// const token = localStorage.getItem('token')
+		const carrera = localStorage.getItem('carrera')
 		try {
-			const response = await axios.get(process.env.SERVIDOR + '/asambleas/terminadas/' + carrera);
+			const response = await axios.get(`${process.env.SERVIDOR}/asambleas/${carrera}`)
 			if (response.status === 200) {
-				setAsambleasTerminadas(response.data);
+				console.log(response.data.asambleasTerminadas)
+				console.log(response.data.asambleasNoTerminadas)
+				setAsambleasTerminadas(response.data.asambleasTerminadas)
+				setAsambleasPorRealizar(response.data.asambleasNoTerminadas)
 			}
-		} catch (error) {
-			console.log("Error: " + error);
+		}
+		catch (error) {
+			console.log("Error: " + error)
 		}
 	}
 
-	const getAsambleasPorRealizar = async (carrera) => {
-		try {
-			const response = await axios.get(process.env.SERVIDOR + '/asambleas/noTerminadas/' + carrera);
-			if (response.status === 200) {
-				setAsambleasPorRealizar(response.data);
-			}
-		} catch (error) {
-			console.log("Error: " + error);
+	const Terminadas = () => {
+		if (asambleasTerminadas.length > 0) {
+			return (<div className={styles.listaCards}>
+				{asambleasPorRealizar.map((asamblea, key) => {
+					return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" />
+				})}
+			</div>)
+		} else {
+			return (<h3>No hay asambleas por realizar</h3>)
+		}
+	}
+
+	const PorRealizar = () => {
+		if (asambleasPorRealizar.length > 0) {
+			return (<div className={styles.listaCards}>
+				{asambleasTerminadas.map((asamblea, key) => {
+					return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" />
+				})}
+			</div>)
+		} else {
+			return (<h3>No hay asambleas terminadas</h3>)
 		}
 	}
 
@@ -75,18 +85,22 @@ export default function asambleas() {
 						</div>
 					</div>
 					<div className={styles.contenedorSectorDerecho}>
-						{asambleasTerminadas ? (
-							<div className={styles.listaCards}>
-								{asambleasPorRealizar.map((asamblea, key) => {
-									return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" />
-								})}
-							</div>
-						) : (<h1>No hay asambleas por realizar</h1>)}
+						<h1>Asambleas por realizar</h1>
+						{PorRealizar()}
+						{/* separation line */}
+						<div className={styles.linea}>
+							<hr className={styles.separationLine} />
+							<span class={styles.dot}></span>
+							<hr className={styles.separationLine} />
+
+						</div>
+						{Terminadas()}
+						{/*
 						<div className={styles.listaCards}>
 							{asambleasTerminadas.map((asamblea, key) => {
 								return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" />
 							})}
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</div>

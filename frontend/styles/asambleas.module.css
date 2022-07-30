@@ -9,6 +9,30 @@
     overflow: hidden;
 }
 
+.contenedorTitulo h1 {
+    font-size: 30px;
+}
+
+.dot {
+    height: 10%;
+    width: 10%;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.separationLine {
+    width: 40%;
+    height: 1px;
+}
+
+.linea {
+    display: flex;
+    width: 100%;
+    height: auto;
+    flex-wrap: nowrap;
+}
+
 .contenedor {
     width: 75%;
     margin-top: 5vh;

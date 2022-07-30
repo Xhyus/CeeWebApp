@@ -3,16 +3,19 @@ const Schema = mongoose.Schema
 const usuarioSchema = Schema({
     nombre: {
         type: String,
-        required: true
+        required: true,
+        match: /^[a-zA-Z]{3,}$/
     },
     apellido: {
         type: String,
         required: true,
-
+        match: /^[a-zA-Z]{3,}$/
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        match: [/.+@.+\..+/, "Porfavor ingrese un correo valido"],
+        unique: true
     },
     password: {
         type: String,

@@ -34,22 +34,19 @@ app.use('/api', ArchivoRoutes)
 const options = {
 	useNewUrlParser: true,
 	useCreateIndex: true,
-	autoIndex: true, //this is the code I added that solved it all
+	autoIndex: true,
 	keepAlive: true,
 	poolSize: 10,
 	bufferMaxEntries: 0,
 	connectTimeoutMS: 10000,
 	socketTimeoutMS: 45000,
-	family: 4, // Use IPv4, skip trying IPv6
+	family: 4,
 	useFindAndModify: false,
 	useUnifiedTopology: true
 }
 mongoose.connect(process.env.DB, options, function (error) {
 	if (error) {
 		console.log(error)
-	}
-	if (!error) {
-		console.log('Conexion a la base de datos exitosa')
 	}
 })
 

@@ -20,23 +20,16 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "application/pdf" || file.mimetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || file.mimetype == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.mimetype == "text/csv") {
-            req.archivoValido = true;
-            cb(null, req.archivoValido);
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            req.params.archivoValido = true;
+            cb(null, req.params.archivoValido);
         } else {
-            req.archivoValido = false;
-            cb(null, req.archivoValido);
+            req.params.archivoValido = false;
+            cb(null, req.params.archivoValido);
         }
     },
-    limits: (req, file, cb) => {
-        const fileSize = 5 * 1024 * 1024
-        if (file.size > fileSize) {
-            req.sizeFile = false;
-            cb(null, req.sizeFile);
-        } else {
-            req.sizeFile = true;
-            cb(null, req.sizeFile);
-        }
+    limits: {
+        fileSize: 1024 * 1024 * 5
     }
 });
 

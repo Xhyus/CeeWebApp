@@ -4,6 +4,7 @@ import styles from '../../styles/verAsamblea.module.css'
 import Navbar from '../../components/navbar/Navbar'
 import axios from 'axios'
 import { formateoFechaBD } from '../../utils/handleDates'
+import handleUpperCase from '../../utils/handleUpperCase'
 
 const verAsamblea = () => {
     const router = useRouter()
@@ -11,19 +12,22 @@ const verAsamblea = () => {
     const [asunto, setAsunto] = useState('')
     const [fecha, setFecha] = useState('')
     const [tipoAsamblea, setTipoAsamblea] = useState('')
-    const [acta, setActa] = useState('')
     const [contexto, setContexto] = useState('')
     const [puntos, setPuntos] = useState([])
     const [count, setCount] = useState(0)
+    const [modal, setModal] = useState(false)
+
+    // modal function
+    const toggle = () => setModal(!modal)
+    console.log(toggle)
 
     useEffect(() => {
         const getAsamblea = (pid) => {
             axios.get(process.env.SERVIDOR + '/asamblea/' + pid)
                 .then(res => {
-                    setAsunto(res.data.asunto)
-                    setTipoAsamblea(res.data.tipoAsamblea)
-                    setActa(res.data.acta)
-                    setContexto(res.data.contexto)
+                    setAsunto(handleUpperCase(res.data.asunto))
+                    setTipoAsamblea(handleUpperCase(res.data.tipoAsamblea))
+                    setContexto(handleUpperCase(res.data.contexto))
                     setFecha(formateoFechaBD(res.data.fecha))
                     let puntos = [...res.data.puntos]
                     puntos.map(punto => {
@@ -32,7 +36,6 @@ const verAsamblea = () => {
                 })
                 .catch(err => {
                     console.log("Error al obtener una asamblea")
-                    router.push("/404")
                 })
         }
         if (count === 1) {
@@ -46,7 +49,7 @@ const verAsamblea = () => {
     }, [pid])
 
     const obtenerPunto = (id) => {
-        axios.get(process.env.SERVIDOR + '/punto/' + id)
+        axios.get(process.env.SERVIDOR + '/punto/search/' + id)
             .then(res => {
                 setPuntos(puntos => [...puntos, res.data])
             })
@@ -77,7 +80,7 @@ const verAsamblea = () => {
                                 {puntos.map((punto, key) => {
                                     return (
                                         <div key={key}>
-                                            <p>{key + 1}: {punto.asunto}</p>
+                                            <p>{key + 1}: {handleUpperCase(punto.asunto)}</p>
                                         </div>
                                     )
                                 })}
@@ -88,7 +91,7 @@ const verAsamblea = () => {
                         <div className={styles.datos_fecha}>
                             <span><strong>Fecha: </strong></span>
                             <span>{fecha.fecha}</span>
-                            <a href='*' className={`${styles.Propiedades_boton} ${styles.boton_archivos}`}>Ver Archivos</a>
+                            <a onClick={() => { toggle }} className={`${styles.Propiedades_boton} ${styles.boton_archivos}`}>Ver Archivos</a>
                         </div>
                         <div className={styles.actas}>
                             <a href='/asambleas/actas_asambleas/' className={`${styles.Propiedades_boton} ${styles.boton_actas}`}>Generar Actas</a>

@@ -25,18 +25,6 @@ const uploadNewFiles = async (req, res) => {
     res.status(201).send(aux)
 
 }
-const downloadFiles = (req, res) => {
-    const { id } = req.params
-    archivos.findById(id, (err, archivo) => {
-        if (err) {
-            return res.status(400).send({ message: 'Error al buscar el archivo' })
-        }
-        if (!archivo) {
-            return res.status(404).send({ message: 'No existe el archivo' })
-        }
-        res.send(archivo)
-    })
-}
 
 const listarArchivos = async (req, res) => {
     archivos.find({}, (err, archivos) => {
@@ -59,14 +47,14 @@ const obtenerUnArchivo = async (req, res) => {
         if (!archivo) {
             return res.status(404).send({ message: 'No existe el archivo' })
         }
-        res.sendFile(archivo)
+        // console.log(archivo.ruta)
+        res.sendFile('./' + archivo.ruta)
     })
 }
 
 
 module.exports = {
     uploadNewFiles,
-    downloadFiles,
     listarArchivos,
     obtenerUnArchivo
 }
