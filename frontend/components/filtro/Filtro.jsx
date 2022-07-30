@@ -1,7 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styles from './Filtro.module.css'
 
-const Filtro = ({ tipo }) => {
+const Filtro = ({ tipo, getRendiciones }) => {
+
+    //? Hook que nos ayudará a saber si el filtro está activo o no.
+    const [filtroActivo, setFiltroActivo] = useState(false);
+
+    //? Label que nos ayudará a identificar el tipo de filtro.
+    const label = {
+        rendicionesMenor10K: "Menor a 10.000",
+        rendicionesMenor3K: "Menor a 3.000",
+    }
+
     const choise = () => {
         if (tipo === 'fecha') {
             return (
@@ -13,13 +23,20 @@ const Filtro = ({ tipo }) => {
         } else {
             return (
                 <div className={styles.opciones_filtro}>
-                    <input type="checkbox" className={styles.checkbox} name="filtro1" onClick={() => { console.log("filtro1"); }}></input>
-                    <p className={styles.texto} >Filtro</p>
+                    <input type="checkbox" className={styles.checkbox} name="filtro1" onClick={() => {
+                        setFiltroActivo(!filtroActivo);
+
+                        if(filtroActivo === false){
+                            getRendiciones(tipo);
+                        }else{
+                            getRendiciones("rendiciones");
+                        }
+                    }}></input>
+                    <p className={styles.texto} >{label[tipo]}</p>
                 </div>
             )
         }
     }
-
 
     return choise()
 

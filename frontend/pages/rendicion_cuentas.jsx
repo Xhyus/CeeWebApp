@@ -30,14 +30,13 @@ export default function rendicion_cuentas() {
 	//* .: LISTAR GASTOS :. *//
 
 	const getRendiciones = async (tipoGetRendiciones) => {
+		
 		try {
 			const response = await axios.get(process.env.SERVIDOR + "/" + tipoGetRendiciones);
 
 			// Estado: Ok
 			if (response.status === 200) {
 				setListaRendiciones(response.data);
-
-				//console.log("Lista de rendiciones: " + listaRendiciones);
 			}
 
 		} catch (error) {
@@ -68,11 +67,8 @@ export default function rendicion_cuentas() {
 							<div className={styles.filtros}>
 								<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
 								<div className={styles.ContainerFiltro}>
-									<Filtro tipo='normal' />
-									<Filtro tipo='normal' />
-									<Filtro tipo='normal' />
-									<Filtro tipo='fecha' />
-									<Filtro tipo='fecha' />
+									<Filtro tipo='rendicionesMenor10K' getRendiciones={getRendiciones} />
+									<Filtro tipo='rendicionesMenor3K' getRendiciones={getRendiciones} />
 								</div>
 							</div>
 						</div>
