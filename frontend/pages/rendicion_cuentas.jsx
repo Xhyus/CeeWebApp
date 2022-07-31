@@ -64,13 +64,16 @@ export default function rendicion_cuentas() {
 					<div className={styles.contenedorInferior}>
 						<div className={styles.contenedorSectorIzquierdo}>
 							<button onClick={()=>{crearGasto()}} className={styles.Propiedades_boton} >Crear gasto</button>
-							<div className={styles.filtros}>
+							{/* Requerimiento para ENTREGA 2!! */}
+							{/* <div className={styles.filtros}>
 								<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
 								<div className={styles.ContainerFiltro}>
 									<Filtro tipo='rendicionesMenor10K' getRendiciones={getRendiciones} />
 									<Filtro tipo='rendicionesMenor3K' getRendiciones={getRendiciones} />
+									<Filtro tipo='rendicionesOficina' getRendiciones={getRendiciones} />
+									<Filtro tipo='rendicionesActividad' getRendiciones={getRendiciones} />
 								</div>
-							</div>
+							</div> */}
 						</div>
 						<div className={styles.contenedorSectorDerecho}>
 							{console.log(listaRendiciones[0])}

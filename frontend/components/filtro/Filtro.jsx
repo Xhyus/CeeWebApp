@@ -10,6 +10,8 @@ const Filtro = ({ tipo, getRendiciones }) => {
     const label = {
         rendicionesMenor10K: "Menor a 10.000",
         rendicionesMenor3K: "Menor a 3.000",
+        rendicionesOficina: "Oficina",
+        rendicionesActividad: "Actividades",
     }
 
     const choise = () => {

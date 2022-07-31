@@ -10,7 +10,8 @@ const Card_Gasto = ({datos_gasto}) => {
         Swal.fire({
             icon: 'info',
             title: datos_gasto.asunto,
-            html: '<table width = "80%">' +
+            //html: '',
+            html: '<table width = "100%">' +
                     '<tr>' + 
                         '<th align = "left">Fecha:</th>' + 
                         '<td align = "right">' + datos_gasto.fecha + '</td>' + 
