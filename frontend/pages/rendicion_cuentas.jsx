@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Navbar from "../components/navbar/Navbar";
 
+import { FaPlus } from 'react-icons/fa';
 export default function rendicion_cuentas() {
 
 	const [listaRendiciones, setListaRendiciones] = useState([]);
@@ -63,7 +64,9 @@ export default function rendicion_cuentas() {
 					</div>
 					<div className={styles.contenedorInferior}>
 						<div className={styles.contenedorSectorIzquierdo}>
-							<button onClick={()=>{crearGasto()}} className={styles.Propiedades_boton} >Crear gasto</button>
+							<button onClick={()=>{crearGasto()}} className={styles.Propiedades_boton}>
+								<FaPlus/>
+								Crear gasto</button>
 							{/* Requerimiento para ENTREGA 2!! */}
 							{/* <div className={styles.filtros}>
 								<p className={styles.titulo_filtro}><strong>Filtro</strong></p>

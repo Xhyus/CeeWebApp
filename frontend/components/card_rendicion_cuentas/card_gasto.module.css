@@ -1,33 +1,43 @@
 .contenedorCard {
     background-color: #EDF1F7;
-    display: flex;
     width: 100%;
     height: 15%;
     border-radius: 12px;
     margin-bottom: 4vh;
-    align-items: baseline;
-    justify-content: space-between;
     padding: 2vh 0;
+    display: grid;
+    grid-template-columns: auto auto auto;
 }
-.contenedorTipo{
-    margin-left: 3vh;
-}
-.contenedorInfoGasto{
+.tipoGasto{
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+}
+.date{
+    grid-column: 1/3;
+    display: flex;
+    flex-direction: row;
     align-items: center;
+    justify-content: end;
+    margin-right: 15%;
 }
-.contenedorDetalleGasto{
-    width: auto;
-    margin-right: 3vh;
+.date p{
+    margin-left: 0.5vh;
+}
+.precioGasto{
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+
+}
+.containerBoton{
+    grid-column: 3/3;
+    display: flex;
+    width: 100%;
     justify-content: center;
     align-items: center;
 }
-.propiedadesBoton{
-    width: 100%;
-    background-color: #20ac6b;
+.buttom{
+    font-weight: bold;
+    background-color: #FEB172;
     border: none;
     color: white;
     padding: 1.75vh 1vh;
