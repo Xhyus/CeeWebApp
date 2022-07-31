@@ -39,7 +39,7 @@ const Card_Gasto = ({datos_gasto}) => {
         <div className = {styles.contenedorCard}>
 
                 <h2 className={styles.tipoGasto}>{datos_gasto.tipoGasto}</h2>
-                <h2 className={styles.tipoGasto}>{datos_gasto.asunto}</h2>
+                <h2 className={`${styles.tipoGasto} ${styles.datosGasto} `}>{datos_gasto.asunto}</h2>
                 <h2 className={styles.tipoGasto}>Total</h2>
                 <div className={styles.date}>
                     <FaCalendarCheck />

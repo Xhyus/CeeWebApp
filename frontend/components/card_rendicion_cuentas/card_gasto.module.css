@@ -12,6 +12,11 @@
     display: flex;
     justify-content: center;
 }
+.datosGasto{
+    display: grid;
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+}
 .date{
     grid-column: 1/3;
     display: flex;

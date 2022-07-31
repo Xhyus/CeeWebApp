@@ -65,7 +65,7 @@ export default function rendicion_cuentas() {
 					<div className={styles.contenedorInferior}>
 						<div className={styles.contenedorSectorIzquierdo}>
 							<button onClick={()=>{crearGasto()}} className={styles.Propiedades_boton}>
-								<FaPlus/>
+								<FaPlus className={styles.Propiedades_iconoplus}/>
 								Crear gasto</button>
 							{/* Requerimiento para ENTREGA 2!! */}
 							{/* <div className={styles.filtros}>

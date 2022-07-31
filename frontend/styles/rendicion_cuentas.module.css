@@ -86,9 +86,14 @@
 
 }
 
-.Propiedades_icono{
-    margin: 0 1vh;
+.Propiedades_iconoplus{
+    margin-right: 1.5vh;
 }
+.Propiedades_boton{
+    color: white;
+
+}
+
 
 @media (max-width: 768px){
     .contenedor{
