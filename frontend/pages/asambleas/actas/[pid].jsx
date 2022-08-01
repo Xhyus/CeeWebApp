@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react'
-import styles from '../../styles/actas_asambleas.module.css'
-import Textarea from '../../components/textarea/Textarea'
-import Navbar from '../../components/navbar/Navbar'
-import Spinner from '../../components/spinner/Spinner'
+import styles from '../../../styles/actas_asambleas.module.css'
+import Textarea from '../../../components/textarea/Textarea'
+import Navbar from '../../../components/navbar/Navbar'
+import Spinner from '../../../components/spinner/Spinner'
 import { FaPaperclip } from 'react-icons/fa'
 import { FiSend } from 'react-icons/fi'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import handleUpperCase from '../../utils/handleUpperCase'
+import handleUpperCase from '../../../utils/handleUpperCase'
 
-export default function actas_asambleas({ idAsamblea }) {
+export default function actas_asambleas() {
+
+	const router = useRouter()
+	const { pid } = router.query
+	const [count, setCount] = useState(0)
 
 	//? Hooks para Spinner.
 	const [cargandoInfo, setCargandoInfo] = useState(false);
 	const [cargandoPuntos, setCargandoPuntos] = useState(false);
-
-	// const idAsambleaPRUEBA = '62887cab6f9cba4180f42c17';
-	const idAsambleaPRUEBA = '62e704c1b06ca50ae0c49034';
-	// const idAsambleaPRUEBA = '6289c3fcc5eaee5de4600601';
 
 	//? Hooks para el formulario.
 	const [puntoActa, setPuntoActa] = useState([{
@@ -26,27 +26,16 @@ export default function actas_asambleas({ idAsamblea }) {
 		descripcion: '',
 	}]);
 
-	const [titulo, setTitulo] = useState('');
 	const [punto, setPunto] = useState([])
-	// const [asistencia, setAsistencia] = useState([])
 	const [asunto, setAsunto] = useState([])
 	const listaAsuntos = [];
 	const [descripcion, setDescripcion] = useState([])
-	const [idActa, setIdActa] = useState('')
-	const router = useRouter()
 	const [asamblea, setAsamblea] = useState()
 
 	const handleChangeDescripcion = index => event => {
 		setDescripcion(event.target.value)
-		//setPuntoActa(puntoActa[event.target.name].descripcion = event.target.value);
-
-		console.log("Input modificado: ", event.target.name)
-		console.log("Texto modificado: ", event.target.value)
-
 		let actualizarDescripcion = [...puntoActa];
-
 		actualizarDescripcion[index].descripcion = event.target.value;
-
 		setPuntoActa(actualizarDescripcion);
 	}
 
@@ -58,80 +47,57 @@ export default function actas_asambleas({ idAsamblea }) {
 
 	useEffect(() => {
 		isLogged()
-
 		setCargandoInfo(true);
-
-		const idAsamblea = localStorage.getItem('pid')
-
 		const obtenerPuntos = async (id) => {
 			setCargandoPuntos(true);
-
-			const response = await axios.get(process.env.SERVIDOR + '/asamblea/' + id)
-			const puntos = [...response.data.puntos]
-
-			console.log("Puntos: ", puntos)
-
-			//? Borramos el punto que se crea por defecto.
-			puntoActa.splice(0, 1);
-
-			puntos.map(punto => {
-				obtenerPunto(punto)
-			})
-
-			console.log("Hook Punto: ", puntoActa);
-			console.log("Array Asunto: ", listaAsuntos)
-			console.log("Hook Asunto: ", asunto)
-
-			setCargandoPuntos(false);
+			try {
+				const response = await axios.get(process.env.SERVIDOR + '/asamblea/' + id)
+				const puntos = [...response.data.puntos]
+				puntoActa.splice(0, 1);
+				puntos.map(punto => {
+					obtenerPunto(punto)
+				})
+				setCargandoPuntos(false);
+			}
+			catch (error) {
+				console.log("Error al obtener los puntos")
+			}
 		}
+		if (count === 1) {
+			setAsamblea(pid)
+			obtenerPuntos(pid)
+			setCargandoInfo(false);
+		} else {
+			if (pid !== undefined) {
+				setAsamblea(pid)
+				obtenerPuntos(pid)
+				setCargandoInfo(false);
+			}
+		}
+	}, [pid]);
 
-		setAsamblea(idAsamblea)
-		obtenerPuntos(idAsamblea)
-
-		setCargandoInfo(false);
-	}, []);
+	console.log(asamblea)
 
 	const obtenerPunto = async (id) => {
 
 		try {
 			const response = await axios.get(process.env.SERVIDOR + '/punto/search/' + id)
-
 			//! PRUEBA PARA LLENAR HOOK PUNTO.
 			setPuntoActa((prevState) => [...prevState, {
 				id: id,
 				asunto: response.data.asunto,
 				descripcion: response.data.descripcion,
 			}]);
-
 			listaAsuntos.push(response.data.asunto)
 			// setAsunto(listaAsuntos);
 			setAsunto(handleUpperCase(localStorage.getItem('asunto')))
 			setPunto(response.data);
 			console.log("Hook Punto: ", punto);
-
 		} catch (error) {
 			console.log("error al obtener un solo punto")
 		}
 
 	}
-
-	// const crearAsistencia = (id) => {
-	// 	const data = {
-	// 		nombre: asistencia.nombre,
-	// 		apellido: asistencia.apellido,
-	// 		rut: asistencia.rut,
-	// 		generacion: asistencia.generacion,
-	// 	}
-	// axios.post(process.env.SERVIDOR + '/asistencia/' + id, data)
-	// 		.then(res => {
-	// 			console.log(res)
-	// 		}
-	// 		)
-	// 		.catch(err => {
-	// 			console.log(err)
-	// 		}
-	// 		)
-	// }
 
 	const asistenciaPrueba = [
 		{
@@ -193,7 +159,6 @@ export default function actas_asambleas({ idAsamblea }) {
 		const data = {
 			acta: id,
 		}
-
 		axios.put(process.env.SERVIDOR + '/asamblea/update/' + id, data)
 			.then(res => {
 				console.log("Se modifico la asamblea")
@@ -204,31 +169,18 @@ export default function actas_asambleas({ idAsamblea }) {
 	}
 
 	const enviarActa = () => {
-		// event.preventDefault()
-		// const puntos = [...punto.puntos];
-		// puntos.map(punto => {
-		// 	modificarPuntos(punto)
-		// })
-		// crearActa(puntos, asistenciaPrueba)
-
-		//? 
-
 		//? Actualizamos puntos mediante PUT.
 		puntoActa.map(punto => {
-
 			const data = {
 				descripcion: punto.descripcion
 			}
 			axios.put(process.env.SERVIDOR + '/punto/update/' + punto.id, data)
 				.then(res => {
 					console.log("se modificaron los puntos")
-				}
-				)
+				})
 				.catch(err => {
 					console.log("error al modificar los puntos")
-				}
-				)
-
+				})
 		})
 
 		//? Bandera de información guardada.
@@ -269,12 +221,13 @@ export default function actas_asambleas({ idAsamblea }) {
 									puntoActa.map((punto, index) => (
 										<>
 											<p>{punto.asunto} </p>
-											<textarea
+											<Textarea
+												key={index}
 												name={index}
 												onChange={handleChangeDescripcion(index)}
 												type="text"
 												placeholder='Ingrese descripción del punto'>
-											</textarea>
+												/</Textarea>
 										</>
 									))
 								}

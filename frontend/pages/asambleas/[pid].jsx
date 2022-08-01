@@ -88,6 +88,10 @@ const verAsamblea = () => {
             })
     }
 
+    const goToActas = (id) => {
+        router.push(`/asambleas/actas/${id}`)
+    }
+
     return (
         <>
             <Navbar />
@@ -128,7 +132,7 @@ const verAsamblea = () => {
                             <a onClick={() => { console.log("hola") }} className={`${styles.Propiedades_boton} ${styles.boton_archivos}`}>Ver Archivos</a>
                         </div> */}
                         <div className={styles.actas}>
-                            <a href='/asambleas/actas_asambleas/' className={`${styles.Propiedades_boton} ${styles.boton_actas}`}>Generar Actas</a>
+                            <a onClick={() => goToActas(pid)} className={`${styles.Propiedades_boton} ${styles.boton_actas}`}>Generar Actas</a>
                         </div>
                         <div className={styles.datos_hora}>
                             {/* <span><strong>Hora: </strong></span> */}
