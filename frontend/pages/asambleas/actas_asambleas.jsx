@@ -15,7 +15,7 @@ export default function actas_asambleas({ idAsamblea }) {
 	const [cargandoPuntos, setCargandoPuntos] = useState(false);
 
 	// const idAsambleaPRUEBA = '62887cab6f9cba4180f42c17';
-	const idAsambleaPRUEBA = '6289c3fcc5eaee5de4600601';
+	const idAsambleaPRUEBA = '62e704c1b06ca50ae0c49034';
 	// const idAsambleaPRUEBA = '6289c3fcc5eaee5de4600601';
 
 	//? Hooks para el formulario.
@@ -25,6 +25,7 @@ export default function actas_asambleas({ idAsamblea }) {
 		descripcion: '',
 	}]);
 
+	const [titulo, setTitulo] = useState('');
 	const [punto, setPunto] = useState([])
 	// const [asistencia, setAsistencia] = useState([])
 	const [asunto, setAsunto] = useState([])
@@ -67,6 +68,9 @@ export default function actas_asambleas({ idAsamblea }) {
 			const puntos = [...response.data.puntos]
 
 			console.log("Puntos: ", puntos)
+
+			//? Borramos el punto que se crea por defecto.
+			puntoActa.splice(0, 1);
 
 			puntos.map(punto => {
 				obtenerPunto(punto)
@@ -204,6 +208,8 @@ export default function actas_asambleas({ idAsamblea }) {
 		// })
 		// crearActa(puntos, asistenciaPrueba)
 
+		//? 
+
 		//? Actualizamos puntos mediante PUT.
 		puntoActa.map(punto => {
 
@@ -235,10 +241,10 @@ export default function actas_asambleas({ idAsamblea }) {
         console.log("--------------------------------------");
 	}
 
-	if(cargandoInfo === true || cargandoPuntos === true) {
-		<Spinner/>
-	}
-	else {
+	// if(cargandoInfo === true || cargandoPuntos === true) {
+	// 	<Spinner/>
+	// }
+	// else {
 
 		return (
 			<>
@@ -259,6 +265,7 @@ export default function actas_asambleas({ idAsamblea }) {
 									<p className={styles.textTitulo}>Título del acta:</p>
 									<input type="text"
 										className={styles.Input}
+										onChange={e => setTitulo(e.target.value)}
 										placeholder='Ingrese título del acta'
 										name="titulo"
 									/>
@@ -273,7 +280,6 @@ export default function actas_asambleas({ idAsamblea }) {
 												onChange={handleChangeDescripcion(index)}
 												type="text" 
 												placeholder='Ingrese descripción del punto'>
-
 											</textarea>
 											</>
 										))
@@ -287,5 +293,5 @@ export default function actas_asambleas({ idAsamblea }) {
 			</>
 		)
 
-	}
+	// }
 }
