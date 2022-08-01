@@ -85,6 +85,16 @@
     text-align: center;
 }
 
+.propiedades_titulo {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.propiedades_texto {
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
 .listaCards {
     width: 100%;
     height: auto;

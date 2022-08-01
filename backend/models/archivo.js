@@ -3,12 +3,14 @@ const Schema = mongoose.Schema
 const archivoSchema = Schema({
     ruta: {
         type: String,
-        default: null,
         required: true
     },
     nombre: {
         type: String,
-        default: null,
+        required: true
+    },
+    tipo: {
+        type: String,
         required: true
     }
 })

@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react'
 import styles from '../styles/asambleas.module.css'
 import Card from './../components/card_asambleas/Card'
 import axios from 'axios'
-import Filtro from './../components/filtro/Filtro'
 import Navbar from '../components/navbar/Navbar'
-import { FaPlus } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 
 export default function asambleas() {
@@ -44,25 +42,33 @@ export default function asambleas() {
 
 	const Terminadas = () => {
 		if (asambleasTerminadas.length > 0) {
-			return (<div className={styles.listaCards}>
-				{asambleasPorRealizar.map((asamblea, key) => {
-					return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" />
-				})}
-			</div>)
+			return (
+				<div className={styles.listaCards}>
+					{asambleasTerminadas.map((asamblea, key) => {
+						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" />
+					})}
+				</div>
+			)
 		} else {
-			return (<h3>No hay asambleas por realizar</h3>)
+			return (
+				<h3>No hay asambleas terminadas</h3>
+			)
 		}
 	}
 
 	const PorRealizar = () => {
 		if (asambleasPorRealizar.length > 0) {
-			return (<div className={styles.listaCards}>
-				{asambleasTerminadas.map((asamblea, key) => {
-					return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" />
-				})}
-			</div>)
+			return (
+				<div className={styles.listaCards}>
+					{asambleasPorRealizar.map((asamblea, key) => {
+						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" />
+					})}
+				</div>
+			)
 		} else {
-			return (<h3>No hay asambleas terminadas</h3>)
+			return (
+				<h3>No hay asambleas por realizar</h3>
+			)
 		}
 	}
 
@@ -71,7 +77,7 @@ export default function asambleas() {
 			<Navbar />
 			<div className={styles.fondo}>
 				<div className={styles.contenedor}>
-					<div className={styles.contenedorSectorIzquierdo}>
+					{/* <div className={styles.contenedorSectorIzquierdo}>
 						<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
 						<div className={styles.filtros}>
 							<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
@@ -83,24 +89,14 @@ export default function asambleas() {
 								<Filtro tipo='fecha' />
 							</div>
 						</div>
-					</div>
+					</div> */}
 					<div className={styles.contenedorSectorDerecho}>
 						<h1>Asambleas por realizar</h1>
 						{PorRealizar()}
 						{/* separation line */}
-						<div className={styles.linea}>
-							<hr className={styles.separationLine} />
-							<span class={styles.dot}></span>
-							<hr className={styles.separationLine} />
-
-						</div>
+						<h1>Asambleas terminadas</h1>
 						{Terminadas()}
-						{/*
-						<div className={styles.listaCards}>
-							{asambleasTerminadas.map((asamblea, key) => {
-								return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" />
-							})}
-						</div> */}
+
 					</div>
 				</div>
 			</div>

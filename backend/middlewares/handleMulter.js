@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
         let fecha = new Date();
         fecha = fecha.getFullYear() + '_' + (fecha.getMonth() + 1) + '_' + fecha.getDate() + '_' + fecha.getHours() + '_' + fecha.getMinutes() + '_' + fecha.getSeconds()
-        let nombreArchivo = fecha + '_' + file.originalname.replace(/\s/g, '_', file.originalname);
+        let nombreArchivo = fecha + '_' + file.originalname.replace(/\s\+/g, '_', file.originalname);
         cb(null, nombreArchivo);
     }
 })
@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg" || file.mimetype == "application/pdf" || file.mimetype == "application/vnd.openxmlformats-officedocument.wordprocessingml.document" || file.mimetype == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || file.mimetype == "text/csv") {
             req.params.archivoValido = true;
             cb(null, req.params.archivoValido);
         } else {

@@ -5,6 +5,7 @@ import Navbar from '../../components/navbar/Navbar'
 import axios from 'axios'
 import { formateoFechaBD } from '../../utils/handleDates'
 import handleUpperCase from '../../utils/handleUpperCase'
+import Puntos from '../../components/puntos_List/Puntos'
 
 const verAsamblea = () => {
     const router = useRouter()
@@ -16,10 +17,10 @@ const verAsamblea = () => {
     const [puntos, setPuntos] = useState([])
     const [count, setCount] = useState(0)
     const [modal, setModal] = useState(false)
+    const [archivos, setArchivos] = useState([])
 
     // modal function
-    const toggle = () => setModal(!modal)
-    console.log(toggle)
+    // const toggle = () => setModal(!modal)
 
     useEffect(() => {
         const getAsamblea = (pid) => {
@@ -29,10 +30,17 @@ const verAsamblea = () => {
                     setTipoAsamblea(handleUpperCase(res.data.tipoAsamblea))
                     setContexto(handleUpperCase(res.data.contexto))
                     setFecha(formateoFechaBD(res.data.fecha))
+                    setArchivos(res.data.archivos)
+                    localStorage.setItem('asunto', res.data.asunto)
                     let puntos = [...res.data.puntos]
                     puntos.map(punto => {
                         obtenerPunto(punto)
                     })
+                    let archivos = [...res.data.archivos]
+                    archivos.map(archivo => {
+                        obtenerInformacionArchivo(archivo)
+                    })
+
                 })
                 .catch(err => {
                     console.log("Error al obtener una asamblea")
@@ -43,10 +51,32 @@ const verAsamblea = () => {
         } else {
             if (pid !== undefined) {
                 getAsamblea(pid)
+                localStorage.setItem('pid', pid)
             }
         }
         setCount(1)
     }, [pid])
+
+    // const obtenerInformacionArchivo = (id) => {
+    //     axios.get(process.env.SERVIDOR + '/archivo/' + id)
+    //         .then(res => {
+    //             setArchivos(archivo => [...archivo, res.data])
+    //         })
+    //         .catch(err => {
+    //             console.log("Error al obtener un archivo")
+    //         })
+    // }
+
+
+
+    // const downloadFile = (archivo) => {
+    //     axios.get("localhost:3001/api/archivo/download/62e7438896eeaa606ce30837", { responseType: 'blob' })
+    //         .then(res => {
+    //             console.log(res)
+    //         }).catch(err => {
+    //             console.log("Error al descargar un archivo")
+    //         })
+    // }
 
     const obtenerPunto = (id) => {
         axios.get(process.env.SERVIDOR + '/punto/search/' + id)
@@ -68,7 +98,7 @@ const verAsamblea = () => {
                     </div>
                     <div className={styles.datos_asamblea}>
                         <div className={styles.datos_tipo}>
-                            <p><span><strong>Tipo de asamblea: </strong></span><span>{tipoAsamblea}</span></p>
+                            <p ><span className={styles.propiedades_titulo}>Tipo de asamblea: </span><span className={styles.propiedades_texto}>{tipoAsamblea}</span></p>
                         </div>
                         <div className={styles.contexto}>
                             <h2>Contexto:</h2>
@@ -76,29 +106,33 @@ const verAsamblea = () => {
                         </div>
                         <div className={styles.puntos}>
                             <h2>Puntos a tratar:</h2>
+                            <Puntos puntos={puntos} />
+                            {/* <h3>Archivos</h3>
                             <ul>
-                                {puntos.map((punto, key) => {
+                                {archivos.map(archivo => {
                                     return (
-                                        <div key={key}>
-                                            <p>{key + 1}: {handleUpperCase(punto.asunto)}</p>
-                                        </div>
+                                        <li key={archivo.id}>
+                                            <a onClick={() => downloadFile(archivo)} download>{archivo.nombre}</a>
+                                        </li>
                                     )
-                                })}
-                            </ul>
+                                })
+                                }
+
+                            </ul> */}
                         </div>
                     </div>
                     <section className={styles.botones}>
-                        <div className={styles.datos_fecha}>
+                        {/* <div className={styles.datos_fecha}>
                             <span><strong>Fecha: </strong></span>
                             <span>{fecha.fecha}</span>
-                            <a onClick={() => { toggle }} className={`${styles.Propiedades_boton} ${styles.boton_archivos}`}>Ver Archivos</a>
-                        </div>
+                            <a onClick={() => { console.log("hola") }} className={`${styles.Propiedades_boton} ${styles.boton_archivos}`}>Ver Archivos</a>
+                        </div> */}
                         <div className={styles.actas}>
                             <a href='/asambleas/actas_asambleas/' className={`${styles.Propiedades_boton} ${styles.boton_actas}`}>Generar Actas</a>
                         </div>
                         <div className={styles.datos_hora}>
-                            <span><strong>Hora: </strong></span>
-                            <span>{fecha.hora}</span>
+                            {/* <span><strong>Hora: </strong></span> */}
+                            {/* <span>{fecha.hora}</span> */}
                             <a href="/asambleas" className={`${styles.Propiedades_boton} ${styles.boton_atras}`}>Volver</a>
                         </div>
                     </section>
