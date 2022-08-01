@@ -11,6 +11,7 @@ const UsuarioRoutes = require('./routes/usuarioRoutes')
 const AsistenciaRoutes = require('./routes/asistenciaRoutes')
 const ActaRoutes = require('./routes/actaRoutes')
 const CEERoutes = require('./routes/ceeRoutes')
+const ArchivoRoutes = require('./routes/archivoRoutes')
 const app = express()
 app.use(function (req, res, next) {
 	res.header("Access-Control-Allow-Origin", "*");
@@ -28,29 +29,29 @@ app.use('/api', UsuarioRoutes)
 app.use('/api', AsistenciaRoutes)
 app.use('/api', ActaRoutes)
 app.use('/api', CEERoutes)
+app.use('/api', ArchivoRoutes)
 
 const options = {
 	useNewUrlParser: true,
 	useCreateIndex: true,
-	autoIndex: true, //this is the code I added that solved it all
+	autoIndex: true,
 	keepAlive: true,
 	poolSize: 10,
 	bufferMaxEntries: 0,
 	connectTimeoutMS: 10000,
 	socketTimeoutMS: 45000,
-	family: 4, // Use IPv4, skip trying IPv6
+	family: 4,
 	useFindAndModify: false,
 	useUnifiedTopology: true
 }
-
-mongoose.connect(`mongodb://ceewebapp:gF6eKxsEez6cnKj@ceewebapp-shard-00-00.eziad.mongodb.net:27017,ceewebapp-shard-00-01.eziad.mongodb.net:27017,ceewebapp-shard-00-02.eziad.mongodb.net:27017/ceewebapp?ssl=true&replicaSet=atlas-li16kg-shard-0&authSource=admin&retryWrites=true&w=majority`, options, function (error) {
+mongoose.connect(process.env.DB, options, function (error) {
 	if (error) {
 		console.log(error)
 	}
 })
 
-app.listen(3001, () => {
-	console.log("Server running on PORT " + 3001)
+app.listen(process.env.PORT, () => {
+	console.log("Server running on PORT " + process.env.PORT)
 })
 
 module.exports = app;

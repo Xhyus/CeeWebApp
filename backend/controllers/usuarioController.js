@@ -16,7 +16,7 @@ const guardarUsuario = async (req, res) => {
     })
     usuarioNuevo.save((err, usuario) => {
         if (err) {
-            return res.status(400).send({ message: `Error al guardar el usuario: ${err}` })
+            return res.status(400).send({ message: `Error al guardar el usuario` })
         }
         res.status(201).send({ usuario })
     })
@@ -25,7 +25,7 @@ const guardarUsuario = async (req, res) => {
 const obtenerUsuarios = (req, res) => {
     usuario.find({}, (err, usuarios) => {
         if (err) {
-            return res.status(400).send({ message: `Error al obtener los usuarios: ${err}` })
+            return res.status(400).send({ message: `Error al obtener los usuarios` })
         }
         res.status(200).send({ usuarios })
     })
@@ -35,31 +35,7 @@ const obtenerUsuario = (req, res) => {
     const { id } = req.params
     usuario.findById(id, (err, usuario) => {
         if (err) {
-            return res.status(400).send({ message: `Error al obtener el usuario: ${err}` })
-        }
-        res.status(200).send({ usuario })
-    })
-}
-
-//! Revisar con tiempo, no entrega el correo que corresponde
-// const obtenerUsuarioCorreo = (req, res) => {
-//     const { email } = req.params
-//     console.log(email)
-//     usuario.find({ 'email': email }, (err, usuario) => {
-//         if (err) {
-//             return res.status(400).send({ message: `Error al obtener el usuario: ${err}` })
-//         }
-//         res.status(200).send({ usuario })
-//     })
-// }
-
-
-const actualizarUsuario = (req, res) => {
-    const { id } = req.params
-    const { nombre, apellido, rol, estadoCuenta, carrera } = req.body
-    usuario.findByIdAndUpdate(id, { nombre, apellido, rol, estadoCuenta, carrera }, (err, usuario) => {
-        if (err) {
-            return res.status(400).send({ message: `Error al actualizar el usuario: ${err}` })
+            return res.status(400).send({ message: `Error al obtener el usuario` })
         }
         res.status(200).send({ usuario })
     })
@@ -71,57 +47,40 @@ const modificarEstado = (req, res) => {
     console.log(estadoCuenta)
     usuario.findByIdAndUpdate(id, { estadoCuenta }, (err, usuario) => {
         if (err) {
-            return res.status(400).send({ message: `Error al actualizar el usuario: ${err}` })
+            return res.status(400).send({ message: `Error al actualizar el usuario` })
         }
         res.status(200).send({ usuario })
     })
 }
 
-const verificacion = (req, res) => {
+const login = (req, res) => {
     usuario.findOne({ 'email': req.body.email }, (err, usuario) => {
         if (err) {
-            return res.status(500).send({ message: `Error al verificar el usuario: ${err}` })
+            return res.status(500).send({ message: `Error al validar el usuario`, error: 1 })
         }
         if (!usuario) {
-            return res.status(400).send({ message: `El usuario no existe` })
+            return res.status(400).send({ message: `El usuario no existe`, error: 2 })
         }
         if (usuario.estadoCuenta == 'noRegular') {
-            return res.status(401).send({ message: `El usuario no está activo` })
+            return res.status(401).send({ message: `El usuario no está activo`, error: 3 })
         }
-        res.status(200).send({ usuario })
-    })
-}
-
-const validarPass = (req, res) => {
-    const reqPass = req.body.password
-    usuario.findOne({ 'email': req.body.email }, (err, usuario) => {
-        if (err) {
-            return res.status(500).send({ message: `Error al validar el usuario: ${err}` })
-        }
-        if (!usuario) {
-            return res.status(400).send({ message: `El usuario no existe` })
-        }
-
-        bcrypt.compare(reqPass, usuario.password, (err, result) => {
+        bcrypt.compare(req.body.password, usuario.password, (err, result) => {
             if (err) {
-                return res.status(500).send({ message: `Error al validar el usuario: ${err}` })
-            } else if (!result) {
-                return res.status(400).send({ message: `Contraseña incorrecta` })
-            } else {
-                res.status(200).send({ message: 'Contraseña correcta', 'token': servicio.createToken(usuario), id: usuario.id })
+                return res.status(500).send({ message: `Error al validar el usuario`, error: 4 })
             }
+            if (!result) {
+                return res.status(400).send({ message: `Contraseña incorrecta`, error: 5 })
+            }
+            res.status(200).send({ message: 'Contraseña correcta', 'token': servicio.createToken(usuario), carrera: usuario.carrera, rol: usuario.rol })
         })
     })
 }
+
 
 module.exports = {
     guardarUsuario,
     obtenerUsuarios,
     obtenerUsuario,
-    actualizarUsuario,
     modificarEstado,
-    verificacion,
-    // obtenerUsuarioCorreo,
-    validarPass
-
+    login,
 }

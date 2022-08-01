@@ -4,7 +4,13 @@ const Schema = mongoose.Schema
 const ceeSchema = Schema({
 	carrera: {
 		type: String,
-		required: true
+		required: true,
+		enum: [
+			"ieci",
+			"comercial",
+			"cpa",
+			"icinf"
+		]
 	},
 	asambleas: {
 		type: [Schema.ObjectId],

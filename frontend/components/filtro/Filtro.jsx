@@ -28,9 +28,9 @@ const Filtro = ({ tipo, getRendiciones }) => {
                     <input type="checkbox" className={styles.checkbox} name="filtro1" onClick={() => {
                         setFiltroActivo(!filtroActivo);
 
-                        if(filtroActivo === false){
+                        if (filtroActivo === false) {
                             getRendiciones(tipo);
-                        }else{
+                        } else {
                             getRendiciones("rendiciones");
                         }
                     }}></input>

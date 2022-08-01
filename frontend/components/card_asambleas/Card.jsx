@@ -3,9 +3,9 @@ import styles from './Card.module.css'
 import { FaClock, FaTag, FaCalendarCheck } from 'react-icons/fa'
 import { compararFechas, formateoFechaBD } from '../../utils/handleDates'
 import { useRouter } from 'next/router'
+import axios from 'axios'
 
-const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
-	const [estado, setEstado] = useState('')
+const Card = ({ id, asunto, fecha, tipoAsamblea, estado }) => {
 	const [format, setFormat] = useState('')
 	const ahora = new Date()
 	const tipoAsambleaUp = tipoAsamblea.charAt(0).toUpperCase() + tipoAsamblea.slice(1)
@@ -14,11 +14,10 @@ const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 
 	useEffect(() => {
 		setFormat(formateoFechaBD(fecha))
-		setEstado(compararFechas(fecha, ahora))
 	}, [])
 
 	const getEstadoAsamblea = () => {
-		if (estado === true) {
+		if (estado === "Terminadas") {
 			return (
 				<nav className={styles.estadoTerminado}>
 					<p className={styles.textoEstado}>Terminada</p>
@@ -35,9 +34,14 @@ const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 		}
 	}
 
-	const generarActa = (id) => {
-		localStorage.setItem('id_asamblea', id)
-		router.push('/asambleas/actas_asambleas')
+	const verAsamblea = (id) => {
+		axios.get(process.env.SERVIDOR + '/asamblea/' + id)
+			.then(res => {
+				router.push(`/asambleas/${id}`)
+			})
+			.catch(err => {
+				router.push('404')
+			})
 	}
 
 	return (
@@ -58,7 +62,7 @@ const Card = ({ id, asunto, fecha, tipoAsamblea }) => {
 						<p className={`${styles.texto} ${styles.fecha}`}>{format.hora}</p>
 					</div>
 				</section>
-				<a className={styles.vermas} onClick={() => generarActa(id)}>Ver más</a>
+				<a className={styles.vermas} onClick={() => verAsamblea(id)}>Ver más</a>
 			</div>
 		</div>
 	)

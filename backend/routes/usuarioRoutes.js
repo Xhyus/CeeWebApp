@@ -2,14 +2,12 @@ const express = require('express')
 const usuarioController = require('../controllers/usuarioController')
 const auth = require('../middlewares/auth')
 const api = express.Router()
+const checkEmail = require('../middlewares/checkEmail')
 
-api.post('/usuario', usuarioController.guardarUsuario)
+api.post('/usuario', checkEmail, usuarioController.guardarUsuario)
 api.get('/usuarios', usuarioController.obtenerUsuarios)
-api.get('/usuario/:id', usuarioController.obtenerUsuario)
-// api.post('/usuario/correo', usuarioController.obtenerUsuarioCorreo)
-api.put('/usuario/update/:id', usuarioController.actualizarUsuario)
+api.get('/usuario/buscar/:id', usuarioController.obtenerUsuario)
 api.put('/usuario/estado/:id', usuarioController.modificarEstado)
-api.post('/usuario/verificacion', usuarioController.verificacion)
-api.post('/usuario/validarPass', usuarioController.validarPass)
+api.post('/usuario/login', usuarioController.login)
 
 module.exports = api

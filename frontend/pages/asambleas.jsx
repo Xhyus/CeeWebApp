@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react'
 import styles from '../styles/asambleas.module.css'
 import Card from './../components/card_asambleas/Card'
 import axios from 'axios'
-import Filtro from './../components/filtro/Filtro'
 import Navbar from '../components/navbar/Navbar'
-import { FaPlus } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 
 export default function asambleas() {
@@ -14,39 +12,63 @@ export default function asambleas() {
 
 	useEffect(() => {
 		(async () => {
-			getAsambleasTerminadas()
-			getAsambleasPorRealizar()
+			isLogged()
+			getAsambleas()
 		})();
-		isLogged()
-
 	}, []);
 
 	const isLogged = () => {
-		localStorage.removeItem('id_asamblea')
 		if (localStorage.getItem('token') === null) {
 			router.push('/')
 		}
 	}
 
-	const getAsambleasTerminadas = async () => {
+	const getAsambleas = async () => {
+		// const token = localStorage.getItem('token')
+		const carrera = localStorage.getItem('carrera')
 		try {
-			const response = await axios.get('http://localhost:3001/api/asambleas/terminadas');
+			const response = await axios.get(`${process.env.SERVIDOR}/asambleas/${carrera}`)
 			if (response.status === 200) {
-				setAsambleasTerminadas(response.data);
+				console.log(response.data.asambleasTerminadas)
+				console.log(response.data.asambleasNoTerminadas)
+				setAsambleasTerminadas(response.data.asambleasTerminadas)
+				setAsambleasPorRealizar(response.data.asambleasNoTerminadas)
 			}
-		} catch (error) {
-			console.log("Error: " + error);
+		}
+		catch (error) {
+			console.log("Error: " + error)
 		}
 	}
 
-	const getAsambleasPorRealizar = async () => {
-		try {
-			const response = await axios.get('http://localhost:3001/api/asambleas/porRealizar');
-			if (response.status === 200) {
-				setAsambleasPorRealizar(response.data);
-			}
-		} catch (error) {
-			console.log("Error: " + error);
+	const Terminadas = () => {
+		if (asambleasTerminadas.length > 0) {
+			return (
+				<div className={styles.listaCards}>
+					{asambleasTerminadas.map((asamblea, key) => {
+						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" />
+					})}
+				</div>
+			)
+		} else {
+			return (
+				<h3>No hay asambleas terminadas</h3>
+			)
+		}
+	}
+
+	const PorRealizar = () => {
+		if (asambleasPorRealizar.length > 0) {
+			return (
+				<div className={styles.listaCards}>
+					{asambleasPorRealizar.map((asamblea, key) => {
+						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" />
+					})}
+				</div>
+			)
+		} else {
+			return (
+				<h3>No hay asambleas por realizar</h3>
+			)
 		}
 	}
 
@@ -55,7 +77,7 @@ export default function asambleas() {
 			<Navbar />
 			<div className={styles.fondo}>
 				<div className={styles.contenedor}>
-					<div className={styles.contenedorSectorIzquierdo}>
+					{/* <div className={styles.contenedorSectorIzquierdo}>
 						<button className={styles.Propiedades_boton} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
 						<div className={styles.filtros}>
 							<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
@@ -67,20 +89,14 @@ export default function asambleas() {
 								<Filtro tipo='fecha' />
 							</div>
 						</div>
-					</div>
+					</div> */}
 					<div className={styles.contenedorSectorDerecho}>
-						{asambleasTerminadas ? (
-							<div className={styles.listaCards}>
-								{asambleasPorRealizar.map((asamblea) => {
-									return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
-								})}
-							</div>
-						) : (<h1>No hay asambleas por realizar</h1>)}
-						<div className={styles.listaCards}>
-							{asambleasTerminadas.map((asamblea) => {
-								return <Card asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} />
-							})}
-						</div>
+						<h1>Asambleas por realizar</h1>
+						{PorRealizar()}
+						{/* separation line */}
+						<h1>Asambleas terminadas</h1>
+						{Terminadas()}
+
 					</div>
 				</div>
 			</div>
