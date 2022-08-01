@@ -39,11 +39,11 @@ const crear = () => {
                         <p className={styles.titulo_filtro}><strong>Filtro</strong></p>
                         <section className={styles.contenedores}>
                             <div className={styles.contenedorAsunto}>
-                                <label for="Asunto" className={styles.labels}>Asunto: </label>
+                                <label className={styles.labels}>Asunto: </label>
                                 <input className={styles.inputs} name="Asunto" id='Asunto' type="text" placeholder="Asunto" onChange={handleChangeAsunto} />
                             </div>
                             <div className={styles.contenedorTipoAsamblea}>
-                                <label for="selectTipo" className={styles.labels}>Tipo de asamblea: </label>
+                                <label className={styles.labels}>Tipo de asamblea: </label>
                                 <select className={styles.selectTipo} name="selectTipo" id='selectTipo' onChange={handleChangeTipoAsamblea}>
                                     <option value="null">Seleccione un tipo de asamblea</option>
                                     <option value="resolutiva">Resolutiva</option>
@@ -51,7 +51,7 @@ const crear = () => {
                                 </select>
                             </div>
                             <div className={styles.contenedorFecha}>
-                                <label for="input-fecha" className={styles.labels}>Fecha: </label>
+                                <label className={styles.labels}>Fecha: </label>
                                 <input className={styles.inputs} type="datetime-local" onChange={handleChangeFecha} name="input-fecha" id="input-fecha" />
                             </div>
                             <button className={styles.Propiedades_boton} onClick={() => handleSubmit()}>{boton}</button>
