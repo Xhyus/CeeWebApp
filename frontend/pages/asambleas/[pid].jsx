@@ -46,12 +46,12 @@ const verAsamblea = () => {
                     console.log("Error al obtener una asamblea")
                 })
         }
+        localStorage.setItem('pid', pid);
         if (count === 1) {
             getAsamblea(pid)
         } else {
             if (pid !== undefined) {
                 getAsamblea(pid)
-                localStorage.setItem('pid', pid)
             }
         }
         setCount(1)
@@ -86,6 +86,10 @@ const verAsamblea = () => {
             .catch(err => {
                 console.log("Error al obtener un solo punto")
             })
+    }
+
+    const goToActas = (id) => {
+        router.push(`/asambleas/actas/${id}`)
     }
 
     return (
@@ -128,7 +132,7 @@ const verAsamblea = () => {
                             <a onClick={() => { console.log("hola") }} className={`${styles.Propiedades_boton} ${styles.boton_archivos}`}>Ver Archivos</a>
                         </div> */}
                         <div className={styles.actas}>
-                            <a href='/asambleas/actas_asambleas/' className={`${styles.propiedades_Boton} ${styles.boton_generar}`}>Generar Actas</a>
+                            <a onClick={() => goToActas(pid)} className={`${styles.Propiedades_boton} ${styles.boton_actas}`}>Generar Actas</a>
                         </div>
                         <div className={styles.datos_hora}>
                             {/* <span><strong>Hora: </strong></span> */}
