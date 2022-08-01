@@ -40,45 +40,33 @@
     align-items: center;
 }
 
-.Propiedades_boton {
-    color: #FFFFFF;
-    width: 100%;
-    height: auto;
-    padding: 15% 20%;
-    font-weight: 600;
-    border-radius: 10px;
-    border: none;
-    font-size: 1rem;
+.botones{
     display: flex;
     align-items: center;
-    text-align: center;
-    justify-content: center;
+    justify-content: space-evenly;
+    margin-top: 2vh;
 }
 
-.boton_atras {
-    background-color: #EDAE49;
+.propiedades_Boton{
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 1.5vh 2vh;
+    border-radius: 10px;
 }
 
-.boton_actas {
-    background-color: #815355;
-}
-
-.boton_archivos {
+.boton_generar{
     background-color: #20ac6b;
 }
-
-.boton_atras:hover {
-    background-color: #EBA433;
+.boton_volver{
+    background-color: #EDAE49;
 }
-
-.boton_actas:hover {
-    background-color: #70484A;
-}
-
-.boton_archivos:hover {
+.boton_generar:hover{
     background-color: #198A55;
 }
-
+.boton_volver:hover{
+    background-color: #EBA433;
+}
 .datos_titulo {
     font-size: 1.3rem;
     font-weight: 600;

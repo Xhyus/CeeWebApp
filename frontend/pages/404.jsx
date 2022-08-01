@@ -1,8 +1,12 @@
 import React from 'react'
 import styles from "../styles/page404.module.css";
+
+
 export default function page404() {
   return (
     <div className={styles.fondo}>
+        <div>
+        </div>
         <div className={styles.contenedorError}>
             <div className={styles.contenedorIzquierda}>
                 <h1 className={styles.textoError}>Error</h1>

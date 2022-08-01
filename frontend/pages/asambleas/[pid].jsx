@@ -128,12 +128,12 @@ const verAsamblea = () => {
                             <a onClick={() => { console.log("hola") }} className={`${styles.Propiedades_boton} ${styles.boton_archivos}`}>Ver Archivos</a>
                         </div> */}
                         <div className={styles.actas}>
-                            <a href='/asambleas/actas_asambleas/' className={`${styles.Propiedades_boton} ${styles.boton_actas}`}>Generar Actas</a>
+                            <a href='/asambleas/actas_asambleas/' className={`${styles.propiedades_Boton} ${styles.boton_generar}`}>Generar Actas</a>
                         </div>
                         <div className={styles.datos_hora}>
                             {/* <span><strong>Hora: </strong></span> */}
                             {/* <span>{fecha.hora}</span> */}
-                            <a href="/asambleas" className={`${styles.Propiedades_boton} ${styles.boton_atras}`}>Volver</a>
+                            <a href="/asambleas" className={`${styles.propiedades_Boton} ${styles.boton_volver} `}>Volver</a>
                         </div>
                     </section>
                 </div>

@@ -48,3 +48,6 @@
     padding: 1.75vh 1vh;
     border-radius: 10px;
 }
+.buttom:hover{
+    background-color: #EBA433;
+}
