@@ -57,10 +57,11 @@ export default function actas_asambleas({ idAsamblea }) {
 	}
 
 	useEffect(() => {
+		isLogged()
+
 		setCargandoInfo(true);
 
-		isLogged()
-		// const idAsamblea = localStorage.getItem('id_asamblea')
+		const idAsamblea = localStorage.getItem('pid')
 
 		const obtenerPuntos = async (id) => {
 			setCargandoPuntos(true);
@@ -85,7 +86,7 @@ export default function actas_asambleas({ idAsamblea }) {
 		}
 
 		setAsamblea(idAsamblea)
-		obtenerPuntos(idAsambleaPRUEBA)
+		obtenerPuntos(idAsamblea)
 
 		setCargandoInfo(false);
 	}, []);
@@ -257,21 +258,12 @@ export default function actas_asambleas({ idAsamblea }) {
 						<div className={styles.contenedorTitulo}>
 							<h1>{asunto}</h1>
 						</div>
-						<div className={styles.contenedorIcono}>
+						{/* <div className={styles.contenedorIcono}>
 							<FaPaperclip className={styles.iconoClip} />
-						</div>
+						</div> */}
 					</div>
 					<div className={styles.contenedorFormulario}>
 						<form className={styles.Form} onSubmit={enviarActa}>
-							<div className={styles.contenedorInput}>
-								<p className={styles.textTitulo}>Título del acta:</p>
-								<input type="text"
-									className={styles.Input}
-									onChange={e => setTitulo(e.target.value)}
-									placeholder='Ingrese título del acta'
-									name="titulo"
-								/>
-							</div>
 							<div className={styles.contenedorTextArea}>
 								{
 									puntoActa.map((punto, index) => (

@@ -46,12 +46,12 @@ const verAsamblea = () => {
                     console.log("Error al obtener una asamblea")
                 })
         }
+        localStorage.setItem('pid', pid);
         if (count === 1) {
             getAsamblea(pid)
         } else {
             if (pid !== undefined) {
                 getAsamblea(pid)
-                localStorage.setItem('pid', pid)
             }
         }
         setCount(1)
