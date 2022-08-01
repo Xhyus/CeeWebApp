@@ -1,9 +1,9 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../../styles/rendicion_cuentas.module.css";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
-import { useEffect } from "react/cjs/react.production.min";
+// import { useEffect } from "react/cjs/react.production.min";
 
 export default function crear_gasto() {
 
@@ -51,7 +51,7 @@ export default function crear_gasto() {
             [event.target.name]: event.target.value
 
         })
-
+        
     }
 
     //? Función para verificar los datos en caso de que hayan campos incorrectos.

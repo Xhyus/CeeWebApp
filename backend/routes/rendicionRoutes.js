@@ -9,6 +9,7 @@ api.post("/rendicion", rendicionesController.crearRendicion);
 
 //? Rendiciones por filtro.
 api.get("/rendiciones", rendicionesController.obtenerRendiciones);
+api.get("/rendicion/:id", rendicionesController.obtenerRendicionPorID);
 api.get("/rendicionesMenor10K", rendicionesController.obtenerRendicionesMenor10K);
 api.get("/rendicionesMenor3K", rendicionesController.obtenerRendicionesMenor3K);
 api.get("/rendicionesOficina", rendicionesController.obtenerRendicionesOficina);

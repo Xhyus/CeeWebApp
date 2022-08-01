@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/router";
 import Navbar from "../components/navbar/Navbar";
 
+import { FaPlus } from 'react-icons/fa';
 export default function rendicion_cuentas() {
 
 	const [listaRendiciones, setListaRendiciones] = useState([]);
@@ -30,18 +31,27 @@ export default function rendicion_cuentas() {
 	//* .: LISTAR GASTOS :. *//
 
 	const getRendiciones = async (tipoGetRendiciones) => {
+		
 		try {
 			const response = await axios.get(process.env.SERVIDOR + "/" + tipoGetRendiciones);
 
 			// Estado: Ok
 			if (response.status === 200) {
 				setListaRendiciones(response.data);
-				//console.log("Respuesta:\n" + response.data[0].asunto);
 			}
 
 		} catch (error) {
 			console.log("Peticion: " + tipoGetRendiciones + "\nError: " + error);
 		}
+	}
+
+	//* .: CREAR GASTO :. *//
+	const crearGasto = () => {
+
+		console.log(".: Redirigiendo a pantalla crear_gasto :.");
+
+		router.push('/rendicion_cuentas/crear_gasto');
+
 	}
 
 	return (
@@ -54,28 +64,27 @@ export default function rendicion_cuentas() {
 					</div>
 					<div className={styles.contenedorInferior}>
 						<div className={styles.contenedorSectorIzquierdo}>
-							<button className={styles.Propiedades_boton} >Crear asamblea</button>
-							<div className={styles.filtros}>
+							<button onClick={()=>{crearGasto()}} className={styles.Propiedades_boton}>
+								<FaPlus className={styles.Propiedades_iconoplus}/>
+								Crear gasto</button>
+							{/* Requerimiento para ENTREGA 2!! */}
+							{/* <div className={styles.filtros}>
 								<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
 								<div className={styles.ContainerFiltro}>
-
-									<Filtro tipo='normal' />
-									<Filtro tipo='normal' />
-									<Filtro tipo='normal' />
-									<Filtro tipo='fecha' />
-									<Filtro tipo='fecha' />
+									<Filtro tipo='rendicionesMenor10K' getRendiciones={getRendiciones} />
+									<Filtro tipo='rendicionesMenor3K' getRendiciones={getRendiciones} />
+									<Filtro tipo='rendicionesOficina' getRendiciones={getRendiciones} />
+									<Filtro tipo='rendicionesActividad' getRendiciones={getRendiciones} />
 								</div>
-							</div>
+							</div> */}
 						</div>
 						<div className={styles.contenedorSectorDerecho}>
+							{console.log(listaRendiciones[0])}
 							{
 								listaRendiciones.map((gasto, index) => (
 									<Card_gasto
 										key={index}
-										tipo_gasto={gasto.tipoGasto}
-										asunto_gasto={gasto.asunto}
-										fecha_gasto={gasto.fecha}
-										total_gasto={gasto.totalGastado}
+										datos_gasto={gasto}
 									/>
 								))
 							}

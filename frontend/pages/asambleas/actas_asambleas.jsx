@@ -2,23 +2,51 @@ import React, { useEffect, useState } from 'react'
 import styles from '../../styles/actas_asambleas.module.css'
 import Textarea from '../../components/textarea/Textarea'
 import Navbar from '../../components/navbar/Navbar'
+import Spinner from '../../components/spinner/Spinner'
 import { FaPaperclip } from 'react-icons/fa'
 import { FiSend } from 'react-icons/fi'
 import axios from 'axios'
 import { useRouter } from 'next/router'
 
 export default function actas_asambleas({ idAsamblea }) {
-	idAsamblea = '62887cbb6f9cba4180f42c19';
+	
+	//? Hooks para Spinner.
+	const [cargandoInfo, setCargandoInfo] = useState(false);
+	const [cargandoPuntos, setCargandoPuntos] = useState(false);
+
+	// const idAsambleaPRUEBA = '62887cab6f9cba4180f42c17';
+	const idAsambleaPRUEBA = '62e704c1b06ca50ae0c49034';
+	// const idAsambleaPRUEBA = '6289c3fcc5eaee5de4600601';
+
+	//? Hooks para el formulario.
+	const [puntoActa, setPuntoActa] = useState([{
+		id: '',
+		asunto: '',
+		descripcion: '',
+	}]);
+
+	const [titulo, setTitulo] = useState('');
 	const [punto, setPunto] = useState([])
 	// const [asistencia, setAsistencia] = useState([])
-	const [asunto, setAsunto] = useState()
-	const [descripcion, setDescripcion] = useState('')
+	const [asunto, setAsunto] = useState([])
+	const listaAsuntos = [];
+	const [descripcion, setDescripcion] = useState([])
 	const [idActa, setIdActa] = useState('')
 	const router = useRouter()
 	const [asamblea, setAsamblea] = useState()
 
-	const handleChangeDescripcion = (e) => {
-		setDescripcion(e.target.value)
+	const handleChangeDescripcion = index => event => {
+		setDescripcion(event.target.value)
+		//setPuntoActa(puntoActa[event.target.name].descripcion = event.target.value);
+
+		console.log("Input modificado: ", event.target.name)
+		console.log("Texto modificado: ", event.target.value)
+
+		let actualizarDescripcion = [...puntoActa];
+
+		actualizarDescripcion[index].descripcion = event.target.value;
+
+		setPuntoActa(actualizarDescripcion);
 	}
 
 	const isLogged = () => {
@@ -28,29 +56,60 @@ export default function actas_asambleas({ idAsamblea }) {
 	}
 
 	useEffect(() => {
+		setCargandoInfo(true);
+
 		isLogged()
-		const idAsamblea = localStorage.getItem('id_asamblea')
+		// const idAsamblea = localStorage.getItem('id_asamblea')
+		
 		const obtenerPuntos = async (id) => {
+			setCargandoPuntos(true);
+
 			const response = await axios.get(process.env.SERVIDOR + '/asamblea/' + id)
-			setPunto(response.data)
 			const puntos = [...response.data.puntos]
+
+			console.log("Puntos: ", puntos)
+
+			//? Borramos el punto que se crea por defecto.
+			puntoActa.splice(0, 1);
+
 			puntos.map(punto => {
 				obtenerPunto(punto)
 			})
+
+			console.log("Hook Punto: ", puntoActa);
+			console.log("Array Asunto: ", listaAsuntos)
+			console.log("Hook Asunto: ", asunto)
+
+			setCargandoPuntos(false);
 		}
+
 		setAsamblea(idAsamblea)
-		obtenerPuntos(idAsamblea)
+		obtenerPuntos(idAsambleaPRUEBA)
+
+		setCargandoInfo(false);
 	}, []);
 
+	const obtenerPunto = async (id) => {
 
-	const obtenerPunto = (id) => {
-		axios.get(process.env.SERVIDOR + '/punto/' + id)
-			.then(res => {
-				setAsunto(res.data.asunto)
-			})
-			.catch(err => {
-				console.log("error al obtener un solo punto")
-			})
+		try {
+			const response = await axios.get(process.env.SERVIDOR + '/punto/' + id)
+			
+			//! PRUEBA PARA LLENAR HOOK PUNTO.
+			setPuntoActa((prevState) => [...prevState, {
+				id: id,
+				asunto: response.data.asunto,
+				descripcion: response.data.descripcion,
+			}]);
+
+			listaAsuntos.push(response.data.asunto)
+			setAsunto(listaAsuntos);
+			setPunto(response.data);
+			console.log("Hook Punto: ", punto);
+
+		} catch(error) {
+			console.log("error al obtener un solo punto")
+		}
+
 	}
 
 	// const crearAsistencia = (id) => {
@@ -94,6 +153,7 @@ export default function actas_asambleas({ idAsamblea }) {
 			generacion: 2018,
 		}
 	]
+
 	const modificarPuntos = (id) => {
 		const data = {
 			descripcion: descripcion
@@ -140,49 +200,98 @@ export default function actas_asambleas({ idAsamblea }) {
 			})
 	}
 
-	const enviarActa = (event) => {
-		event.preventDefault()
-		const puntos = [...punto.puntos];
-		puntos.map(punto => {
-			modificarPuntos(punto)
+	const enviarActa = () => {
+		// event.preventDefault()
+		// const puntos = [...punto.puntos];
+		// puntos.map(punto => {
+		// 	modificarPuntos(punto)
+		// })
+		// crearActa(puntos, asistenciaPrueba)
+
+		//? 
+
+		//? Actualizamos puntos mediante PUT.
+		puntoActa.map(punto => {
+
+			const data = {
+				descripcion: punto.descripcion
+			}
+			axios.put(process.env.SERVIDOR + '/punto/update/' + punto.id, data)
+				.then(res => {
+					console.log("se modificaron los puntos")
+				}
+				)
+				.catch(err => {
+					console.log("error al modificar los puntos")
+				}
+				)
+
 		})
-		crearActa(puntos, asistenciaPrueba)
+
+		//? Bandera de información guardada.
+        console.log("--------------------------------------");
+
+		puntoActa.map(punto => {
+
+			console.log("\nID: ", punto.id);
+			console.log("ASUNTO: ", punto.asunto);
+			console.log("DESCRIPCION: ", punto.descripcion);
+
+		})
+        console.log("--------------------------------------");
 	}
 
-	return (
-		<>
-			<Navbar />
-			<div className={styles.fondo}>
-				<div className={styles.contenedor}>
-					<div className={styles.contenedorSuperior}>
-						<div className={styles.contenedorTitulo}>
-							<h1>Titulo de la asamblea</h1>
-						</div>
-						<div className={styles.contenedorIcono}>
-							<FaPaperclip className={styles.iconoClip} />
-						</div>
-					</div>
-					<div className={styles.contenedorFormulario}>
-						<form className={styles.Form} onSubmit={enviarActa}>
-							<div className={styles.contenedorInput}>
-								<p className={styles.textTitulo}>Título del acta:</p>
-								<input type="text"
-									className={styles.Input}
-									placeholder='Ingrese título del acta'
-									name="titulo"
-								/>
+	// if(cargandoInfo === true || cargandoPuntos === true) {
+	// 	<Spinner/>
+	// }
+	// else {
+
+		return (
+			<>
+				<Navbar />
+				<div className={styles.fondo}>
+					<div className={styles.contenedor}>
+						<div className={styles.contenedorSuperior}>
+							<div className={styles.contenedorTitulo}>
+								<h1>Titulo de la asamblea</h1>
 							</div>
-							<div className={styles.contenedorTextArea}>
-								{/* {
-										punto.puntos.map(punto => (
-											<Textarea punto={asunto} onchange={handleChangeDescripcion} />
-										))} */}
+							<div className={styles.contenedorIcono}>
+								<FaPaperclip className={styles.iconoClip} />
 							</div>
-							<button type="submit" className={styles.boton}>Enviar <FiSend className={styles.iconoSend} /> </button>
-						</form>
+						</div>
+						<div className={styles.contenedorFormulario}>
+							<form className={styles.Form} onSubmit={enviarActa}>
+								<div className={styles.contenedorInput}>
+									<p className={styles.textTitulo}>Título del acta:</p>
+									<input type="text"
+										className={styles.Input}
+										onChange={e => setTitulo(e.target.value)}
+										placeholder='Ingrese título del acta'
+										name="titulo"
+									/>
+								</div>
+								<div className={styles.contenedorTextArea}>
+									{
+										puntoActa.map((punto, index) => (
+											<>
+											<p>{punto.asunto} </p>
+											<textarea 
+												name={index}
+												onChange={handleChangeDescripcion(index)}
+												type="text" 
+												placeholder='Ingrese descripción del punto'>
+											</textarea>
+											</>
+										))
+									}
+								</div>
+								<button type="submit" className={styles.boton} onClick={() => enviarActa()}>Enviar <FiSend className={styles.iconoSend} /> </button>
+							</form>
+						</div>
 					</div>
 				</div>
-			</div>
-		</>
-	)
+			</>
+		)
+
+	// }
 }

@@ -14,8 +14,8 @@ const Button = ({ icon_button, text, enviar }) => {
     )
 
     const lock = () => (
-            <button className={styles.propiedadesBoton} onClick={enviar}>
-                <FaLock className={styles.iconBoton} />
+            <button className={`${styles.propiedadesBoton}`} onClick={enviar}>
+                <FaLock className={`${styles.iconBoton} ${styles.propiedadesText}`} />
                 {text}
             </button>
     )
