@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "../button/button.module.css";
+import styles from "../button/Button.module.css";
 import { FaGoogle, FaLock } from "react-icons/fa";
 
 const Button = ({ icon_button, text, enviar }) => {
