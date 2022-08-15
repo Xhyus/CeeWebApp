@@ -24,6 +24,13 @@ export default function Login() {
 		setPassword(event.target.value)
 	}
 
+	const keyDownHandler = event => {
+		if (event.key === 'Enter') {
+			event.preventDefault();
+			validarLogin();
+		}
+	};
+
 	const validarLogin = async () => {
 		const data = {
 			email: email,
@@ -64,13 +71,13 @@ export default function Login() {
 						<img src="/separador.svg" alt="ubb-logo" className={styles.separador} />
 						<nav className={styles.contenedorInput}>
 							<FaUser className={styles.iconInput} />
-							<input type="email" autoComplete="new-password" placeholder="Ingrese su email" onChange={handleInputChangeCorreo} className={styles.propiedadesInput} />
+							<input type="email" autoComplete="new-password" placeholder="Ingrese su email" onKeyDown={keyDownHandler} onChange={handleInputChangeCorreo} className={styles.propiedadesInput} />
 						</nav>
 						<nav className={styles.contenedorInput}>
 							<FaLock className={styles.iconInput} />
-							<input type="password" autoComplete="new-password" placeholder="Ingrese su contraseña" onChange={handleInputChangePassword} className={styles.propiedadesInput} />
+							<input type="password" autoComplete="new-password" placeholder="Ingrese su contraseña" onKeyDown={keyDownHandler} onChange={handleInputChangePassword} className={styles.propiedadesInput} />
 						</nav>
-						<Button icon_button="Lock" text="Ingresar" enviar={validarLogin} />
+						<Button icon_button="Lock" text="Ingresar" enviar={validarLogin} keyButton={keyDownHandler} />
 					</div>
 				</div>
 			</div>
