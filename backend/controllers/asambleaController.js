@@ -106,10 +106,72 @@ const asambleasPorCarrera = (req, res) => {
     })
 }
 
+const filtro = (req, res) => {
+    let Filtro = {}, fechas = {}, estados = {}, tipos = {}
+    let { inicio, fin, estado, tipo } = req.query
+    cee.find({ carrera: req.params.carrera }, (err, cee) => {
+        if (cee.length === 0) {
+            return res.status(404).send({ message: "No existen el cee" })
+        }
+        if (err) {
+            return res.status(400).send({ message: "Error al buscar" })
+        }
+        if (!cee) {
+            return res.status(404).send({ message: "No existe el cee" })
+        }
+        if (inicio || fin) {
+            if (inicio && fin) {
+                fechas = { fecha: { $lte: new Date(fin), $gte: new Date(inicio) } }
+            } else if (inicio) {
+                fechas = { fecha: { $lte: new Date(), $gte: new Date(inicio) } }
+            } else if (fin) {
+                fechas = { fecha: { $lte: new Date(), $gte: new Date(2020, 1, 1) } }
+            }
+            Filtro = { ...fechas }
+        }
+
+        if (tipo) {
+            if (tipo == "resolutiva") {
+                tipos = { tipoAsamblea: "resolutiva" }
+            } else {
+                tipos = { tipoAsamblea: "informativa" }
+            }
+            Filtro = { ...Filtro, ...tipos }
+        }
+        asamblea.find(Filtro, (err, asambleaFiltrada) => {
+            if (err) {
+                return res.status(400).send({ message: "Error al buscar" })
+            }
+            if (!asambleaFiltrada) {
+                return res.status(404).send({ message: "No existen asambleas con estos criterios" })
+            }
+            let asambleas = asambleaFiltrada.filter(asamblea => {
+                return cee[0].asambleas.includes(asamblea._id)
+            })
+            if (estado) {
+                if (estado == "terminada") {
+                    asambleas = asambleas.filter(asamblea => {
+                        return asamblea.fecha < new Date()
+                    })
+                } else {
+                    asambleas = asambleas.filter(asamblea => {
+                        return asamblea.fecha > new Date()
+                    })
+                }
+                return res.status(200).json(asambleas)
+
+            } else {
+                res.status(200).json(asambleas)
+            }
+        })
+    })
+}
+
 module.exports = {
     crearAsamblea,
     modificarAsamblea,
     eliminarAsamblea,
     buscarAsamblea,
     asambleasPorCarrera,
+    filtro
 }
