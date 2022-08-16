@@ -55,7 +55,6 @@
 }
 
 .Propiedades_boton {
-    background-color: #20ac6b;
     color: #FFFFFF;
     width: 100%;
     padding: 3.5%;
@@ -69,9 +68,20 @@
     justify-content: center;
 }
 
+.crear {
+    background-color: #20ac6b;
+}
+
+.crear:hover {
+    background-color: #1f9c6e;
+}
+
 .filtros {
     background-color: #EDF1F7;
-    width: auto;
+    width: 70%;
+    flex-wrap: wrap;
+    display: flex;
+    flex-direction: column;
     height: auto;
     border-radius: 24px;
     padding: 10% 20%;

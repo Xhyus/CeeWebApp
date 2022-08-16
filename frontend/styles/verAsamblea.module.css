@@ -40,14 +40,14 @@
     align-items: center;
 }
 
-.botones{
+.botones {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     margin-top: 2vh;
 }
 
-.propiedades_Boton{
+.propiedades_Boton {
     color: white;
     font-weight: bold;
     font-size: 1rem;
@@ -55,18 +55,22 @@
     border-radius: 10px;
 }
 
-.boton_generar{
+.boton_generar {
     background-color: #20ac6b;
 }
-.boton_volver{
+
+.boton_volver {
     background-color: #EDAE49;
 }
-.boton_generar:hover{
+
+.boton_generar:hover {
     background-color: #198A55;
 }
-.boton_volver:hover{
+
+.boton_volver:hover {
     background-color: #EBA433;
 }
+
 .datos_titulo {
     font-size: 1.3rem;
     font-weight: 600;

@@ -3,7 +3,9 @@ import styles from '../styles/asambleas.module.css'
 import Card from './../components/card_asambleas/Card'
 import axios from 'axios'
 import Navbar from '../components/navbar/Navbar'
+import { FaPlus } from 'react-icons/fa'
 import { useRouter } from 'next/router'
+import Filtro from '../components/filtro_asambleas/Filtro'
 
 export default function asambleas() {
 	const [asambleasTerminadas, setAsambleasTerminadas] = useState([])
@@ -81,19 +83,15 @@ export default function asambleas() {
 			<Navbar />
 			<div className={styles.fondo}>
 				<div className={styles.contenedor}>
-					{/* <div className={styles.contenedorSectorIzquierdo}>
-						<button className={styles.Propiedades_boton} onClick={() => crearAsamblea()} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
+					<div className={styles.contenedorSectorIzquierdo}>
+						<button className={`${styles.Propiedades_boton} ${styles.crear}`} onClick={() => crearAsamblea()} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
 						<div className={styles.filtros}>
 							<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
 							<div className={styles.ContainerFiltro}>
 								<Filtro tipo='normal' />
-								<Filtro tipo='normal' />
-								<Filtro tipo='normal' />
-								<Filtro tipo='fecha' />
-								<Filtro tipo='fecha' />
 							</div>
 						</div>
-					</div> */}
+					</div>
 					<div className={styles.contenedorSectorDerecho}>
 						<h1>Asambleas por realizar</h1>
 						{PorRealizar()}

@@ -1,6 +1,7 @@
 const archivos = require('../models/archivo');
+const asamblea = require('../models/asamblea');
 
-const uploadNewFiles = async (req, res) => {
+const uploadNewFilesAsambleas = async (req, res) => {
     const { files } = req
     if (req.archivoValido === false) {
         return res.status(400).send({ message: 'Solo se aceptan archivos con extensiones .png, .jpg, .jpeg, .pdf, .docx, .xlsx, .csv' })
@@ -14,14 +15,22 @@ const uploadNewFiles = async (req, res) => {
             ruta: file.path,
             tipo: file.mimetype
         })
-        archivo.save()
-            .catch(err => {
-                return res.status(400).send({ message: 'Error al subir archivo' })
+        archivo.save((err, archivo) => {
+            if (err) {
+                return res.status(400).send({ message: 'Error al subir el archivo' })
+            }
+            asamblea.findOneAndUpdate({ _id: req.params.id }, { $push: { archivos: archivo._id } }, (err, asamblea) => {
+                if (err) {
+                    return res.status(400).send({ message: 'Error al subir el archivo' })
+                }
+                if (!asamblea) {
+                    return res.status(404).send({ message: 'No existe la asamblea' })
+                }
             })
+        })
         return archivo
     })
     res.status(201).send(aux)
-
 }
 
 const listarArchivos = async (req, res) => {
@@ -63,7 +72,7 @@ const obtenerInformacionArchivo = async (req, res) => {
 }
 
 module.exports = {
-    uploadNewFiles,
+    uploadNewFilesAsambleas,
     listarArchivos,
     obtenerUnArchivo,
     obtenerInformacionArchivo

@@ -1,0 +1,69 @@
+/* *Seccion Input Calendario */
+.opciones_filtro_fecha {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    width: 45%;
+    margin-right: 5%;
+}
+
+.calendario {
+    width: 100%;
+}
+
+/* *Seccion Input Checkbox */
+.opciones_filtro {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.texto {
+    font-size: 1.5vh;
+    font-weight: 400;
+    color: #2F2D2E;
+    font-family: 'Montserrat', Helvetica;
+}
+
+.checkbox input[type="checkbox"] {
+    display: none;
+    margin-right: 1vw;
+}
+
+.filtro_contenido_titulo_label {
+    font-size: 1.5vh;
+    font-weight: 400;
+    color: #2F2D2E;
+    font-family: 'Montserrat', Helvetica;
+}
+
+.filtro_contenido_estado {
+    font-size: 1.5vh;
+    font-weight: 400;
+    color: #2F2D2E;
+    font-family: 'Montserrat', Helvetica;
+}
+
+.filtro_contenido_titulo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.filtro {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 1vh;
+}
+
+.label {
+    font-size: 1.5vh;
+    font-weight: 400;
+    margin-bottom: 1.5vh;
+    width: 100%;
+    color: #2F2D2E;
+    font-family: 'Montserrat', Helvetica;
+}

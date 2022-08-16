@@ -107,7 +107,7 @@ const asambleasPorCarrera = (req, res) => {
 }
 
 const filtro = (req, res) => {
-    let Filtro = {}, fechas = {}, estados = {}, tipos = {}
+    let Filtro = {}, fechas = {}, tipos = {}
     let { inicio, fin, estado, tipo } = req.query
     cee.find({ carrera: req.params.carrera }, (err, cee) => {
         if (cee.length === 0) {
@@ -129,7 +129,6 @@ const filtro = (req, res) => {
             }
             Filtro = { ...fechas }
         }
-
         if (tipo) {
             if (tipo == "resolutiva") {
                 tipos = { tipoAsamblea: "resolutiva" }
@@ -159,7 +158,6 @@ const filtro = (req, res) => {
                     })
                 }
                 return res.status(200).json(asambleas)
-
             } else {
                 res.status(200).json(asambleas)
             }
