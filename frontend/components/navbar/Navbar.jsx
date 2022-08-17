@@ -11,7 +11,7 @@ const Navbar = () => {
 			<div className={styles.contenedorLista}>
 				<li className={styles.lista}>
 					<ul className={`${styles.contenedorLista} ${styles.active}`}><a href='/asambleas'>Asambleas</a></ul>
-					<ul className={styles.contenedorLista}><a href='/rendicion_cuentas'>Rendicion de Cuentas</a></ul>
+					<ul className={styles.contenedorLista}><a href='/rendicion_cuentas'>Rendición de Cuentas</a></ul>
 					<ul className={styles.contenedorLista}><a href='/'>Cerrar Sesión</a></ul>
 				</li>
 			</div>
