@@ -15,4 +15,12 @@ const downloadFile = (archivo) => {
         })
 }
 
-export default downloadFile
+const getAsambleas = async () => {
+    const res = await axios.get(process.env.SERVIDOR + "/asamblea/getAsambleas")
+    return res.data
+}
+
+export {
+    downloadFile,
+    getAsambleas
+}

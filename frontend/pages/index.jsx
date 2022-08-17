@@ -50,7 +50,8 @@ export default function Login() {
 				title: 'Error',
 				text: 'Usuario o contraseña incorrectos',
 				icon: 'error',
-				confirmButtonText: 'Aceptar'
+				confirmButtonText: 'Aceptar',
+				position: 'center'
 			})
 		}
 	}
