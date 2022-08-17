@@ -132,7 +132,7 @@ const verAsamblea = () => {
                             <a onClick={() => { console.log("hola") }} className={`${styles.Propiedades_boton} ${styles.boton_archivos}`}>Ver Archivos</a>
                         </div> */}
                         <div className={styles.actas}>
-                            <a onClick={() => goToActas(pid)} className={`${styles.Propiedades_boton} ${styles.boton_actas}`}>Generar Actas</a>
+                            <a onClick={() => goToActas(pid)} className={`${styles.propiedades_Boton} ${styles.boton_generar}`}>Generar Actas</a>
                         </div>
                         <div className={styles.datos_hora}>
                             {/* <span><strong>Hora: </strong></span> */}
