@@ -7,21 +7,19 @@ const Puntos = ({ handleChangePunto, id, handleDeletePunto }) => {
     const handleDelete = () => {
         if (id !== 0) {
             return (
-                <div className={styles.contenedorBoton}>
-                    <FaTrash className={styles.icono} onClick={() => handleDeletePunto(id)} />
-                </div>
+                <FaTrash className={styles.icono} onClick={() => handleDeletePunto(id)} />
             )
         }
     }
 
     return (
         <div className={styles.contenedorPuntos}>
+            <label htmlFor={id}>Punto a tratar: {id + 1}</label>
             <div className={styles.contenedorPunto}>
 
-                <label htmlFor={id}>Punto a tratar: {id + 1}</label>
                 <input type="text" name={id} placeholder="Punto a tratar" onChange={handleChangePunto} className={styles.inputs} />
+                {handleDelete()}
             </div>
-            {handleDelete()}
         </div>
     )
 }

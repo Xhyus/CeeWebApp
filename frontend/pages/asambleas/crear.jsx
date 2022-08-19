@@ -3,9 +3,10 @@ import Navbar from '../../components/navbar/Navbar'
 import { isLogged } from '../../utils/logged'
 import styles from '../../styles/crear_asambleas.module.css'
 import Puntos from '../../components/puntos/Puntos'
-import { FaPlus, FaTrash } from 'react-icons/fa'
+import { FaPlus, FaTrash, FaPlusCircle } from 'react-icons/fa'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import { useRouter } from 'next/router'
 
 const crear = () => {
     const [asamblea, setAsamblea] = useState({
@@ -18,6 +19,7 @@ const crear = () => {
         id: 0,
         asunto: ''
     }])
+    const router = useRouter()
 
     useEffect(() => isLogged(), [])
 
@@ -120,27 +122,32 @@ const crear = () => {
             <div className={styles.fondo}>
                 <div className={styles.contenedor}>
                     <div className={styles.contenedorCrear}>
-                        <h1 className={styles.titulo_filtro}>Crear Asamblea</h1>
+                        <div className={styles.contenedorTitulo}>
+                            <FaPlusCircle className={styles.iconTitulo} />
+                            <h1 className={styles.titulo}>Crear Asamblea</h1>
+                        </div>
                         <section className={styles.contenedores}>
-                            <div className={styles.contenedorAsunto}>
+                            <div className={styles.contenedorInformacion}>
                                 <label className={styles.labels}>Asunto: </label>
                                 <input className={styles.inputs} name="asunto" required id='asunto' type="text" placeholder="Asunto asamblea" onChange={handleChange} />
                             </div>
-                            <div className={styles.contenedorContexto}>
+                            <div className={styles.contenedorInformacion}>
                                 <label className={styles.labels}>Contexto Asamblea: </label>
                                 <textarea className={styles.textarea} name="contexto" required id='contexto' type="text" placeholder="Contexto asamblea" onChange={handleChange} />
                             </div>
-                            <div className={styles.contenedorTipoAsamblea}>
-                                <label className={styles.labels}>Tipo de asamblea: </label>
-                                <select className={styles.selectTipo} required name="tipoAsamblea" id='tipoAsamblea' onChange={handleChange}>
-                                    <option value="">Seleccione un tipo de asamblea</option>
-                                    <option value="resolutiva">Resolutiva</option>
-                                    <option value="informativa">Informativa</option>
-                                </select>
-                            </div>
-                            <div className={styles.contenedorFecha}>
-                                <label className={styles.labels}>Fecha: </label>
-                                <input className={styles.inputs} required type="datetime-local" onChange={handleChange} name="fecha" id="input-fecha" />
+                            <div className={styles.contInfo}>
+                                <div className={styles.select}>
+                                    <label className={styles.labels}>Tipo de asamblea: </label>
+                                    <select className={styles.selectTipo} required name="tipoAsamblea" id='tipoAsamblea' onChange={handleChange}>
+                                        <option value="">Seleccione un tipo de asamblea</option>
+                                        <option value="resolutiva">Resolutiva</option>
+                                        <option value="informativa">Informativa</option>
+                                    </select>
+                                </div>
+                                <div className={styles.fecha}>
+                                    <label className={styles.labels}>Fecha: </label>
+                                    <input className={styles.inputFecha} required type="datetime-local" onChange={handleChange} name="fecha" id="input-fecha" />
+                                </div>
                             </div>
                             {puntos.map((punto, index) => {
                                 return (
@@ -148,8 +155,14 @@ const crear = () => {
                                 )
                             })
                             }
-                            <FaPlus className={styles.icon} onClick={() => handleAddPunto()} />
-                            <button className={`${styles.Propiedades_boton} ${styles.crear}`} onClick={() => handleSubmit()}>Crear Asamblea</button>
+                            <div className={styles.add}>
+                                <FaPlus className={styles.icon} onClick={() => handleAddPunto()} />
+                                <a onClick={handleAddPunto}>Agregar punto</a>
+                            </div>
+                            <div className={styles.botones}>
+                                <button className={`${styles.boton} ${styles.crear}`} onClick={() => handleSubmit()}>Crear Asamblea</button>
+                                <button className={`${styles.boton} ${styles.cancelar}`} onClick={() => router.push("/asambleas")}>Cancelar</button>
+                            </div>
                         </section>
                     </div>
                 </div>

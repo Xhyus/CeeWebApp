@@ -93,10 +93,10 @@ export default function asambleas() {
 						</div>
 					</div>
 					<div className={styles.contenedorSectorDerecho}>
-						<h1>Asambleas por realizar</h1>
+						<h1 className={styles.titulo}>Asambleas por realizar</h1>
 						{PorRealizar()}
 						{/* separation line */}
-						<h1>Asambleas terminadas</h1>
+						<h1 className={styles.titulo}>Asambleas terminadas</h1>
 						{Terminadas()}
 
 					</div>
