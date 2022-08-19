@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import Navbar from '../../components/navbar/Navbar'
 import { isLogged } from '../../utils/logged'
 import styles from '../../styles/crear_asambleas.module.css'
+import Puntos from '../../components/puntos/Puntos'
+import { FaPlus } from 'react-icons/fa'
 
 const crear = () => {
     const [asamblea, setAsamblea] = useState({
@@ -11,10 +13,9 @@ const crear = () => {
         puntos: []
     })
     const [puntos, setPuntos] = useState([{
-        asunto: '',
-        id: ''
+        id: 0,
+        asunto: ''
     }])
-    const [cantidadPuntos, setCantidadPuntos] = useState(1)
 
     useEffect(() => {
         isLogged()
@@ -28,31 +29,36 @@ const crear = () => {
     }
 
     const handleSubmit = () => {
+        puntos.map(punto => {
+            asamblea.puntos.push(punto.asunto)
+        })
         setAsamblea({
             ...asamblea,
             puntos: puntos
         })
-        console.log("asunto: ", asamblea.asunto, "fecha: ", asamblea.fecha, "tipoAsamblea: ", asamblea.tipoAsamblea, "puntos: ", puntos)
+        console.log("asunto: ", asamblea.asunto, "fecha: ", asamblea.fecha, "tipoAsamblea: ", asamblea.tipoAsamblea, "puntos: ", asamblea.puntos)
     }
 
     const handleChangePunto = (e) => {
-        setPuntos({
-            id: e.target.id,
-            asunto: e.target.value
-        })
-        console.log("punto: ", puntos.asunto, "id: ", puntos.id)
+        setPuntos(
+            puntos.map(punto => {
+                if (punto.id.toString() === e.target.name) {
+                    return {
+                        ...punto,
+                        asunto: e.target.value
+                    }
+                }
+                return punto
+            })
+        )
     }
 
-    const puntosList = () => {
-        let puntos = []
-        for (let i = 0; i < cantidadPuntos; i++) {
-            puntos.push(
-                <div className={styles.contenedorPuntos}>
-                    <input type="text" id={i} placeholder="Asunto a tratar" onChange={handleChangePunto} className={styles.inputs} />
-                </div>
-            )
-        }
-        return puntos
+    const handleAddPunto = () => {
+        const ultimoId = puntos[puntos.length - 1].id
+        setPuntos([...puntos, {
+            id: ultimoId + 1,
+            asunto: ''
+        }])
     }
 
     return (
@@ -79,8 +85,13 @@ const crear = () => {
                                 <label className={styles.labels}>Fecha: </label>
                                 <input className={styles.inputs} type="datetime-local" onChange={handleChange} name="fecha" id="input-fecha" />
                             </div>
-                            <button onClick={() => setCantidadPuntos(cantidadPuntos + 1)} > Puntos </button >
-                            {puntosList()}
+                            <FaPlus onClick={() => handleAddPunto()} />
+                            {puntos.map((punto, index) => {
+                                return (
+                                    <Puntos key={index} handleChangePunto={handleChangePunto} id={punto.id} />
+                                )
+                            })
+                            }
                             <button className={`${styles.Propiedades_boton} ${styles.crear}`} onClick={() => handleSubmit()}>Crear Asamblea</button>
                         </section>
                     </div>
