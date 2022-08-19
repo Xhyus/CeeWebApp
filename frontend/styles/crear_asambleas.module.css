@@ -1,0 +1,102 @@
+.fondo {
+    background-color: #EDF1F7;
+    width: 100%;
+    height: auto;
+    min-height: 91vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.contenedor {
+    width: 70%;
+    padding: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+}
+
+.contenedorCrear {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.titulo {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2C3E50;
+    margin-bottom: 2rem;
+}
+
+.contenedores {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 2%;
+    align-items: center;
+}
+
+.contenedorAsunto {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2%;
+}
+
+.contenedorTipoAsamblea {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2%;
+    align-items: center;
+}
+
+.contenedorFecha {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 2%;
+    align-items: center;
+}
+
+.inputs {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.selectTipo {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Propiedades_boton {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedorPuntos {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2%;
+}
