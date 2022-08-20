@@ -1,14 +1,16 @@
 const handleDates = (fecha) => {
-    let fechaBD = fecha.split('T')
-    let fechaBD2 = fechaBD[0].split('-')
-    let fechaBD3 = fechaBD2[2] + '/' + fechaBD2[1] + '/' + fechaBD2[0]
-    let horaBD = fechaBD[1].split(':')
-    let horaBD2 = horaBD[0] + ':' + horaBD[1]
-    let formateado = {
-        fecha: fechaBD3,
-        hora: horaBD2
-    }
-    return formateado
+    let fechaFormateada = new Date(fecha);
+    let dia = fechaFormateada.getDate();
+    let mes = fechaFormateada.getMonth() + 1;
+    let anio = fechaFormateada.getFullYear();
+    let hora = fechaFormateada.getHours()
+    let minutos = fechaFormateada.getMinutes();
+    let segundos = fechaFormateada.getSeconds();
+    fechaFormateada = `${dia}-${mes}-${anio} a las ${addZeroBefore(hora)}:${addZeroBefore(minutos)}:${addZeroBefore(segundos)}`;
+    return fechaFormateada;
+}
+const addZeroBefore = (n) => {
+    return (n < 10 ? '0' : '') + n;
 }
 
 module.exports = handleDates

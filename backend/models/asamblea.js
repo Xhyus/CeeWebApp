@@ -38,6 +38,11 @@ const asambleaSchema = Schema({
         ref: 'archivo',
         default: []
     }],
+    ubicacion: {
+        type: String,
+        required: true,
+        match: /^[a-zA-Z0-9\s]{3,}$/
+    }
 
 })
 module.exports = mongoose.model('asamblea', asambleaSchema)
