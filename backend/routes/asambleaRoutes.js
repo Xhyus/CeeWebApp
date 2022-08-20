@@ -10,7 +10,7 @@ api.post("/asamblea/:carrera", asambleaController.crearAsamblea);
 api.get("/asambleas/:carrera", asambleaController.asambleasPorCarrera);
 api.get("/asamblea/:id", asambleaController.buscarAsamblea);
 api.put("/asamblea/update/:id", asambleaController.modificarAsamblea);
-api.delete("/asamblea/delete/:id", asambleaController.eliminarAsamblea);
+api.delete("/asamblea/delete/:id/:carrera", asambleaController.eliminarAsamblea);
 api.get("/asambleas/filtros/:carrera", asambleaController.filtro);
 
 module.exports = api;

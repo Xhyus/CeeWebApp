@@ -1,7 +1,6 @@
 const asamblea = require('../models/asamblea.js')
 const cee = require('../models/cee.js')
-const moment = require('moment');
-const { now } = require('mongoose');
+const mailSender = require('../controllers/mailSender.js')
 
 const crearAsamblea = (req, res) => {
     const carrera = req.params.carrera
@@ -23,6 +22,7 @@ const crearAsamblea = (req, res) => {
             if (err) {
                 return res.status(400).send({ message: "Error al guardar" })
             }
+            mailSender(asamblea.asunto, asamblea.fecha, asamblea.contexto, asamblea.tipoAsamblea, asamblea.puntos, carrera)
             res.status(201).send(asamblea)
         })
     })
@@ -42,15 +42,31 @@ const modificarAsamblea = (req, res) => {
 }
 
 const eliminarAsamblea = (req, res) => {
-    let id = req.params.id;
-    asamblea.findByIdAndRemove(id, (err, asamblea) => {
+    let { id, carrera } = req.params;
+
+    asamblea.findById(id, (err, asamblea) => {
         if (err) {
             return res.status(400).send({ message: "Error al eliminar" })
         }
         if (!asamblea) {
             return res.status(404).send({ message: "No existe" })
         }
-        res.status(200).send(asamblea)
+        cee.updateOne({ carrera: carrera }, { $pull: { asambleas: asamblea._id } }, (err, cee) => {
+            if (err) {
+                return res.status(400).send({ message: "Error al eliminar" })
+            }
+            asamblea.remove((err, asamblea) => {
+                if (err) {
+                    return res.status(400).send({ message: "Error al eliminar" })
+                }
+                if (!asamblea) {
+                    return res.status(404).send({ message: "No existe" })
+                }
+                res.status(200).send(asamblea)
+            }
+            )
+        }
+        )
     })
 }
 
@@ -78,7 +94,7 @@ const asambleasPorCarrera = (req, res) => {
         if (!asamblea) {
             return res.status(404).send({ message: "No existen asambleas terminadas" })
         }
-        cee.find({ carrera: req.params.carrera }).populate({ path: 'asamblea' }).exec((err, cee) => {
+        cee.find({ carrera: req.params.carrera }).populate({ path: 'asamblea' }).sort({ fecha: -1 }).exec((err, cee) => {
             if (cee.length === 0) {
                 return res.status(404).send({ message: "No existen el cee" })
             }
