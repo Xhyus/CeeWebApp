@@ -14,6 +14,10 @@ export default function Login() {
 
 	useEffect(() => {
 		localStorage.removeItem('token')
+		localStorage.removeItem('carrera')
+		localStorage.removeItem('pid')
+		localStorage.removeItem('id_asamblea')
+		localStorage.removeItem('asunto')
 	}, []);
 
 	const handleInputChangeCorreo = (event) => {

@@ -4,8 +4,9 @@ import { FaClock, FaTag, FaCalendarCheck } from 'react-icons/fa'
 import { compararFechas, formateoFechaBD } from '../../utils/handleDates'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 
-const Card = ({ id, asunto, fecha, tipoAsamblea, estado }) => {
+const Card = ({ id, asunto, fecha, tipoAsamblea, estado, deleteAsamblea }) => {
 	const [format, setFormat] = useState('')
 	const ahora = new Date()
 	const tipoAsambleaUp = tipoAsamblea.charAt(0).toUpperCase() + tipoAsamblea.slice(1)
@@ -63,6 +64,7 @@ const Card = ({ id, asunto, fecha, tipoAsamblea, estado }) => {
 					</div>
 				</section>
 				<a className={styles.vermas} onClick={() => verAsamblea(id)}>Ver más</a>
+				<a className={styles.eliminar} onClick={() => deleteAsamblea(id)}>Eliminar</a>
 			</div>
 		</div>
 	)

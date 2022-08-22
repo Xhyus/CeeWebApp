@@ -6,10 +6,12 @@ import Navbar from '../components/navbar/Navbar'
 import { FaPlus } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 import Filtro from '../components/filtro_asambleas/Filtro'
+import Swal from 'sweetalert2'
 
 export default function asambleas() {
 	const [asambleasTerminadas, setAsambleasTerminadas] = useState([])
 	const [asambleasPorRealizar, setAsambleasPorRealizar] = useState([])
+	const [carreraState, setCarrera] = useState('')
 	const router = useRouter()
 
 	useEffect(() => {
@@ -28,6 +30,7 @@ export default function asambleas() {
 	const getAsambleas = async () => {
 		// const token = localStorage.getItem('token')
 		const carrera = localStorage.getItem('carrera')
+		setCarrera(carrera)
 		try {
 			const response = await axios.get(`${process.env.SERVIDOR}/asambleas/${carrera}`)
 			if (response.status === 200) {
@@ -42,12 +45,31 @@ export default function asambleas() {
 		}
 	}
 
+	const deteleAsamblea = async (id) => {
+		const res = await axios.delete(`${process.env.SERVIDOR}/asamblea/delete/${id}/${carreraState}`)
+		if (res.status === 200) {
+			Swal.fire({
+				title: 'Asamblea eliminada',
+				text: 'La asamblea ha sido eliminada correctamente',
+				icon: 'success',
+				confirmButtonText: 'Aceptar'
+			}).then((res) => {
+				setAsambleasPorRealizar((prevState) => {
+					return prevState.filter((asamblea) => asamblea.id !== id)
+				})
+				setAsambleasTerminadas((prevState) => {
+					return prevState.filter((asamblea) => asamblea.id !== id)
+				})
+			})
+		}
+	}
+
 	const Terminadas = () => {
 		if (asambleasTerminadas.length > 0) {
 			return (
 				<div className={styles.listaCards}>
 					{asambleasTerminadas.map((asamblea, key) => {
-						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" />
+						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" deleteAsamblea={deteleAsamblea} />
 					})}
 				</div>
 			)
@@ -63,7 +85,7 @@ export default function asambleas() {
 			return (
 				<div className={styles.listaCards}>
 					{asambleasPorRealizar.map((asamblea, key) => {
-						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" />
+						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" deleteAsamblea={deteleAsamblea} />
 					})}
 				</div>
 			)

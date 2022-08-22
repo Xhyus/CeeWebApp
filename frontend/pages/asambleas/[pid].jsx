@@ -7,9 +7,19 @@ import { formateoFechaBD } from '../../utils/handleDates'
 import handleUpperCase from '../../utils/handleUpperCase'
 import Puntos from '../../components/puntos_List/Puntos'
 import downloadFile from '../../data/asambleas/downloadFile'
+import Swal from 'sweetalert2'
 
 const verAsamblea = () => {
     const router = useRouter()
+    const [asamblea, setAsamblea] = useState({
+        asunto: '',
+        fecha: '',
+        tipoAsamblea: '',
+        contexto: '',
+        acta: '',
+        puntos: [],
+        archivos: [],
+    })
     const { pid } = router.query
     const [asunto, setAsunto] = useState('')
     const [fecha, setFecha] = useState('')
@@ -27,6 +37,13 @@ const verAsamblea = () => {
         const getAsamblea = (pid) => {
             axios.get(process.env.SERVIDOR + '/asamblea/' + pid)
                 .then(res => {
+                    setAsamblea({
+                        asunto: handleUpperCase(res.data.asunto),
+                        fecha: formateoFechaBD(res.data.fecha),
+                        tipoAsamblea: handleUpperCase(res.data.tipoAsamblea),
+                        contexto: handleUpperCase(res.data.contexto),
+                        acta: res.data.acta,
+                    })
                     setAsunto(handleUpperCase(res.data.asunto))
                     setTipoAsamblea(handleUpperCase(res.data.tipoAsamblea))
                     setContexto(handleUpperCase(res.data.contexto))
@@ -79,7 +96,25 @@ const verAsamblea = () => {
     }
 
     const goToActas = (id) => {
+        if (asamblea.acta) {
+            return Swal.fire({
+                title: 'Error!',
+                text: 'Ya existe un acta asociada a esta asamblea',
+                icon: 'error',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Aceptar',
+            })
+        }
         router.push(`/asambleas/actas/${id}`)
+    }
+    console.log('asamblea', asamblea)
+
+    const estadoActa = () => {
+        if (asamblea.acta) {
+            return (`${styles.propiedades_Boton} ${styles.disabled}`)
+        } else {
+            return (`${styles.propiedades_Boton} ${styles.boton_generar}`)
+        }
     }
 
     return (
@@ -122,7 +157,7 @@ const verAsamblea = () => {
                             <a onClick={() => { console.log("hola") }} className={`${styles.Propiedades_boton} ${styles.boton_archivos}`}>Ver Archivos</a>
                         </div> */}
                         <div className={styles.actas}>
-                            <a onClick={() => goToActas(pid)} className={`${styles.propiedades_Boton} ${styles.boton_generar}`}>Generar Actas</a>
+                            <a onClick={() => goToActas(pid)} className={estadoActa()}>Generar Actas</a>
                         </div>
                         <div className={styles.datos_hora}>
                             {/* <span><strong>Hora: </strong></span> */}

@@ -60,6 +60,11 @@
     background-color: #20ac6b;
 }
 
+.disabled {
+    pointer-events: none;
+    background-color: gray;
+}
+
 .boton_volver {
     background-color: #EDAE49;
 }

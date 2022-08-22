@@ -5,7 +5,7 @@ import { FaTrash } from 'react-icons/fa'
 const Puntos = ({ handleChangePunto, id, handleDeletePunto }) => {
 
     const handleDelete = () => {
-        if (id !== 0) {
+        if (id > 0) {
             return (
                 <FaTrash className={styles.icono} onClick={() => handleDeletePunto(id)} />
             )
@@ -13,7 +13,7 @@ const Puntos = ({ handleChangePunto, id, handleDeletePunto }) => {
     }
 
     return (
-        <div className={styles.contenedorPuntos}>
+        <div className={styles.contenedorInformacion}>
             <label htmlFor={id}>Punto a tratar: {id + 1}</label>
             <div className={styles.contenedorPunto}>
 

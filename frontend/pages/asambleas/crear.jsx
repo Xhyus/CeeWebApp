@@ -136,18 +136,18 @@ const crear = () => {
                                 <textarea className={styles.textarea} name="contexto" required id='contexto' type="text" placeholder="Contexto asamblea" onChange={handleChange} />
                             </div>
                             <div className={styles.contInfo}>
-                                <div className={styles.select}>
+                                <section className={styles.select}>
                                     <label className={styles.labels}>Tipo de asamblea: </label>
                                     <select className={styles.selectTipo} required name="tipoAsamblea" id='tipoAsamblea' onChange={handleChange}>
                                         <option value="">Seleccione un tipo de asamblea</option>
                                         <option value="resolutiva">Resolutiva</option>
                                         <option value="informativa">Informativa</option>
                                     </select>
-                                </div>
-                                <div className={styles.fecha}>
+                                </section>
+                                <section className={styles.fecha}>
                                     <label className={styles.labels}>Fecha: </label>
                                     <input className={styles.inputFecha} required type="datetime-local" onChange={handleChange} name="fecha" id="input-fecha" />
-                                </div>
+                                </section>
                             </div>
                             {puntos.map((punto, index) => {
                                 return (

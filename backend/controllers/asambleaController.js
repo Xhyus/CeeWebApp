@@ -4,7 +4,7 @@ const mailSender = require('../controllers/mailSender.js')
 
 const crearAsamblea = (req, res) => {
     const carrera = req.params.carrera
-    const { asunto, fecha, contexto, tipoAsamblea, puntos, acta, archivos, ubicacion } = req.body;
+    const { asunto, fecha, contexto, tipoAsamblea, puntos, acta, archivos, ubicacion, url } = req.body;
     const nuevaAsamblea = new asamblea({
         asunto,
         fecha,
@@ -13,7 +13,8 @@ const crearAsamblea = (req, res) => {
         puntos,
         acta,
         archivos,
-        ubicacion
+        ubicacion,
+        url
     })
     nuevaAsamblea.save((err, asamblea) => {
         if (err) {
@@ -23,7 +24,6 @@ const crearAsamblea = (req, res) => {
             if (err) {
                 return res.status(400).send({ message: "Error al guardar" })
             }
-            mailSender(asamblea.asunto, asamblea.fecha, asamblea.contexto, asamblea.tipoAsamblea, asamblea.puntos, asamblea.ubicacion, carrera)
             res.status(201).send(asamblea)
         })
     })
