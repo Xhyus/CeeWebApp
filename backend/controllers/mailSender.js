@@ -7,6 +7,7 @@ dotenv.config();
 const envioCorreo = (req, res) => {
     let formatedData = handleInfo(req.body.asunto, req.body.fecha, req.body.contexto, req.body.tipoAsamblea, req.body.puntos, req.body.url, req.body.ubicacion, req.params.carrera);
     let credenciales = handleMail(formatedData.carrera);
+    console.log(formatedData)
     if (credenciales == "error") {
         return res.status(400).send({ message: "Error al enviar correo" })
     }
@@ -31,7 +32,7 @@ const envioCorreo = (req, res) => {
             <p>La fecha de la asamblea es: ${formatedData.fecha} y nos reuniremos en ${formatedData.ubicacion}</p>
             <p>Los puntos a conversar en la asamblea seran:</p>
             <ul>
-                ${formatedData.puntos.map(punto => `<li>${punto}</li>`).join('')}
+                ${formatedData.puntos.map(punto => `<li>${punto.asunto}</li>`).join('')}
             </ul>
             <p>Saludos</p>
             <p>Centro de Estudiantes ${formatedData.carrera}</p>
