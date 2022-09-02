@@ -13,6 +13,7 @@ body {
 	user-select: none;
 }
 
+/* 
 html::-webkit-scrollbar {
 	background-color: #FFFFFF;
 	width: 1.7vh;
@@ -33,7 +34,7 @@ html::-webkit-scrollbar-track-piece:start {
 
 html::-webkit-scrollbar-track-piece:end {
 	margin-bottom: -10px;
-}
+} */
 
 a {
 	color: inherit;

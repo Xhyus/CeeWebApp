@@ -5,7 +5,6 @@ import Filtro from "../components/filtro/Filtro";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import Navbar from "../components/navbar/Navbar";
 
 import { FaPlus } from 'react-icons/fa';
 export default function rendicion_cuentas() {
@@ -31,7 +30,7 @@ export default function rendicion_cuentas() {
 	//* .: LISTAR GASTOS :. *//
 
 	const getRendiciones = async (tipoGetRendiciones) => {
-		
+
 		try {
 			const response = await axios.get(process.env.SERVIDOR + "/" + tipoGetRendiciones);
 
@@ -56,7 +55,6 @@ export default function rendicion_cuentas() {
 
 	return (
 		<>
-			<Navbar />
 			<div className={styles.fondo}>
 				<div className={styles.contenedor}>
 					<div className={styles.contenedorTitulo}>

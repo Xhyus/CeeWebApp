@@ -1,26 +1,32 @@
 import React from 'react'
-import styles from '../../styles/crear_asambleas.module.css'
 import { FaTrash } from 'react-icons/fa'
+import { FormControl, FormLabel, Input, HStack } from '@chakra-ui/react'
 
-const Puntos = ({ handleChangePunto, id, handleDeletePunto }) => {
+
+const Puntos = ({ handleChangePunto, id, handleDeletePunto, ultimo }) => {
 
     const handleDelete = () => {
-        if (id > 0) {
+        if (id + 1 === ultimo && id !== 0) {
             return (
-                <FaTrash className={styles.icono} onClick={() => handleDeletePunto(id)} />
+                <FaTrash onClick={() => handleDeletePunto(id)} />
             )
+        }
+        if (id !== ultimo) {
+            return null
         }
     }
 
     return (
-        <div className={styles.contenedorInformacion}>
-            <label htmlFor={id}>Punto a tratar: {id + 1}</label>
-            <div className={styles.contenedorPunto}>
+        <>
+            <FormControl>
+                <FormLabel htmlFor={id}>Punto a tratar: {id + 1}</FormLabel>
+                <HStack mb={5}>
+                    <Input type="text" name={id} placeholder="Punto a tratar" onChange={handleChangePunto} />
+                    {handleDelete()}
+                </HStack>
 
-                <input type="text" name={id} placeholder="Punto a tratar" onChange={handleChangePunto} className={styles.inputs} />
-                {handleDelete()}
-            </div>
-        </div>
+            </FormControl>
+        </>
     )
 }
 

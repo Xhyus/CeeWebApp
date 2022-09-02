@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import styles from '../styles/asambleas.module.css'
 import Card from './../components/card_asambleas/Card'
 import axios from 'axios'
-import Navbar from '../components/navbar/Navbar'
 import { FaPlus } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 import Filtro from '../components/filtro_asambleas/Filtro'
@@ -102,7 +101,6 @@ export default function asambleas() {
 
 	return (
 		<>
-			<Navbar />
 			<div className={styles.fondo}>
 				<div className={styles.contenedor}>
 					<div className={styles.contenedorSectorIzquierdo}>

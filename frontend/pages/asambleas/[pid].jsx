@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import styles from '../../styles/verAsamblea.module.css'
-import Navbar from '../../components/navbar/Navbar'
 import axios from 'axios'
 import { formateoFechaBD } from '../../utils/handleDates'
 import handleUpperCase from '../../utils/handleUpperCase'
@@ -119,7 +118,6 @@ const verAsamblea = () => {
 
     return (
         <>
-            <Navbar />
             <div className={styles.fondo}>
                 <div className={styles.contenedor}>
                     <div className={styles.datos_titulo}>

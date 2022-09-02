@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import Navbar from '../../components/navbar/Navbar'
 import { isLogged } from '../../utils/logged'
-import styles from '../../styles/crear_asambleas.module.css'
 import Puntos from '../../components/puntos/Puntos'
-import { FaPlus, FaTrash, FaPlusCircle } from 'react-icons/fa'
+import { FaPlus, FaPlusCircle } from 'react-icons/fa'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
-// import Ubicacion from '../../components/inputUbicacion/Ubicacion'
+import { Container, Heading, ChakraProvider, FormControl, FormLabel, Input, Button, Select, Link, Textarea, HStack, Center, Spinner } from '@chakra-ui/react'
 
 const crear = () => {
     const [asamblea, setAsamblea] = useState({
@@ -24,6 +22,7 @@ const crear = () => {
     }])
     const [lugar, setLugar] = useState('')
     const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => isLogged(), [])
 
@@ -77,6 +76,7 @@ const crear = () => {
                 confirmButtonText: 'Aceptar'
             })
         } else {
+            setIsLoading(true)
             let carrera = localStorage.getItem('carrera')
             axios.post(process.env.SERVIDOR + '/asamblea/' + carrera, {
                 asunto: asamblea.asunto,
@@ -90,7 +90,6 @@ const crear = () => {
                     postPunto(res.data._id)
                 })
                 .catch(err => {
-                    console.log("Error de crear asamblea: " + err)
                     Swal.fire({
                         title: 'Error',
                         text: 'Error al crear la asamblea',
@@ -102,17 +101,15 @@ const crear = () => {
     }
 
 
-    const postPunto = (id) => {
-        puntos.map(punto => {
+    const postPunto = async (id) => {
+        await puntos.map(punto => {
             let data = {
                 asunto: punto.asunto,
                 descripcion: ""
             }
             axios.post(process.env.SERVIDOR + '/punto/' + id, data)
                 .then(res => {
-                    console.log("punto creado con exito")
                 }).catch(err => {
-                    console.log("Error de crear punto: " + err)
                     Swal.fire({
                         title: 'Error',
                         text: 'Error al crear los puntos',
@@ -120,17 +117,8 @@ const crear = () => {
                         confirmButtonText: 'Aceptar'
                     })
                 })
-        }).then(() => {
-            enviarCorreo()
-        }).catch(err => {
-            console.log("Error de crear punto: " + err)
-            Swal.fire({
-                title: 'Error',
-                text: 'Error al crear los puntos',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            })
         })
+        enviarCorreo()
     }
 
     const enviarCorreo = () => {
@@ -145,14 +133,17 @@ const crear = () => {
             puntos: puntos
         })
             .then(res => {
+                setIsLoading(false)
                 Swal.fire({
                     title: 'Exito',
                     text: 'Asamblea Creada con exito y notificada por correo',
                     icon: 'success',
-                    confirmButtonText: 'Aceptar'
+                    confirmButtonText: 'Aceptar',
+
+                }).then(() => {
+                    router.push('/asambleas')
                 })
             }).catch(err => {
-                console.log("Error de enviar correo: " + err)
                 Swal.fire({
                     title: 'Error',
                     text: 'Error al enviar el correo',
@@ -168,93 +159,100 @@ const crear = () => {
         }
         if (lugar == 'online') {
             return (
-                <div className={styles.contInfo}>
-                    <section className={styles.select}>
-                        <label htmlFor="ubicacion">Plataforma</label>
-                        <input className={styles.inputs} type="text" name="ubicacion" onChange={handleChange} placeholder="Ejemplo: Discord, Zoom, Etc." />
-                    </section>
-                    <section className={styles.fecha}>
-                        <label htmlFor="url">URL</label>
-                        <input className={styles.inputs} type="text" name="url" onChange={handleChange} placeholder="www.google.cl" />
-                    </section>
-                </div>
+                <HStack mb={5}>
+                    <FormControl isRequired>
+                        <FormLabel>Ubicacion</FormLabel>
+                        <Input type="text" name="ubicacion" onChange={handleChange} placeholder="Ejemplo: Discord, Zoom, Etc." />
+                    </FormControl>
+                    <FormControl isRequired >
+                        <FormLabel>Url</FormLabel>
+                        <Input type="text" name="url" onChange={handleChange} placeholder="www.google.cl" />
+                    </FormControl>
+                </HStack>
             )
         }
         if (lugar == 'presencial') {
             return (
-                <div className={styles.contenedorInformacion}>
-                    <label htmlFor="ubicacion">Lugar</label>
-                    <input className={styles.inputs} type="text" name="ubicacion" onChange={handleChange} placeholder="FACE Sala 103CE" />
-                </div>
+                <FormControl isRequired mb={5}>
+                    <FormLabel>Ubicacion</FormLabel>
+                    <Input type="text" name="ubicacion" onChange={handleChange} placeholder="Ejemplo: FACE Sala 103CE" />
+                </FormControl>
             )
         }
     }
 
+    if (isLoading) {
+        return (
+            <ChakraProvider>
+                <Center h="92.5vh">
+                    <Spinner size="xl" />
+                </Center>
+            </ChakraProvider>
+        )
+    }
+
     return (
         <>
-            <Navbar />
-            <div className={styles.fondo}>
-                <div className={styles.contenedor}>
-                    <div className={styles.contenedorCrear}>
-                        <div className={styles.contenedorTitulo}>
-                            <FaPlusCircle className={styles.iconTitulo} />
-                            <h1 className={styles.titulo}>Crear Asamblea</h1>
-                        </div>
-                        <section className={styles.contenedores}>
-                            <div className={styles.contenedorInformacion}>
-                                <label className={styles.labels}>Asunto: </label>
-                                <input className={styles.inputs} name="asunto" required id='asunto' type="text" placeholder="Asunto asamblea" onChange={handleChange} />
-                            </div>
-                            <div className={styles.contenedorInformacion}>
-                                <label className={styles.labels}>Contexto Asamblea: </label>
-                                <textarea className={styles.textarea} name="contexto" required id='contexto' type="text" placeholder="Contexto asamblea" onChange={handleChange} />
-                            </div>
-                            <div className={styles.contInfo}>
-                                <section className={styles.select}>
-                                    <label className={styles.labels}>Tipo de asamblea: </label>
-                                    <select className={styles.selectTipo} required name="tipoAsamblea" id='tipoAsamblea' onChange={handleChange}>
-                                        <option value="">Seleccione un tipo de asamblea</option>
-                                        <option value="resolutiva">Resolutiva</option>
-                                        <option value="informativa">Informativa</option>
-                                    </select>
-                                </section>
-                                <section className={styles.fecha}>
-                                    <label className={styles.labels}>Fecha: </label>
-                                    <input className={styles.inputFecha} required type="datetime-local" onChange={handleChange} name="fecha" id="input-fecha" />
-                                </section>
-                            </div>
-                            <div className={styles.contenedorInformacion}>
-                                <section className={styles.select}>
-                                    <label className={styles.labels}>Formato asamblea: </label>
-                                    <select className={styles.selectTipo} required name="lugar" id='lugar' onChange={handleChangeLugar}>
-                                        <option value="">Seleccione una opción</option>
-                                        <option value="presencial">Presencial</option>
-                                        <option value="online">Online</option>
-                                    </select>
-                                    {/* <Ubicacion lugar={lugar} handleChange={handleChange} /> */}
-                                    {wawa()}
-                                </section>
-                            </div>
-                            {puntos.map((punto, index) => {
-                                return (
-                                    <Puntos key={index} handleChangePunto={handleChangePunto} id={punto.id} handleDeletePunto={handleDeletePunto} />
-                                )
-                            })
-                            }
-                            <div className={styles.add}>
-                                <FaPlus className={styles.icon} onClick={() => handleAddPunto()} />
-                                <a onClick={handleAddPunto}>Agregar punto</a>
-                            </div>
-                            <div className={styles.botones}>
-                                <button className={`${styles.boton} ${styles.crear}`} onClick={() => handleSubmit()}>Crear Asamblea</button>
-                                <button className={`${styles.boton} ${styles.cancelar}`} onClick={() => router.push("/asambleas")}>Cancelar</button>
-                            </div>
-                        </section>
-                    </div>
-                </div>
-            </div>
+            <ChakraProvider>
+                <Container maxW={"container.md"}>
+                    <HStack align={"center"} justify={"center"} mt={10}>
+                        <FaPlusCircle size={30} />
+                        <Heading>Crear Asamblea</Heading>
+                    </HStack>
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Asunto</FormLabel>
+                        <Input name="asunto" required id='asunto' type="text" placeholder="Asunto asamblea" onChange={handleChange} />
+                    </FormControl>
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Contexto</FormLabel>
+                        <Textarea name="contexto" required id='contexto' type="text" placeholder="Contexto asamblea" onChange={handleChange} resize={"none"} minH={200} />
+                    </FormControl>
+                    <HStack mt={4}>
+                        <FormControl isRequired >
+                            <FormLabel>Tipo asamblea</FormLabel>
+                            <Select required name="tipoAsamblea" id='tipoAsamblea' onChange={handleChange}>
+                                <option value="">Seleccione un tipo de asamblea</option>
+                                <option value="resolutiva">Resolutiva</option>
+                                <option value="informativa">Informativa</option>
+                            </Select>
+                        </FormControl>
+                        <FormControl isRequired>
+                            <FormLabel>Fecha</FormLabel>
+                            <Input required name="fecha" id='fecha' type="datetime-local" onChange={handleChange} />
+                        </FormControl>
+                    </HStack>
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Lugar</FormLabel>
+                        <Select required name="lugar" id='lugar' onChange={handleChangeLugar}>
+                            <option value="">Seleccione un lugar</option>
+                            <option value="online">Online</option>
+                            <option value="presencial">Presencial</option>
+                        </Select>
+                    </FormControl>
+                    <FormControl isRequired mt={4}>
+                        {wawa()}
+                    </FormControl>
+                    {puntos.map((punto, index) => {
+                        return (
+                            <Puntos key={index} handleChangePunto={handleChangePunto} id={punto.id} ultimo={puntos.length} handleDeletePunto={handleDeletePunto} />
+                        )
+                    })
+                    }
+                    <FormControl>
+                        <HStack mt={4} align={"center"} justify={"center"}>
+                            <FaPlus size={20} onClick={handleAddPunto} />
+                            <Link mt={4} colorScheme="blue" onClick={handleAddPunto}>Agregar Punto</Link>
+                        </HStack>
+                    </FormControl>
+                    <HStack mt={4} mb={10}>
+                        <Button colorScheme="red" onClick={() => router.push("/asambleas")} w={"full"} > Cancelar </Button>
+                        <Button colorScheme="green" onClick={() => handleSubmit()} w={"full"} > Crear Asamblea </Button>
+                    </HStack>
+                </Container>
+            </ChakraProvider>
         </>
     )
+
 }
 
 export default crear

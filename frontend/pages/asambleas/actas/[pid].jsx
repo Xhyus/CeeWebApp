@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import styles from '../../../styles/actas_asambleas.module.css'
 import Textarea from '../../../components/textarea/Textarea'
-import Navbar from '../../../components/navbar/Navbar'
 import Spinner from '../../../components/spinner/Spinner'
 import { FaPaperclip } from 'react-icons/fa'
 import { FiSend } from 'react-icons/fi'
@@ -203,7 +202,6 @@ export default function actas_asambleas() {
 
 	return (
 		<>
-			<Navbar />
 			<div className={styles.fondo}>
 				<div className={styles.contenedor}>
 					<div className={styles.contenedorSuperior}>
