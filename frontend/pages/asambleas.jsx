@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import Filtro from '../components/filtro_asambleas/Filtro'
 import SpinnerLoading from '../components/spinner/SpinnerLoading'
 import { Container, Heading, ChakraProvider, Button, Collapse, HStack, Center, Spinner, Box, useMediaQuery } from '@chakra-ui/react'
+import Swal from 'sweetalert2'
 
 
 export default function asambleas() {
@@ -109,22 +110,20 @@ export default function asambleas() {
 		)
 	}
 
-	const FiltroActivo = () => {
+	const FiltroActivo = async () => {
 		return (
-			informacion.length > 0 ? informacion.map((asamblea, index) => {
+			await informacion.length > 0 ? informacion.map((asamblea, index) => {
 				return (
-					<Box key={index} mt={5} p={5} shadow="md" borderWidth="1px">
-						<Heading as="h4" size="md">{asamblea.titulo}</Heading>
-						<Text mt={2}>Tipo: {asamblea.tipo}</Text>
-						<Text mt={2}>Estado: {asamblea.estado}</Text>
-						<Text mt={2}>Fecha: {asamblea.fecha}</Text>
-						<Text mt={2}>Hora: {asamblea.hora}</Text>
-						<Text mt={2}>Lugar: {asamblea.lugar}</Text>
-						<Text mt={2}>Descripción: {asamblea.descripcion}</Text>
-						<Button mt={2} colorScheme={"yellow"} href={`/asambleas/${asamblea._id}`}>Ver más</Button>
-					</Box>
+					<Card key={index} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado={asamblea.fecha >= new Date() ? "PorRealizar" : "Terminadas"} />
 				)
-			}) : <Center mt={5}><Spinner /></Center>
+			}) :
+				Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: 'No hay asambleas con ese filtro',
+				}).then(() => {
+					setFiltro(false)
+				})
 		)
 	}
 
@@ -143,12 +142,11 @@ export default function asambleas() {
 						<Button colorScheme="blue" w={"full"} onClick={() => setOpenFiltro(!openFiltro)} leftIcon={<FaFilter />}>Abrir Filtro</Button>
 					</HStack>
 					<Collapse in={openFiltro} animateOpacity>
-						<Filtro setFiltro={setFiltro} />
+						<Filtro setFiltro={setFiltro} setInformacion={setInformacion} />
 					</Collapse>
 				</Box>
-				{filtro ? <FiltroActivo setInformacion={setInformacion} setFiltro={setFiltro} /> :
+				{filtro === true ? <FiltroActivo /> :
 					isMobile ? <Telefono /> : <Computador />
-
 				}
 			</Container>
 		</ChakraProvider >

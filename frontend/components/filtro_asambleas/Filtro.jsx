@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
-// import styles from './Filtro.module.css'
 import axios from 'axios'
-import { Container, Heading, ChakraProvider, FormControl, FormLabel, Input, Button, Select, Link, Text, HStack, Center, Spinner, Box } from '@chakra-ui/react'
+import { ChakraProvider, FormControl, FormLabel, Input, Button, Select, HStack, Center, Box } from '@chakra-ui/react'
 import { FaSearch } from 'react-icons/fa';
-
+import Swal from 'sweetalert2';
 
 const Filtro = ({ setFiltro, setInformacion }) => {
     const ISSERVER = typeof window === "undefined";
@@ -26,8 +25,17 @@ const Filtro = ({ setFiltro, setInformacion }) => {
     }
 
     const filtrar = () => {
+        if (data.estado === '' && data.tipoAsamblea === '' && data.inicio === '' && data.fin === '') {
+            return (
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Debe llenar al menos un campo',
+                    icon: 'error'
+                })
+            )
+        }
         setFiltro(true)
-        axios.get(`${process.env.SERVIDOR}/asambleas/filtros/${carrera}?estado=${data.estado}&tipo=${data.tipo}&inicio=${data.inicio}&fin=${data.fin}`, data)
+        axios.get(`${process.env.SERVIDOR}/asambleas/filtros/${carrera}?estado=${data.estado}&tipo=${data.tipoAsamblea}&inicio=${data.inicio}&fin=${data.fin}`, data)
             .then(res => {
                 setInformacion(res.data)
             }).catch(err => {
@@ -49,7 +57,7 @@ const Filtro = ({ setFiltro, setInformacion }) => {
                         </FormControl>
                         <FormControl w={"full"}>
                             <FormLabel>Tipo</FormLabel>
-                            <Select placeholder="Selecciona un tipo" name="tipo" onChange={handleChange}>
+                            <Select placeholder="Selecciona un tipo" name="tipoAsamblea" onChange={handleChange}>
                                 <option value="informativa">Informativa</option>
                                 <option value="resolutiva">Resolutiva</option>
                             </Select>
@@ -66,13 +74,12 @@ const Filtro = ({ setFiltro, setInformacion }) => {
                         </FormControl>
                     </HStack>
                     <Center mt={5}>
-                        <Button colorScheme="blue" w={500} leftIcon={<FaSearch />} onClick={filtrar}>Buscar</Button>
+                        <Button colorScheme="blue" w={500} leftIcon={<FaSearch />} onClick={() => filtrar()}>Buscar</Button>
                     </Center>
                 </Box>
             </ChakraProvider>
         </>
     )
-
 }
 
 export default Filtro

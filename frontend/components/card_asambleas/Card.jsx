@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from 'react'
-// import styles from './Card.module.css'
 import { FaClock, FaTag, FaCalendarCheck } from 'react-icons/fa'
-import { compararFechas, formateoFechaBD } from '../../utils/handleDates'
+import { formateoFechaBD } from '../../utils/handleDates'
 import { useRouter } from 'next/router'
-import axios from 'axios'
-import Swal from 'sweetalert2'
 import handleUpperCase from '../../utils/handleUpperCase'
 import { Box, Heading, Text, Button, HStack, Tag, TagLabel } from "@chakra-ui/react"
 
 const Card = ({ id, asunto, fecha, tipoAsamblea, estado }) => {
 	const [format, setFormat] = useState('')
 	const router = useRouter()
-
 	useEffect(() => {
 		setFormat(formateoFechaBD(fecha))
 	}, [])
-
 	const getEstadoAsamblea = () => {
 		if (estado === "Terminadas") {
 			return (
@@ -35,7 +30,6 @@ const Card = ({ id, asunto, fecha, tipoAsamblea, estado }) => {
 	}
 
 	return (
-
 		<Box key={id} mt={5} pt={5} pb={5} pr={10} pl={10} shadow="md" borderWidth="1px" borderRadius={'3xl'}>
 			<Box w={"full"}>
 				<HStack >
@@ -60,5 +54,4 @@ const Card = ({ id, asunto, fecha, tipoAsamblea, estado }) => {
 		</Box >
 	)
 }
-
 export default Card
