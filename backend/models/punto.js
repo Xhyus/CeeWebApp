@@ -4,7 +4,7 @@ const puntoSchema = Schema([{
 	asunto: {
 		type: String,
 		required: true,
-		match: /^[a-zA-Z\s]{3,}$/
+		match: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s\-]+$/,
 	},
 	descripcion: {
 		type: String,

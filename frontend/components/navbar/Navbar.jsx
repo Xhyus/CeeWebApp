@@ -1,8 +1,19 @@
-import React, {lazy, Suspense} from 'react';
+import React, { lazy, Suspense } from 'react';
 import styles from './Navbar.module.css'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 const Navbar = () => {
+	const router = useRouter()
+	const path = router.pathname.split('/')
+	const currentPage = (boton) => {
+		if (path[1] === 'asambleas' && boton === 'asambleas') {
+			return (`${styles.contenedorLista} ${styles.active}`)
+		}
+		if (path[1] === 'rendicion_cuentas' && boton === 'rendicion_cuentas') {
+			return (`${styles.contenedorLista} ${styles.active}`)
+		}
+	}
 	return (
 		<div className={styles.navbar}>
 			<div className={styles.imagenNavbar}>
@@ -10,8 +21,8 @@ const Navbar = () => {
 			</div>
 			<div className={styles.contenedorLista}>
 				<li className={styles.lista}>
-					<ul className={`${styles.contenedorLista} ${styles.active}`}><a href='/asambleas'>Asambleas</a></ul>
-					<ul className={styles.contenedorLista}><a href='/rendicion_cuentas'>Rendición de Cuentas</a></ul>
+					<ul className={currentPage('asambleas')}><a href='/asambleas'>Asambleas</a></ul>
+					<ul className={currentPage('rendicion_cuentas')}><a href='/rendicion_cuentas'>Rendicion de Cuentas</a></ul>
 					<ul className={styles.contenedorLista}><a href='/'>Cerrar Sesión</a></ul>
 				</li>
 			</div>

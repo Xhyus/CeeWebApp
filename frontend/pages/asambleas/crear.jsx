@@ -1,66 +1,262 @@
 import React, { useState, useEffect } from 'react'
-import Navbar from '../../components/navbar/Navbar'
 import { isLogged } from '../../utils/logged'
-import styles from '../../styles/asambleas.module.css'
+import Puntos from '../../components/puntos/Puntos'
+import { FaPlus, FaPlusCircle } from 'react-icons/fa'
+import axios from 'axios'
+import Swal from 'sweetalert2'
+import { useRouter } from 'next/router'
+import { Container, Heading, ChakraProvider, FormControl, FormLabel, Input, Button, Select, Link, Textarea, HStack, Center, Spinner } from '@chakra-ui/react'
 
 const crear = () => {
-    const [asunto, setAsunto] = useState()
-    const [fecha, setFecha] = useState()
-    const [tipoAsamblea, setTipoAsamblea] = useState(null)
-    const [boton, setboton] = useState('Crear')
+    const [asamblea, setAsamblea] = useState({
+        asunto: '',
+        fecha: '',
+        tipoAsamblea: '',
+        contexto: '',
+        ubicacion: '',
+        url: null,
+    })
+    const [puntos, setPuntos] = useState([{
+        id: 0,
+        asunto: ''
+    }])
+    const [lugar, setLugar] = useState('')
+    const router = useRouter()
+    const [isLoading, setIsLoading] = useState(false)
 
-    useEffect(() => {
-        isLogged()
-    }, [])
+    useEffect(() => isLogged(), [])
 
-    const handleChangeAsunto = (e) => {
-        setAsunto(e.target.value)
+    const handleChange = (e) => {
+        setAsamblea({
+            ...asamblea,
+            [e.target.name]: e.target.value
+        })
     }
 
-    const handleChangeFecha = (e) => {
-        setFecha(e.target.value)
+    const handleChangeLugar = (e) => {
+        setLugar(e.target.value)
     }
 
-    const handleChangeTipoAsamblea = (e) => {
-        setTipoAsamblea(e.target.value)
-        console.log(tipoAsamblea)
+    const handleAddPunto = () => {
+        const ultimoId = puntos[puntos.length - 1].id
+        setPuntos([...puntos, {
+            id: ultimoId + 1,
+            asunto: ''
+        }])
+    }
+    const handleDeletePunto = (id) => {
+        setPuntos(puntos.filter(punto => punto.id !== id))
+        puntos.map(punto => {
+            if (punto.id > id) {
+                punto.id = punto.id - 1
+            }
+        })
+    }
+
+    const handleChangePunto = (e) => {
+        setPuntos(
+            puntos.map(punto => {
+                if (punto.id.toString() === e.target.name) {
+                    return {
+                        ...punto,
+                        asunto: e.target.value
+                    }
+                }
+                return punto
+            })
+        )
     }
 
     const handleSubmit = () => {
-        console.log(asunto, fecha, tipoAsamblea)
+        if (asamblea.asunto === '' || asamblea.fecha === '' || asamblea.tipoAsamblea === '' || asamblea.contexto === '') {
+            Swal.fire({
+                title: 'Error',
+                text: 'Todos los campos son obligatorios',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            })
+        } else {
+            setIsLoading(true)
+            const data = {
+                asunto: asamblea.asunto,
+                fecha: asamblea.fecha,
+                tipoAsamblea: asamblea.tipoAsamblea,
+                contexto: asamblea.contexto,
+                ubicacion: asamblea.ubicacion,
+                url: asamblea.url,
+            }
+            let carrera = localStorage.getItem('carrera')
+            axios.post(process.env.SERVIDOR + '/asamblea/' + carrera, data)
+                .then(res => {
+                    postPunto(res.data._id)
+                })
+                .catch(err => {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Error al crear la asamblea',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                    })
+                })
+        }
+    }
+
+
+    const postPunto = async (id) => {
+        await puntos.map(punto => {
+            let data = {
+                asunto: punto.asunto,
+                descripcion: ""
+            }
+            axios.post(process.env.SERVIDOR + '/punto/' + id, data)
+                .then(res => {
+                }).catch(err => {
+                    Swal.fire({
+                        title: 'Error',
+                        text: 'Error al crear los puntos',
+                        icon: 'error',
+                        confirmButtonText: 'Aceptar'
+                    })
+                })
+        })
+        enviarCorreo()
+    }
+
+    const enviarCorreo = () => {
+        let carrera = localStorage.getItem('carrera')
+        axios.post(`${process.env.SERVIDOR}/asamblea/mail/${carrera}`, {
+            asunto: asamblea.asunto,
+            fecha: asamblea.fecha,
+            tipoAsamblea: asamblea.tipoAsamblea,
+            contexto: asamblea.contexto,
+            ubicacion: asamblea.ubicacion,
+            url: asamblea.url,
+            puntos: puntos
+        })
+            .then(res => {
+                setIsLoading(false)
+                Swal.fire({
+                    title: 'Exito',
+                    text: 'Asamblea Creada con exito y notificada por correo',
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar',
+
+                }).then(() => {
+                    router.push('/asambleas')
+                })
+            }).catch(err => {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'Error al enviar el correo',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                })
+            })
+    }
+
+    const wawa = () => {
+        if (lugar === '') {
+            return null
+        }
+        if (lugar == 'online') {
+            return (
+                <HStack mb={5}>
+                    <FormControl isRequired>
+                        <FormLabel>Ubicacion</FormLabel>
+                        <Input type="text" name="ubicacion" onChange={handleChange} placeholder="Ejemplo: Discord, Zoom, Etc." />
+                    </FormControl>
+                    <FormControl isRequired >
+                        <FormLabel>Url</FormLabel>
+                        <Input type="text" name="url" onChange={handleChange} placeholder="www.google.cl" />
+                    </FormControl>
+                </HStack>
+            )
+        }
+        if (lugar == 'presencial') {
+            return (
+                <FormControl isRequired mb={5}>
+                    <FormLabel>Ubicacion</FormLabel>
+                    <Input type="text" name="ubicacion" onChange={handleChange} placeholder="Ejemplo: FACE Sala 103CE" />
+                </FormControl>
+            )
+        }
+    }
+
+    if (isLoading) {
+        return (
+            <ChakraProvider>
+                <Center h="92.5vh">
+                    <Spinner size="xl" />
+                </Center>
+            </ChakraProvider>
+        )
     }
 
     return (
         <>
-            <Navbar />
-            <div className={styles.fondo}>
-                <div className={styles.contenedor}>
-                    <div className={styles.contenedorCrear}>
-                        <p className={styles.titulo_filtro}><strong>Filtro</strong></p>
-                        <section className={styles.contenedores}>
-                            <div className={styles.contenedorAsunto}>
-                                <label className={styles.labels}>Asunto: </label>
-                                <input className={styles.inputs} name="Asunto" id='Asunto' type="text" placeholder="Asunto" onChange={handleChangeAsunto} />
-                            </div>
-                            <div className={styles.contenedorTipoAsamblea}>
-                                <label className={styles.labels}>Tipo de asamblea: </label>
-                                <select className={styles.selectTipo} name="selectTipo" id='selectTipo' onChange={handleChangeTipoAsamblea}>
-                                    <option value="null">Seleccione un tipo de asamblea</option>
-                                    <option value="resolutiva">Resolutiva</option>
-                                    <option value="informativa">Informativa</option>
-                                </select>
-                            </div>
-                            <div className={styles.contenedorFecha}>
-                                <label className={styles.labels}>Fecha: </label>
-                                <input className={styles.inputs} type="datetime-local" onChange={handleChangeFecha} name="input-fecha" id="input-fecha" />
-                            </div>
-                            <button className={styles.Propiedades_boton} onClick={() => handleSubmit()}>{boton}</button>
-                        </section>
-                    </div>
-                </div>
-            </div>
+            <ChakraProvider>
+                <Container maxW={"container.md"}>
+                    <HStack align={"center"} justify={"center"} mt={10}>
+                        <FaPlusCircle size={30} />
+                        <Heading>Crear Asamblea</Heading>
+                    </HStack>
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Asunto</FormLabel>
+                        <Input name="asunto" required id='asunto' type="text" placeholder="Asunto asamblea" onChange={handleChange} />
+                    </FormControl>
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Contexto</FormLabel>
+                        <Textarea name="contexto" required id='contexto' type="text" placeholder="Contexto asamblea" onChange={handleChange} resize={"none"} minH={200} />
+                    </FormControl>
+                    <HStack mt={4}>
+                        <FormControl isRequired >
+                            <FormLabel>Tipo asamblea</FormLabel>
+                            <Select required name="tipoAsamblea" id='tipoAsamblea' onChange={handleChange}>
+                                <option value="">Seleccione un tipo de asamblea</option>
+                                <option value="resolutiva">Resolutiva</option>
+                                <option value="informativa">Informativa</option>
+                            </Select>
+                        </FormControl>
+                        <FormControl isRequired>
+                            <FormLabel>Fecha</FormLabel>
+                            <Input required name="fecha" id='fecha' type="datetime-local" onChange={handleChange} />
+                        </FormControl>
+                    </HStack>
+                    <FormControl isRequired mt={4}>
+                        <FormLabel>Lugar</FormLabel>
+                        <Select required name="lugar" id='lugar' onChange={handleChangeLugar}>
+                            <option value="">Seleccione un lugar</option>
+                            <option value="online">Online</option>
+                            <option value="presencial">Presencial</option>
+                        </Select>
+                    </FormControl>
+                    <FormControl isRequired mt={4}>
+                        {wawa()}
+                    </FormControl>
+                    {puntos.map((punto, index) => {
+                        return (
+                            <Puntos key={index} handleChangePunto={handleChangePunto} id={punto.id} ultimo={puntos.length} handleDeletePunto={handleDeletePunto} />
+                        )
+                    })
+                    }
+                    {puntos.length < 8 ?
+                        <FormControl>
+                            <HStack mt={4} align={"center"} justify={"center"}>
+                                <FaPlus size={20} onClick={handleAddPunto} />
+                                <Link mt={4} colorScheme="blue" onClick={handleAddPunto}>Agregar Punto</Link>
+                            </HStack>
+                        </FormControl>
+                        : null}
+
+                    <HStack mt={10} mb={10}>
+                        <Button colorScheme="red" onClick={() => router.push("/asambleas")} w={"full"} > Cancelar </Button>
+                        <Button colorScheme="green" onClick={() => handleSubmit()} w={"full"} > Crear Asamblea </Button>
+                    </HStack>
+                </Container>
+            </ChakraProvider>
         </>
     )
+
 }
 
 export default crear

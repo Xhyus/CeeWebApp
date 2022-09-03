@@ -16,14 +16,21 @@ const compararFechas = (fecha, ahora) => {
 }
 
 const formateoFechaBD = (fecha) => {
+    let estado
     let fechaBD = fecha.split('T')
     let fechaBD2 = fechaBD[0].split('-')
     let fechaBD3 = fechaBD2[2] + '/' + fechaBD2[1] + '/' + fechaBD2[0]
     let horaBD = fechaBD[1].split(':')
     let horaBD2 = horaBD[0] + ':' + horaBD[1]
+    if (new Date(fecha) >= new Date()) {
+        estado = 'Por realizar'
+    } else {
+        estado = 'Finalizado'
+    }
     let formateado = {
         fecha: fechaBD3,
-        hora: horaBD2
+        hora: horaBD2,
+        estado: estado
     }
     return formateado
 
