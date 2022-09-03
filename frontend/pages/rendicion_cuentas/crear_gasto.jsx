@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import styles from "../../styles/rendicion_cuentas.module.css";
+import styles from "../../styles/crear_gasto.module.css";
+import { ChakraProvider, HStack, Container, Input, Select, FormLabel, FormControl, Button, Heading } from "@chakra-ui/react";
+import { FaPlusCircle } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 // import { useEffect } from "react/cjs/react.production.min";
@@ -45,6 +47,7 @@ export default function crear_gasto() {
     //? Función para capturar cambios en los inputs.
     const handleInputChange = (event) => {
 
+        console.log("Edit: " + event.target.value)
         setDatosGasto({
 
             ...datosGasto,
@@ -72,22 +75,36 @@ export default function crear_gasto() {
         console.log("Boleta        : " + boletaGasto + "\n");
         console.log("--------------------------------------");
 
-        //? Crear gasto.
-        // axios.post(process.env.SERVIDOR +'/rendicion/', datosVerificados)
-        // .then((respuesta) => {
-        //     console.log("Solicitud creación Gasto: " + respuesta);
-        // })
-        // .catch((error) => {
-        //     console.log("Error al crear el gasto: " + error);
-        // })
+        //? Validación de campos.
+        if (datosGasto.asunto === '' || datosGasto.total === '' || datosGasto.tipo === '' || datosGasto.fecha === '' || datosGasto.detalle === '') {
+        
+            Swal.fire({
+                title: 'Error',
+                text: 'Todos los campos son obligatorios',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+            })
+        
+        } else {
 
-        //* Mostrar alerta en pantalla.
-        Swal.fire({
-            title: 'Gasto creado',
-            text: datosVerificados.asunto,
-            icon: 'success',
-            confirmButtonText: 'Aceptar'
-        })
+            //? Crear gasto.
+            // axios.post(process.env.SERVIDOR +'/rendicion/', datosVerificados)
+            // .then((respuesta) => {
+            //     console.log("Solicitud creación Gasto: " + respuesta);
+            // })
+            // .catch((error) => {
+            //     console.log("Error al crear el gasto: " + error);
+            // })
+
+            //* Mostrar alerta en pantalla.
+            Swal.fire({
+                title: 'Gasto creado',
+                text: datosVerificados.asunto,
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            })
+
+        }
 
         //* Resetear valores de los input.
 
@@ -96,75 +113,57 @@ export default function crear_gasto() {
 
     return (
 
-        //* .: CONTENEDOR PRINCIPAL :. *//
-        <div className={styles.Contenedor_principal}>
+        <ChakraProvider>
+            <Container maxW={"container.md"}>
+                <HStack align={"center"} justify={"center"} mt={10}>
+                    <FaPlusCircle size={30}/>
+                    <Heading> Crear Gasto</Heading>
+                </HStack>
 
-            {/* .: CONTENEDOR DEL FORMULARIO :. */}
-            <div className={styles.Contenedor_secundario}>
+                <FormControl isRequired mt={5}>
+                    <FormLabel>Asunto</FormLabel>
+                    <Input type="text" name="asunto" onChange={handleInputChange}/>
+                </FormControl>
 
-                {/* .: TITULO :. */}
-                <div className={styles.Contenedor_titulo}>
-                    <h1 className={styles.Propiedades_texto}>Agregar gasto</h1>
-                </div>
+                <FormControl isRequired mt={5}>
+                    <FormLabel>Detalle</FormLabel>
+                    <Input type="text" name="detalle" onChange={handleInputChange}/>
+                </FormControl>
 
-                <div className={styles.Contenedor_contenido}>
+                <HStack mt={5}>
+                    <FormControl isRequired>
+                        <FormLabel>Tipo</FormLabel>
+                        <Select name="tipo" onChange={handleInputChange}>
+                            <option>Seleccione un tipo</option>
+                            <option>Actividades</option>
+                            <option>Oficina</option>
+                            <option>CEE</option>
+                            <option>Otros</option>
+                        </Select>
+                    </FormControl>
 
-                    {/* .: ASUNTO y TOTAL :. */}
-                    <div className={styles.Contenedor_asunto_total}>
+                    <FormControl isRequired>
+                        <FormLabel>Fecha</FormLabel>
+                        <Input type="date" name="fecha" onChange={handleInputChange}/>
+                    </FormControl>
+                </HStack>
 
-                        {/* Ingresar asunto del gasto */}
-                        <div>
-                            <p className={styles.Propiedades_texto}>Asunto</p>
-                            <input type="text" name="asunto" onChange={handleInputChange} />
-                        </div>
+                <FormControl isRequired mt={5}>
+                    <FormLabel>Total</FormLabel>
+                    <Input type="number" name="total" onChange={handleInputChange}/>
+                </FormControl>
 
-                        {/* Ingresar total del gasto */}
-                        <div>
-                            <p className={styles.Propiedades_texto}>Total</p>
-                            <input type="number" name="total" onChange={handleInputChange} />
-                        </div>
+                <FormControl isRequired mt={5}>
+                    <FormLabel>Boleta</FormLabel>
+                    <Button colorScheme={"orange"} onClick={console.log("Subir archivo")} w={"full"}>Adjuntar boleta</Button>
+                </FormControl>
 
-                    </div>
-
-                    {/* .: TIPO y FECHA :. */}
-                    <div className={styles.Contenedor_tipo_fecha}>
-
-                        {/* Ingresar tipo de gasto (Ingreso o gasto) */}
-                        <div>
-                            <p className={styles.Propiedades_texto}>Tipo</p>
-                            <input type="text" name="tipo" onChange={handleInputChange} />
-                        </div>
-
-                        {/* Ingresar fecha en que se realizó el gasto */}
-                        <div>
-                            <p className={styles.Propiedades_texto}>Fecha</p>
-                            <input type="date" name="fecha" onChange={handleInputChange} />
-                        </div>
-
-                    </div>
-
-                    {/* .: DETALLE :. */}
-                    <div className={styles.Contenedor_detalle}>
-                        <h3 className={styles.Propiedades_texto}>Detalle</h3>
-                        <input type="text" name="detalle" onChange={handleInputChange} />
-                    </div>
-
-                    {/* .: BOLETA :. */}
-                    <div className={styles.Contenedor_boleta}>
-                        <h3 className={styles.Propiedades_texto}>Boleta</h3>
-                        <input type="file" name="boleta" onChange={handleInputChange} />
-                    </div>
-
-                    {/* .: ENVIAR :. */}
-                    <div className={styles.Contenedor_boton}>
-                        <button className={styles.Propiedades_texto} onClick={() => verificarDatos()}>Enviar</button>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
+                <HStack mt={10} mb={10}>
+                    <Button colorScheme={"red"} onClick={() => router.push("/rendicion_cuentas")} w={"full"}>Cancelar</Button>
+                    <Button colorScheme={"green"} onClick={() => verificarDatos()} w={"full"}>Crear gasto</Button>
+                </HStack>
+            </Container>
+        </ChakraProvider>
 
     );
 

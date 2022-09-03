@@ -1,0 +1,33 @@
+.fondo {
+    background-color: #EDF1F7;
+    width: 100%;
+    height: auto;
+    min-height: 91vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.contenedor {
+    width: 75%;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    height: auto;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 60px;
+}
+
+.contenedor_tipo_fecha {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+}
