@@ -4,7 +4,7 @@ const mailSender = require('../controllers/mailSender.js')
 
 const crearAsamblea = (req, res) => {
     const carrera = req.params.carrera
-    const { asunto, fecha, contexto, tipoAsamblea, puntos, acta, archivos, ubicacion, url } = req.body;
+    const { asunto, fecha, contexto, tipoAsamblea, puntos, acta, archivos, ubicacion, url, horaTermino } = req.body;
     const nuevaAsamblea = new asamblea({
         asunto,
         fecha,
@@ -14,7 +14,8 @@ const crearAsamblea = (req, res) => {
         acta,
         archivos,
         ubicacion,
-        url
+        url,
+        horaTermino
     })
     nuevaAsamblea.save((err, asamblea) => {
         if (err) {
@@ -182,11 +183,26 @@ const filtro = (req, res) => {
     })
 }
 
+const agregarHoraTermino = (req, res) => {
+    let id = req.params.id;
+    let horaTermino = req.body.horaTermino;
+    asamblea.findByIdAndUpdate(id, { horaTermino: horaTermino }, (err, asamblea) => {
+        if (err) {
+            return res.status(400).send({ message: "Error al buscar" })
+        }
+        if (!asamblea) {
+            return res.status(404).send({ message: "No existe" })
+        }
+        res.status(200).send(asamblea)
+    })
+}
+
 module.exports = {
     crearAsamblea,
     modificarAsamblea,
     eliminarAsamblea,
     buscarAsamblea,
     asambleasPorCarrera,
-    filtro
+    filtro,
+    agregarHoraTermino
 }

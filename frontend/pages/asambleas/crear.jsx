@@ -77,15 +77,17 @@ const crear = () => {
             })
         } else {
             setIsLoading(true)
-            let carrera = localStorage.getItem('carrera')
-            axios.post(process.env.SERVIDOR + '/asamblea/' + carrera, {
+            const data = {
                 asunto: asamblea.asunto,
                 fecha: asamblea.fecha,
                 tipoAsamblea: asamblea.tipoAsamblea,
                 contexto: asamblea.contexto,
                 ubicacion: asamblea.ubicacion,
                 url: asamblea.url,
-            })
+            }
+            console.log("Data:", data)
+            let carrera = localStorage.getItem('carrera')
+            axios.post(process.env.SERVIDOR + '/asamblea/' + carrera, data)
                 .then(res => {
                     postPunto(res.data._id)
                 })
@@ -103,13 +105,16 @@ const crear = () => {
 
     const postPunto = async (id) => {
         await puntos.map(punto => {
+            console.log("Punto asunto " + punto.id + ":" + punto.asunto)
             let data = {
                 asunto: punto.asunto,
                 descripcion: ""
             }
             axios.post(process.env.SERVIDOR + '/punto/' + id, data)
                 .then(res => {
+                    console.log(res.data)
                 }).catch(err => {
+                    console.log(err)
                     Swal.fire({
                         title: 'Error',
                         text: 'Error al crear los puntos',
@@ -238,13 +243,16 @@ const crear = () => {
                         )
                     })
                     }
-                    <FormControl>
-                        <HStack mt={4} align={"center"} justify={"center"}>
-                            <FaPlus size={20} onClick={handleAddPunto} />
-                            <Link mt={4} colorScheme="blue" onClick={handleAddPunto}>Agregar Punto</Link>
-                        </HStack>
-                    </FormControl>
-                    <HStack mt={4} mb={10}>
+                    {puntos.length < 5 ?
+                        <FormControl>
+                            <HStack mt={4} align={"center"} justify={"center"}>
+                                <FaPlus size={20} onClick={handleAddPunto} />
+                                <Link mt={4} colorScheme="blue" onClick={handleAddPunto}>Agregar Punto</Link>
+                            </HStack>
+                        </FormControl>
+                        : null}
+
+                    <HStack mt={10} mb={10}>
                         <Button colorScheme="red" onClick={() => router.push("/asambleas")} w={"full"} > Cancelar </Button>
                         <Button colorScheme="green" onClick={() => handleSubmit()} w={"full"} > Crear Asamblea </Button>
                     </HStack>

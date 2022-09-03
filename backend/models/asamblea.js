@@ -46,6 +46,12 @@ const asambleaSchema = Schema({
     url: {
         type: String,
         // match: /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/
+    },
+    horaTermino: {
+        // type time (hh:mm)
+        type: String,
+        default: '',
+        match: /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/
     }
 
 })

@@ -22,7 +22,7 @@ const formateoFechaBD = (fecha) => {
     let fechaBD3 = fechaBD2[2] + '/' + fechaBD2[1] + '/' + fechaBD2[0]
     let horaBD = fechaBD[1].split(':')
     let horaBD2 = horaBD[0] + ':' + horaBD[1]
-    if (fecha > new Date()) {
+    if (new Date(fecha) >= new Date()) {
         estado = 'Por realizar'
     } else {
         estado = 'Finalizado'

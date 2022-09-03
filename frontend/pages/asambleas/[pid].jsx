@@ -4,10 +4,11 @@ import axios from 'axios'
 import { formateoFechaBD } from '../../utils/handleDates'
 import handleUpperCase from '../../utils/handleUpperCase'
 import Puntos from '../../components/puntos_List/Puntos'
-import downloadFile from '../../data/asambleas/downloadFile'
 import Swal from 'sweetalert2'
-import { Container, Heading, ChakraProvider, Button, Link, HStack, Center, Spinner, Text, Highlight, ListItem, List, ListIcon, Box, CheckCircleIcon, UnorderedList } from '@chakra-ui/react'
-
+import { Container, Heading, ChakraProvider, Button, Link, HStack, Text, ListItem, Box, UnorderedList, FormControl, Input, color } from '@chakra-ui/react'
+import Archivos from '../../components/archivosList/Archivos'
+import SpinnerLoading from '../../components/spinner/SpinnerLoading'
+import UploadImages from '../../components/UploadImages/UploadImages'
 
 const verAsamblea = () => {
     const router = useRouter()
@@ -19,6 +20,7 @@ const verAsamblea = () => {
         acta: '',
         ubicacion: '',
         url: '',
+        horaTermino: '',
         puntos: [],
         archivos: [],
     })
@@ -29,8 +31,8 @@ const verAsamblea = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        const getAsamblea = (pid) => {
-            axios.get(process.env.SERVIDOR + '/asamblea/' + pid)
+        const getAsamblea = async (pid) => {
+            await axios.get(process.env.SERVIDOR + '/asamblea/' + pid)
                 .then(res => {
                     setAsamblea({
                         asunto: handleUpperCase(res.data.asunto),
@@ -40,8 +42,8 @@ const verAsamblea = () => {
                         acta: res.data.acta,
                         ubicacion: handleUpperCase(res.data.ubicacion),
                         url: res.data.url,
+                        horaTermino: res.data.horaTermino,
                     })
-                    localStorage.setItem('asunto', res.data.asunto)
                     let puntos = [...res.data.puntos]
                     puntos.map(punto => {
                         obtenerPunto(punto)
@@ -53,7 +55,7 @@ const verAsamblea = () => {
                     setIsLoading(false)
                 })
                 .catch(err => {
-                    console.log("Error al obtener una asamblea")
+                    router.push('/asambleas')
                 })
         }
         localStorage.setItem('pid', pid);
@@ -87,92 +89,137 @@ const verAsamblea = () => {
             })
     }
 
-    if (isLoading) {
+    const editarAsamblea = () => {
         return (
-            <ChakraProvider>
-                <Center h="92.5vh">
-                    <Spinner size="xl" />
-                </Center>
-            </ChakraProvider>
+            Swal.fire({
+                title: '<strong>Añadir hora de termino de asamblea</strong>',
+                icon: 'question',
+                html:
+                    '<FormControl>' +
+                    '<Label><Strong>Hora:</Strong></Label> <Input type="time" id="horaTermino" />' +
+                    '</FormControl>',
+
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: false,
+                confirmButtonText:
+                    'Enviar',
+                cancelButtonText:
+                    'Cancelar',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let horaTermino = document.getElementById('horaTermino').value
+                    if (horaTermino === '') {
+                        Swal.fire({
+                            title: 'Error',
+                            text: 'Debe ingresar una hora de termino',
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar'
+                        })
+                    } else {
+                        axios.put(process.env.SERVIDOR + '/asamblea/update/hora/' + pid, { horaTermino: horaTermino })
+                            .then(res => {
+                                Swal.fire({
+                                    title: 'Exito',
+                                    text: 'Hora de termino de asamblea actualizada',
+                                    icon: 'success',
+                                    confirmButtonText: 'Aceptar'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        window.location.reload()
+                                    }
+                                })
+                            })
+                            .catch(err => {
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: 'Error al actualizar hora de termino',
+                                    icon: 'error',
+                                    confirmButtonText: 'Aceptar'
+                                })
+                            })
+                    }
+                }
+            })
         )
     }
 
-    const showFiles = () => {
-        if (archivos.length > 0) {
+    const showHoraTermino = () => {
+        if (asamblea.horaTermino === '' || asamblea.horaTermino === undefined || asamblea.horaTermino === null) {
+            return null
+        } else {
             return (
-                <Box>
-                    <Heading size="md" mt="5" mb="2">Archivos</Heading>
-                    <UnorderedList>
-                        {archivos.map(archivo => {
-                            return (
-                                <ListItem key={archivo.id}>
-                                    <Link onClick={() => downloadFile(archivo)} download>
-                                        <Text fontSize={"xl"}>{handleUpperCase(archivo.nombre)}</Text>
-                                    </Link>
-                                </ListItem>
-                            )
-                        })}
-                    </UnorderedList>
-                </Box>
+                <Text fontSize="lg" mt={2} mb={2} fontWeight={"bold"}>
+                    Hora de termino: {asamblea.horaTermino}
+                </Text>
             )
         }
+    }
+
+    const color = () => {
+        if ((asamblea.horaTermino == '' || asamblea.horaTermino == undefined || asamblea.horaTermino == null) && asamblea.fecha.estado == 'Finalizado') {
+            return "orange"
+        } else {
+            return "gray"
+        }
+    }
+
+    const disable = () => {
+        if ((asamblea.horaTermino == '' || asamblea.horaTermino == undefined || asamblea.horaTermino == null) && asamblea.fecha.estado == 'Finalizado') {
+            return false
+        } else {
+            return true
+        }
+    }
+
+    if (isLoading) {
+        return (
+            <SpinnerLoading />
+        )
     }
 
     return (
         <>
             <ChakraProvider>
                 <Container maxW="container.lg">
-                    <Heading as="h1" size="xl" color="black" textAlign="center" mt="10" mb="5">{asamblea.asunto}</Heading>
-                    <HStack spacing="24px" mt={5}>
-                        <Text fontSize="xl" fontWeight="bold">Tipo Asamblea: </Text>
-                        <Text fontSize="xl">{asamblea.tipoAsamblea}</Text>
+                    <Heading as="h1" size="xl" color="black" textAlign="center" mt={10}>{asamblea.asunto}</Heading>
+                    <HStack spacing="24px" mt={10} >
+                        <Text fontSize="lg" fontWeight="bold">Tipo Asamblea: </Text>
+                        <Text fontSize="lg">{asamblea.tipoAsamblea}</Text>
+                    </HStack>
+                    <HStack mt={5}>
+                        <Text fontSize="lg" fontWeight="bold">Fecha: </Text>
+                        <Text fontSize="lg">{asamblea.fecha.fecha}</Text>
+                    </HStack>
+                    <HStack mt={5}>
+                        <Text fontSize="lg" fontWeight="bold">Hora: </Text>
+                        <Text fontSize="lg">{asamblea.fecha.hora}</Text>
+                    </HStack>
+                    <HStack mt={5}>
+                        {asamblea.url ? <Text fontSize="lg" fontWeight="bold" mt={5}>Plataforma: </Text> : <Text fontSize="xl" fontWeight="bold">Ubicacion: </Text>}
+                        <Text fontSize="lg" mt={5}>{asamblea.ubicacion}</Text>
                     </HStack>
                     <HStack spacing="24px" mt={5}>
-                        <HStack >
-                            <Text fontSize="xl" fontWeight="bold">Fecha: </Text>
-                            <Text fontSize="xl">{asamblea.fecha.fecha}</Text>
-                        </HStack>
-                        <HStack>
-                            <Text fontSize="xl" fontWeight="bold">Hora: </Text>
-                            <Text fontSize="xl">{asamblea.fecha.hora}</Text>
-                        </HStack>
+                        <Text fontSize="lg" fontWeight="bold">Estado: </Text>
+                        <Text fontSize="lg" fontWeight={"bold"} color={asamblea.fecha.estado == "Finalizado" ? "red" : "green"}>{asamblea.fecha.estado == "Finalizado" ? "Finalizado" : "En proceso"}</Text>
+                        {showHoraTermino()}
                     </HStack>
-                    <HStack spacing="24px" mt={5}>
-                        {asamblea.url ? <Text fontSize="xl" fontWeight="bold">Plataforma: </Text> : <Text fontSize="xl" fontWeight="bold">Ubicacion: </Text>}
-                        <Text fontSize="xl">{asamblea.ubicacion}</Text>
-                    </HStack>
-                    {asamblea.url ? <HStack spacing="24px" mt={5}>
-                        <Text fontSize="xl" fontWeight="bold">URL: </Text>
+                    {asamblea.url ? <HStack mt={5}>
+                        <Text fontSize="lg" fontWeight="bold">URL: </Text>
                         <Link href={asamblea.url} isExternal>
-                            <Text fontSize="xl" color="blue.500">{asamblea.url}</Text>
+                            <Text fontSize="lg" color="blue.500">{asamblea.url}</Text>
                         </Link>
                     </HStack> : null}
                     <Box spacing="24px" justify={"flex-start"} mt={5}>
-                        <Text fontSize="xl" fontWeight="bold">Contexto: </Text>
-                        <Text fontSize="xl">{asamblea.contexto}</Text>
+                        <Text fontSize="lg" fontWeight="bold">Contexto: </Text>
+                        <Text fontSize="lg">{asamblea.contexto}</Text>
                     </Box>
-                    <HStack spacing="24px" mt={5}>
-                        <Text fontSize="xl" fontWeight="bold">Estado: </Text>
-                        <Text fontSize="xl" fontWeight={"bold"} color={asamblea.fecha.estado == "Terminado" ? "red" : "green"}>{asamblea.fecha.estado == "Finalizada" ? "Finalizada" : "En proceso"}</Text>
-                    </HStack>
-                    <Heading as="h4" size="md" color="black" textAlign="start" mt="5" >Puntos a tratar</Heading>
-                    <List spacing={3} mt={5}>
-                        {puntos.map((punto, index) => (
-                            <UnorderedList key={index}>
-                                <ListItem>
-                                    <HStack>
-                                        <Text fontSize="xl" fontWeight="bold">Punto {index + 1}:</Text>
-                                        <Text fontSize="xl">{punto.asunto}</Text>
-                                    </HStack>
-                                </ListItem>
-                            </UnorderedList>
-                        ))}
-                    </List>
-                    {showFiles()}
-
-                    <HStack spacing="24px" mt={10} mb={10}>
-                        <Button colorScheme="green" w={"full"} onClick={() => console.log("Adjuntar archivos")}>Adjuntar archivos</Button>
-                        <Button colorScheme="orange" w={"full"} onClick={() => console.log("editar")}>Editar</Button>
+                    <Heading as="h4" size="lg" color="black" textAlign="start" mt="5" >Puntos a tratar</Heading>
+                    <Puntos puntos={puntos} />
+                    <Archivos archivos={archivos} />
+                    <HStack mt={10} mb={10}>
+                        <Button colorScheme="green" w={"full"} onClick={async () => { localStorage.setItem("pid", pid), await UploadImages(router) }}>Adjuntar archivos</Button>
+                        <Button colorScheme={color()} w={"full"} disabled={disable()} onClick={() => { localStorage.setItem("pid", pid), editarAsamblea() }}>Editar</Button>
                         <Button colorScheme="red" w={"full"} onClick={() => router.push(`/asambleas`)}>Atras</Button>
                     </HStack>
                 </Container>

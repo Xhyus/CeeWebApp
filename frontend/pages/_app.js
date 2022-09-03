@@ -6,7 +6,6 @@ import { useRouter } from 'next/router'
 function MyApp({ Component, pageProps }) {
 
 	const router = useRouter()
-	console.log(router.pathname)
 	const useNavbar = () => {
 		if (router.pathname == '/' || router.pathname == '' || router.pathname == '/404' || router.pathname == '/500') {
 			return <>

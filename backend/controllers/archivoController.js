@@ -30,7 +30,7 @@ const uploadNewFilesAsambleas = async (req, res) => {
         })
         return archivo
     })
-    res.status(201).send(aux)
+    return res.status(201).send(aux)
 }
 
 const listarArchivos = async (req, res) => {
