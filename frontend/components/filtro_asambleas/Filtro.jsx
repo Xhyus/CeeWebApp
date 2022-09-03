@@ -24,8 +24,6 @@ const Filtro = ({ tipo }) => {
         })
     }
 
-
-
     const filtrar = () => {
         setFiltro(true)
         axios.get(`${process.env.SERVIDOR}/asambleas/filtros/${carrera}?estado=${data.estado}&tipo=${data.tipo}&inicio=${data.inicio}&fin=${data.fin}`, data)
@@ -33,12 +31,11 @@ const Filtro = ({ tipo }) => {
                 setInformacion(res.data)
             }).catch(err => {
                 console.log(err)
-            }
-            )
+            })
     }
 
     return (
-        < >
+        <>
             <div className={styles.filtro}>
                 <label className={styles.label}>Estado Asamblea: </label>
                 <select onChange={handleChange} name="estado" className={styles.filtro_contenido_estado}>

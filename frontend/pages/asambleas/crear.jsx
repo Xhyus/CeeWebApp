@@ -14,7 +14,7 @@ const crear = () => {
         tipoAsamblea: '',
         contexto: '',
         ubicacion: '',
-        url: '',
+        url: null,
     })
     const [puntos, setPuntos] = useState([{
         id: 0,

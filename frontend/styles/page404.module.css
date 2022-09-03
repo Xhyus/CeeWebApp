@@ -1,6 +1,6 @@
-.fondo{
+.fondo {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url(../public/ant-rozetsky-HXOllTSwrpM-unsplash.jpg);
     background-repeat: no-repeat;
     background-size: cover;
@@ -13,7 +13,8 @@
     align-items: center;
     justify-content: center;
 }
-.contenedorError{
+
+.contenedorError {
     color: #fff;
     border: none;
     display: flex;
@@ -23,49 +24,57 @@
     border-radius: 50px;
     padding: 8vh;
 }
-.contenedorIzquierda{
+
+.contenedorIzquierda {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.textoError{
+
+.textoError {
     display: flex;
     font-size: 60px;
     margin: 0;
 }
-.texto404{
+
+.texto404 {
     margin: 0;
     font-size: 100px;
 }
-.contenedorCentral{
+
+.contenedorCentral {
     padding: 3vh;
 }
-.contenedorDerecha{
+
+.contenedorDerecha {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.textoPagina{
+
+.textoPagina {
     font-size: 60px;
     margin: 0;
 }
-.sad{
+
+.sad {
     margin-top: 3vh;
     height: 7vh;
 }
 
-@media (max-width: 768px){
-    .contenedorError{
+@media (max-width: 768px) {
+    .contenedorError {
         flex-direction: column;
     }
-    .separadorVertical{
+
+    .separadorVertical {
         padding: 3vh;
         display: none;
     }
 }
 
-@media (min-width: 769px){
-    .separadorHorizontal{
+@media (min-width: 769px) {
+    .separadorHorizontal {
         padding: 3vh;
         display: none;
     }

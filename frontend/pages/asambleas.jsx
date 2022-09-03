@@ -11,6 +11,7 @@ export default function asambleas() {
 	const [asambleasTerminadas, setAsambleasTerminadas] = useState([])
 	const [asambleasPorRealizar, setAsambleasPorRealizar] = useState([])
 	const [carreraState, setCarrera] = useState('')
+	const [isLoading, setIsLoading] = useState(true)
 	const router = useRouter()
 
 	useEffect(() => {
