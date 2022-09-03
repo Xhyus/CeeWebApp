@@ -85,7 +85,6 @@ const crear = () => {
                 ubicacion: asamblea.ubicacion,
                 url: asamblea.url,
             }
-            console.log("Data:", data)
             let carrera = localStorage.getItem('carrera')
             axios.post(process.env.SERVIDOR + '/asamblea/' + carrera, data)
                 .then(res => {
@@ -105,16 +104,13 @@ const crear = () => {
 
     const postPunto = async (id) => {
         await puntos.map(punto => {
-            console.log("Punto asunto " + punto.id + ":" + punto.asunto)
             let data = {
                 asunto: punto.asunto,
                 descripcion: ""
             }
             axios.post(process.env.SERVIDOR + '/punto/' + id, data)
                 .then(res => {
-                    console.log(res.data)
                 }).catch(err => {
-                    console.log(err)
                     Swal.fire({
                         title: 'Error',
                         text: 'Error al crear los puntos',
@@ -243,7 +239,7 @@ const crear = () => {
                         )
                     })
                     }
-                    {puntos.length < 5 ?
+                    {puntos.length < 8 ?
                         <FormControl>
                             <HStack mt={4} align={"center"} justify={"center"}>
                                 <FaPlus size={20} onClick={handleAddPunto} />

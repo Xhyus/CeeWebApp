@@ -1,18 +1,23 @@
 import { useState, useEffect } from 'react'
-import styles from '../styles/asambleas.module.css'
 import Card from './../components/card_asambleas/Card'
 import axios from 'axios'
-import { FaPlus } from 'react-icons/fa'
+import { FaPlus, FaFilter } from 'react-icons/fa'
 import { useRouter } from 'next/router'
 import Filtro from '../components/filtro_asambleas/Filtro'
-import Swal from 'sweetalert2'
+import SpinnerLoading from '../components/spinner/SpinnerLoading'
+import { Container, Heading, ChakraProvider, Button, Collapse, HStack, Center, Spinner, Box, useMediaQuery } from '@chakra-ui/react'
+
 
 export default function asambleas() {
 	const [asambleasTerminadas, setAsambleasTerminadas] = useState([])
 	const [asambleasPorRealizar, setAsambleasPorRealizar] = useState([])
-	const [carreraState, setCarrera] = useState('')
+	const [filtro, setFiltro] = useState(false)
+	const [informacion, setInformacion] = useState([])
 	const [isLoading, setIsLoading] = useState(true)
 	const router = useRouter()
+	const [openFiltro, setOpenFiltro] = useState(false)
+	const [isMobile] = useMediaQuery("(max-width: 768px)")
+
 
 	useEffect(() => {
 		(async () => {
@@ -28,16 +33,13 @@ export default function asambleas() {
 	}
 
 	const getAsambleas = async () => {
-		// const token = localStorage.getItem('token')
 		const carrera = localStorage.getItem('carrera')
-		setCarrera(carrera)
 		try {
 			const response = await axios.get(`${process.env.SERVIDOR}/asambleas/${carrera}`)
 			if (response.status === 200) {
-				console.log(response.data.asambleasTerminadas)
-				console.log(response.data.asambleasNoTerminadas)
 				setAsambleasTerminadas(response.data.asambleasTerminadas)
 				setAsambleasPorRealizar(response.data.asambleasNoTerminadas)
+				setIsLoading(false)
 			}
 		}
 		catch (error) {
@@ -45,37 +47,18 @@ export default function asambleas() {
 		}
 	}
 
-	const deteleAsamblea = async (id) => {
-		const res = await axios.delete(`${process.env.SERVIDOR}/asamblea/delete/${id}/${carreraState}`)
-		if (res.status === 200) {
-			Swal.fire({
-				title: 'Asamblea eliminada',
-				text: 'La asamblea ha sido eliminada correctamente',
-				icon: 'success',
-				confirmButtonText: 'Aceptar'
-			}).then((res) => {
-				setAsambleasPorRealizar((prevState) => {
-					return prevState.filter((asamblea) => asamblea.id !== id)
-				})
-				setAsambleasTerminadas((prevState) => {
-					return prevState.filter((asamblea) => asamblea.id !== id)
-				})
-			})
-		}
-	}
-
 	const Terminadas = () => {
 		if (asambleasTerminadas.length > 0) {
 			return (
-				<div className={styles.listaCards}>
+				<div>
 					{asambleasTerminadas.map((asamblea, key) => {
-						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" deleteAsamblea={deteleAsamblea} />
+						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="Terminadas" />
 					})}
 				</div>
 			)
 		} else {
 			return (
-				<h3>No hay asambleas terminadas</h3>
+				<Text>No hay asambleas terminadas</Text>
 			)
 		}
 	}
@@ -83,47 +66,91 @@ export default function asambleas() {
 	const PorRealizar = () => {
 		if (asambleasPorRealizar.length > 0) {
 			return (
-				<div className={styles.listaCards}>
+				<div>
 					{asambleasPorRealizar.map((asamblea, key) => {
-						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" deleteAsamblea={deteleAsamblea} />
+						return <Card key={key} asunto={asamblea.asunto} fecha={asamblea.fecha} tipoAsamblea={asamblea.tipoAsamblea} id={asamblea._id} estado="PorRealizar" />
 					})}
 				</div>
 			)
 		} else {
 			return (
-				<h3>No hay asambleas por realizar</h3>
+				<Text>No hay asambleas por realizar</Text>
 			)
 		}
 	}
 
-	const crearAsamblea = () => {
-		router.push('asambleas/crear')
+	const Computador = () => {
+		return (
+			<HStack align={"baseline"}>
+				<Box mt="5">
+					<Heading as="h2" size="xl" textAlign={"center"}>Asambleas por realizar</Heading>
+					<PorRealizar />
+				</Box>
+				<Box mt="5">
+					<Heading as="h2" size="xl" textAlign={"center"} >Asambleas terminadas</Heading>
+					<Terminadas />
+				</Box>
+			</HStack>
+		)
+	}
+
+	const Telefono = () => {
+		return (
+			<Box align={"baseline"}>
+				<Box mt="5">
+					<Heading as="h2" size="xl" textAlign={"center"}>Asambleas por realizar</Heading>
+					<PorRealizar />
+				</Box>
+				<Box mt="5">
+					<Heading as="h2" size="xl" textAlign={"center"} >Asambleas terminadas</Heading>
+					<Terminadas />
+				</Box>
+			</Box>
+		)
+	}
+
+	const FiltroActivo = () => {
+		return (
+			informacion.length > 0 ? informacion.map((asamblea, index) => {
+				return (
+					<Box key={index} mt={5} p={5} shadow="md" borderWidth="1px">
+						<Heading as="h4" size="md">{asamblea.titulo}</Heading>
+						<Text mt={2}>Tipo: {asamblea.tipo}</Text>
+						<Text mt={2}>Estado: {asamblea.estado}</Text>
+						<Text mt={2}>Fecha: {asamblea.fecha}</Text>
+						<Text mt={2}>Hora: {asamblea.hora}</Text>
+						<Text mt={2}>Lugar: {asamblea.lugar}</Text>
+						<Text mt={2}>Descripción: {asamblea.descripcion}</Text>
+						<Button mt={2} colorScheme={"yellow"} href={`/asambleas/${asamblea._id}`}>Ver más</Button>
+					</Box>
+				)
+			}) : <Center mt={5}><Spinner /></Center>
+		)
+	}
+
+	if (isLoading) {
+		return (
+			<SpinnerLoading />
+		)
 	}
 
 	return (
-		<>
-			<div className={styles.fondo}>
-				<div className={styles.contenedor}>
-					<div className={styles.contenedorSectorIzquierdo}>
-						<button className={`${styles.Propiedades_boton} ${styles.crear}`} onClick={() => crearAsamblea()} ><FaPlus className={styles.Propiedades_icono} />Crear asamblea</button>
-						<div className={styles.filtros}>
-							<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
-							<div className={styles.ContainerFiltro}>
-								<Filtro tipo='normal' />
-							</div>
-						</div>
-					</div>
-					<div className={styles.contenedorSectorDerecho}>
-						<h1 className={styles.titulo}>Asambleas por realizar</h1>
-						{PorRealizar()}
-						{/* separation line */}
-						<h1 className={styles.titulo}>Asambleas terminadas</h1>
-						{Terminadas()}
+		<ChakraProvider>
+			<Container maxW={"container.lg"}>
+				<Box verticalAlign={"flex-start"}>
+					<HStack justify={"center"} mt={10}>
+						<Button colorScheme="green" w={"full"} onClick={() => router.push('asambleas/crear')} leftIcon={<FaPlus />}>Crear asamblea</Button>
+						<Button colorScheme="blue" w={"full"} onClick={() => setOpenFiltro(!openFiltro)} leftIcon={<FaFilter />}>Abrir Filtro</Button>
+					</HStack>
+					<Collapse in={openFiltro} animateOpacity>
+						<Filtro setFiltro={setFiltro} />
+					</Collapse>
+				</Box>
+				{filtro ? <FiltroActivo setInformacion={setInformacion} setFiltro={setFiltro} /> :
+					isMobile ? <Telefono /> : <Computador />
 
-					</div>
-				</div>
-			</div>
-		</>
-
+				}
+			</Container>
+		</ChakraProvider >
 	)
 }

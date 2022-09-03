@@ -4,7 +4,6 @@ const puntoSchema = Schema([{
 	asunto: {
 		type: String,
 		required: true,
-		// match must have letters, numbers, spaces, and some special characters áéíóúÁÉÍÓÚñÑ
 		match: /^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s\-]+$/,
 	},
 	descripcion: {

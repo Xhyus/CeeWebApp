@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import styles from './Card.module.css'
+// import styles from './Card.module.css'
 import { FaClock, FaTag, FaCalendarCheck } from 'react-icons/fa'
 import { compararFechas, formateoFechaBD } from '../../utils/handleDates'
 import { useRouter } from 'next/router'
 import axios from 'axios'
 import Swal from 'sweetalert2'
+import handleUpperCase from '../../utils/handleUpperCase'
+import { Box, Heading, Text, Button, HStack, Tag, TagLabel } from "@chakra-ui/react"
 
-const Card = ({ id, asunto, fecha, tipoAsamblea, estado, deleteAsamblea }) => {
+const Card = ({ id, asunto, fecha, tipoAsamblea, estado }) => {
 	const [format, setFormat] = useState('')
-	const ahora = new Date()
-	const tipoAsambleaUp = tipoAsamblea.charAt(0).toUpperCase() + tipoAsamblea.slice(1)
-	const tituloAsambleaUp = asunto.charAt(0).toUpperCase() + asunto.slice(1)
 	const router = useRouter()
 
 	useEffect(() => {
@@ -20,53 +19,45 @@ const Card = ({ id, asunto, fecha, tipoAsamblea, estado, deleteAsamblea }) => {
 	const getEstadoAsamblea = () => {
 		if (estado === "Terminadas") {
 			return (
-				<nav className={styles.estadoTerminado}>
-					<p className={styles.textoEstado}>Terminada</p>
-					<FaTag style={{ color: "white" }} />
-				</nav>
+				<Tag size={"lg"} variant='subtle' colorScheme='red'>
+					<FaTag />
+					<TagLabel ml={1}>Terminadas</TagLabel>
+				</Tag>
 			)
 		} else {
 			return (
-				<nav className={styles.estadoNoTerminado}>
-					<p className={styles.textoEstado}>Por realizarse</p>
-					<FaTag style={{ color: "white" }} />
-				</nav>
+				<Tag size={"lg"} variant='subtle' colorScheme='green'>
+					<FaTag />
+					<TagLabel ml={1}>No Terminadas</TagLabel>
+				</Tag>
 			)
 		}
 	}
 
-	const verAsamblea = (id) => {
-		axios.get(process.env.SERVIDOR + '/asamblea/' + id)
-			.then(res => {
-				router.push(`/asambleas/${id}`)
-			})
-			.catch(err => {
-				router.push('404')
-			})
-	}
-
 	return (
-		<div className={styles.fondo}>
-			<div className={styles.contenedorIzquierdo}>
-				{getEstadoAsamblea()}
-				<p className={`${styles.texto} ${styles.titulo}`}>{tituloAsambleaUp}</p>
-				<p className={`${styles.texto} ${styles.tipoAsamblea}`}><strong>Tipo Asamblea: </strong>{tipoAsambleaUp}</p>
-			</div>
-			<div className={styles.contenedorDerecho}>
-				<section className={styles.realizacion}>
-					<div className={styles.contenedorFecha}>
+
+		<Box key={id} mt={5} pt={5} pb={5} pr={10} pl={10} shadow="md" borderWidth="1px" borderRadius={'3xl'}>
+			<Box w={"full"}>
+				<HStack >
+					{getEstadoAsamblea()}
+				</HStack>
+				<Heading mt={5} as="h4" size="md">{handleUpperCase(asunto)}</Heading>
+				<HStack mt={3}>
+					<Text>Tipo: {handleUpperCase(tipoAsamblea)}</Text>
+				</HStack>
+				<HStack mt={3} justify={"space-between"}>
+					<HStack >
 						<FaCalendarCheck />
-						<p className={`${styles.texto} ${styles.fecha}`}>{format.fecha}</p>
-					</div>
-					<div className={styles.ContenedorHora}>
+						<Text>Fecha: {format.fecha}</Text>
+					</HStack>
+					<HStack>
 						<FaClock />
-						<p className={`${styles.texto} ${styles.fecha}`}>{format.hora}</p>
-					</div>
-				</section>
-				<a className={styles.vermas} onClick={() => verAsamblea(id)}>Ver más</a>
-				<a className={styles.eliminar} onClick={() => deleteAsamblea(id)}>Eliminar</a>
-			</div>
-		</div>
+						<Text >Hora: {format.hora}</Text>
+					</HStack>
+				</HStack>
+				<Button mt={3} w={"full"} colorScheme={"yellow"} onClick={() => router.push(`/asambleas/${id}`)}>Ver más</Button>
+			</Box >
+		</Box >
 	)
 }
 
