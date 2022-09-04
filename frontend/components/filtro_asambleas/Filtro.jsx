@@ -1,48 +1,8 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React from 'react'
 import { ChakraProvider, FormControl, FormLabel, Input, Button, Select, HStack, Center, Box } from '@chakra-ui/react'
 import { FaSearch } from 'react-icons/fa';
-import Swal from 'sweetalert2';
 
-const Filtro = ({ setFiltro, setInformacion }) => {
-    const ISSERVER = typeof window === "undefined";
-    let carrera
-    if (!ISSERVER) {
-        carrera = localStorage.getItem('carrera')
-    }
-    const [data, setData] = useState({
-        estado: '',
-        tipo: '',
-        inicio: '',
-        fin: ''
-    })
-
-    const handleChange = (e) => {
-        setData({
-            ...data,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const filtrar = () => {
-        if (data.estado === '' && data.tipoAsamblea === '' && data.inicio === '' && data.fin === '') {
-            return (
-                Swal.fire({
-                    title: 'Error',
-                    text: 'Debe llenar al menos un campo',
-                    icon: 'error'
-                })
-            )
-        }
-        setFiltro(true)
-        axios.get(`${process.env.SERVIDOR}/asambleas/filtros/${carrera}?estado=${data.estado}&tipo=${data.tipoAsamblea}&inicio=${data.inicio}&fin=${data.fin}`, data)
-            .then(res => {
-                setInformacion(res.data)
-            }).catch(err => {
-                console.log(err)
-            })
-    }
-
+const Filtro = ({ filtrarInformacion, handleChangeFiltros }) => {
     return (
         <>
             <ChakraProvider>
@@ -50,14 +10,14 @@ const Filtro = ({ setFiltro, setInformacion }) => {
                     <HStack mt={5}>
                         <FormControl w={"full"}>
                             <FormLabel>Estado</FormLabel>
-                            <Select placeholder="Selecciona un estado" name="estado" onChange={handleChange}>
-                                <option value="terminadas">Terminada</option>
-                                <option value="noTerminadas">Por realizar</option>
+                            <Select placeholder="Selecciona un estado" name="estado" onChange={handleChangeFiltros}>
+                                <option value="terminada">Terminada</option>
+                                <option value="noTerminada">Por realizar</option>
                             </Select>
                         </FormControl>
                         <FormControl w={"full"}>
                             <FormLabel>Tipo</FormLabel>
-                            <Select placeholder="Selecciona un tipo" name="tipoAsamblea" onChange={handleChange}>
+                            <Select placeholder="Selecciona un tipo" name="tipoAsamblea" onChange={handleChangeFiltros}>
                                 <option value="informativa">Informativa</option>
                                 <option value="resolutiva">Resolutiva</option>
                             </Select>
@@ -66,15 +26,15 @@ const Filtro = ({ setFiltro, setInformacion }) => {
                     <HStack mt={5}>
                         <FormControl w={[145, "full"]}>
                             <FormLabel>Fecha de inicio</FormLabel>
-                            <Input type="date" name="inicio" onChange={handleChange} />
+                            <Input type="date" name="inicio" onChange={handleChangeFiltros} />
                         </FormControl>
                         <FormControl w={[145, "full"]}>
                             <FormLabel>Fecha de fin</FormLabel>
-                            <Input type="date" name="fin" onChange={handleChange} />
+                            <Input type="date" name="fin" onChange={handleChangeFiltros} />
                         </FormControl>
                     </HStack>
                     <Center mt={5}>
-                        <Button colorScheme="blue" w={500} leftIcon={<FaSearch />} onClick={() => filtrar()}>Buscar</Button>
+                        <Button colorScheme="blue" w={500} leftIcon={<FaSearch />} onClick={() => filtrarInformacion()}>Buscar</Button>
                     </Center>
                 </Box>
             </ChakraProvider>

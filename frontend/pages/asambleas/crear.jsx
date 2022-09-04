@@ -5,7 +5,8 @@ import { FaPlus, FaPlusCircle } from 'react-icons/fa'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
-import { Container, Heading, ChakraProvider, FormControl, FormLabel, Input, Button, Select, Link, Textarea, HStack, Center, Spinner } from '@chakra-ui/react'
+import { Container, Heading, ChakraProvider, FormControl, FormLabel, Input, Button, Select, Link, Textarea, HStack, Center, Spinner, Collapse, Tooltip } from '@chakra-ui/react'
+import validacion from '../../utils/validacion'
 
 const crear = () => {
     const [asamblea, setAsamblea] = useState({
@@ -27,10 +28,27 @@ const crear = () => {
     useEffect(() => isLogged(), [])
 
     const handleChange = (e) => {
-        setAsamblea({
-            ...asamblea,
-            [e.target.name]: e.target.value
-        })
+        if (e.target.name === 'fecha') {
+            if (e.target.value < new Date().toISOString().split('T')[0]) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'La fecha no puede ser menor a la actual',
+                }).then(() => {
+                    document.getElementById("fecha").value = "";
+                })
+            } else {
+                setAsamblea({
+                    ...asamblea,
+                    [e.target.name]: e.target.value
+                })
+            }
+        } else {
+            setAsamblea({
+                ...asamblea,
+                [e.target.name]: e.target.value
+            })
+        }
     }
 
     const handleChangeLugar = (e) => {
@@ -53,13 +71,28 @@ const crear = () => {
         })
     }
 
+    const validateWithRegex = (regex, value) => {
+        return regex.test(value)
+    }
+
+    const formatDate = (date) => {
+        const d = new Date(date)
+        const month = '' + (d.getMonth() + 1)
+        const day = '' + d.getDate()
+        const year = d.getFullYear()
+        return [year, month, day].join('-')
+    }
+
     const handleChangePunto = (e) => {
         setPuntos(
             puntos.map(punto => {
                 if (punto.id.toString() === e.target.name) {
-                    return {
-                        ...punto,
-                        asunto: e.target.value
+                    if (e.target.value != "[a - zA - Z]") {
+
+                        return {
+                            ...punto,
+                            asunto: e.target.value
+                        }
                     }
                 }
                 return punto
@@ -163,11 +196,15 @@ const crear = () => {
                 <HStack mb={5}>
                     <FormControl isRequired>
                         <FormLabel>Ubicacion</FormLabel>
-                        <Input type="text" name="ubicacion" onChange={handleChange} placeholder="Ejemplo: Discord, Zoom, Etc." />
+                        <Tooltip label="Plataforma a utilizar" color={"white"} aria-label="Plataforma a utilizar">
+                            <Input type="text" name="ubicacion" onChange={handleChange} placeholder="Ejemplo: Discord, Zoom, Etc." />
+                        </Tooltip>
                     </FormControl>
                     <FormControl isRequired >
                         <FormLabel>Url</FormLabel>
-                        <Input type="text" name="url" onChange={handleChange} placeholder="www.google.cl" />
+                        <Tooltip label="URL de la plataforma para entrar a la asamblea" color={"white"} aria-label="URL de la plataforma para entrar a la asamblea">
+                            <Input type="url" name="url" onChange={handleChange} placeholder="www.google.cl" isInvalid={validacion()} />
+                        </Tooltip>
                     </FormControl>
                 </HStack>
             )
@@ -176,7 +213,9 @@ const crear = () => {
             return (
                 <FormControl isRequired mb={5}>
                     <FormLabel>Ubicacion</FormLabel>
-                    <Input type="text" name="ubicacion" onChange={handleChange} placeholder="Ejemplo: FACE Sala 103CE" />
+                    <Tooltip label="Lugar donde se realizara la asamblea" color={"white"} aria-label="Lugar donde se realizara la asamblea">
+                        <Input type="text" name="ubicacion" onChange={handleChange} placeholder="Ejemplo: FACE Sala 103CE" />
+                    </Tooltip>
                 </FormControl>
             )
         }
@@ -202,36 +241,48 @@ const crear = () => {
                     </HStack>
                     <FormControl isRequired mt={4}>
                         <FormLabel>Asunto</FormLabel>
-                        <Input name="asunto" required id='asunto' type="text" placeholder="Asunto asamblea" onChange={handleChange} />
+                        <Tooltip label="Nombre o tema destacado de la asamblea" color={"white"} aria-label="Nombre o tema destacado de la asamblea">
+                            <Input name="asunto" required id='asunto' type="text" placeholder="Asunto asamblea" onChange={handleChange} />
+                        </Tooltip>
                     </FormControl>
                     <FormControl isRequired mt={4}>
                         <FormLabel>Contexto</FormLabel>
-                        <Textarea name="contexto" required id='contexto' type="text" placeholder="Contexto asamblea" onChange={handleChange} resize={"none"} minH={200} />
+                        <Tooltip label="Contexto de la asamblea" color={"white"} aria-label="Contexto de la asamblea">
+                            <Textarea name="contexto" required id='contexto' type="text" placeholder="Contexto asamblea" onChange={handleChange} resize={"none"} minH={200} />
+                        </Tooltip>
                     </FormControl>
                     <HStack mt={4}>
                         <FormControl isRequired >
                             <FormLabel>Tipo asamblea</FormLabel>
-                            <Select required name="tipoAsamblea" id='tipoAsamblea' onChange={handleChange}>
-                                <option value="">Seleccione un tipo de asamblea</option>
-                                <option value="resolutiva">Resolutiva</option>
-                                <option value="informativa">Informativa</option>
-                            </Select>
+                            <Tooltip label="Tipo de asamblea" color={"white"} aria-label="Tipo de asamblea">
+                                <Select required name="tipoAsamblea" id='tipoAsamblea' onChange={handleChange}>
+                                    <option value="">Seleccione un tipo de asamblea</option>
+                                    <option value="resolutiva">Resolutiva</option>
+                                    <option value="informativa">Informativa</option>
+                                </Select>
+                            </Tooltip>
                         </FormControl>
                         <FormControl isRequired>
                             <FormLabel>Fecha</FormLabel>
-                            <Input required name="fecha" id='fecha' type="datetime-local" onChange={handleChange} />
+                            <Tooltip label="Fecha de realización" color={"white"} aria-label="Fecha de realización">
+                                <Input required name="fecha" id='fecha' type="datetime-local" onChange={handleChange} />
+                            </Tooltip>
                         </FormControl>
                     </HStack>
                     <FormControl isRequired mt={4}>
                         <FormLabel>Lugar</FormLabel>
-                        <Select required name="lugar" id='lugar' onChange={handleChangeLugar}>
-                            <option value="">Seleccione un lugar</option>
-                            <option value="online">Online</option>
-                            <option value="presencial">Presencial</option>
-                        </Select>
+                        <Tooltip label="Formato de asamblea" color={"white"} aria-label="Formato de asamblea">
+                            <Select required name="lugar" id='lugar' onChange={handleChangeLugar}>
+                                <option value="">Seleccione un lugar</option>
+                                <option value="online">Online</option>
+                                <option value="presencial">Presencial</option>
+                            </Select>
+                        </Tooltip>
                     </FormControl>
                     <FormControl isRequired mt={4}>
-                        {wawa()}
+                        <Collapse in={lugar !== ''}>
+                            {wawa()}
+                        </Collapse>
                     </FormControl>
                     {puntos.map((punto, index) => {
                         return (

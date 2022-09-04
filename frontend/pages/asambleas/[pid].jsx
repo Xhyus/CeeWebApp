@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
-import { formateoFechaBD } from '../../utils/handleDates'
+import { formateoFecha } from '../../utils/handleDates'
 import handleUpperCase from '../../utils/handleUpperCase'
 import Puntos from '../../components/puntos_List/Puntos'
 import Swal from 'sweetalert2'
@@ -36,7 +36,7 @@ const verAsamblea = () => {
                 .then(res => {
                     setAsamblea({
                         asunto: handleUpperCase(res.data.asunto),
-                        fecha: formateoFechaBD(res.data.fecha),
+                        fecha: formateoFecha(res.data.fecha),
                         tipoAsamblea: handleUpperCase(res.data.tipoAsamblea),
                         contexto: handleUpperCase(res.data.contexto),
                         acta: res.data.acta,
@@ -196,8 +196,8 @@ const verAsamblea = () => {
                         <Text fontSize="lg">{asamblea.fecha.hora}</Text>
                     </HStack>
                     <HStack mt={5}>
-                        {asamblea.url ? <Text fontSize="lg" fontWeight="bold" mt={5}>Plataforma: </Text> : <Text fontSize="xl" fontWeight="bold">Ubicacion: </Text>}
-                        <Text fontSize="lg" mt={5}>{asamblea.ubicacion}</Text>
+                        {asamblea.url ? <Text fontSize="lg" fontWeight="bold">Plataforma: </Text> : <Text fontSize="xl" fontWeight="bold">Ubicacion: </Text>}
+                        <Text fontSize="lg">{asamblea.ubicacion}</Text>
                     </HStack>
                     <HStack spacing="24px" mt={5}>
                         <Text fontSize="lg" fontWeight="bold">Estado: </Text>

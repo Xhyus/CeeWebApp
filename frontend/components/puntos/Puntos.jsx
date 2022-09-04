@@ -1,6 +1,6 @@
 import React from 'react'
 import { FaTrash } from 'react-icons/fa'
-import { FormControl, FormLabel, Input, HStack } from '@chakra-ui/react'
+import { FormControl, FormLabel, Input, HStack, Tooltip } from '@chakra-ui/react'
 
 
 const Puntos = ({ handleChangePunto, id, handleDeletePunto, ultimo }) => {
@@ -21,10 +21,11 @@ const Puntos = ({ handleChangePunto, id, handleDeletePunto, ultimo }) => {
             <FormControl>
                 <FormLabel htmlFor={id}>Punto a tratar: {id + 1}</FormLabel>
                 <HStack mb={5}>
-                    <Input type="text" name={id} placeholder="Punto a tratar" onChange={handleChangePunto} />
+                    <Tooltip label="Temas importantes a conversar" color={"white"} aria-label="Temas importantes a conversar">
+                        <Input type="text" name={id} placeholder="Punto a tratar" onChange={handleChangePunto} />
+                    </Tooltip>
                     {handleDelete()}
                 </HStack>
-
             </FormControl>
         </>
     )

@@ -11,7 +11,7 @@ api.get("/asambleas/:carrera", asambleaController.asambleasPorCarrera);
 api.get("/asamblea/:id", asambleaController.buscarAsamblea);
 api.put("/asamblea/update/:id", asambleaController.modificarAsamblea);
 api.delete("/asamblea/delete/:id/:carrera", asambleaController.eliminarAsamblea);
-api.get("/asambleas/filtros/:carrera", asambleaController.filtro);
+api.post("/asambleas/filtros/:carrera", asambleaController.filtro);
 api.post("/asamblea/mail/:carrera", correos)
 api.put("/asamblea/update/hora/:id", asambleaController.agregarHoraTermino);
 module.exports = api;

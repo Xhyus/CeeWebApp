@@ -1,50 +1,38 @@
+import compareAsc from 'date-fns/compareAsc'
 
-const compararFechas = (fecha, ahora) => {
-    let fechaBD = fecha.split('T')
-    let fechaBD2 = fechaBD[0].split('-')
-    let fechaBD3 = fechaBD2[2] + '/' + fechaBD2[1] + '/' + fechaBD2[0]
-    let horaBD = fechaBD[1].split(':')
-    let horaBD2 = horaBD[0] + ':' + horaBD[1]
-    let fechaBD4 = new Date(fechaBD3 + ' ' + horaBD2)
-    let fechaBD5 = fechaBD4.getTime()
-    let ahora2 = ahora.getTime()
-    if (fechaBD5 < ahora2) {
-        return true
-    } else {
-        return false
-    }
-}
-
-const formateoFechaBD = (fecha) => {
+const formateoFecha = (fecha) => {
+    let newDate = fecha.split('T')[0].split('-');
+    let anio = newDate[0]
+    let mes = newDate[1]
+    let dia = newDate[2]
+    let fechaFormateada = `${dia}/${mes}/${anio}`
+    let newHora = fecha.split('T')
+    let hora = newHora[1]
+    let horaFormateada = hora.split(':')
+    let horaFinal = `${horaFormateada[0]}:${horaFormateada[1]}`
     let estado
-    let fechaBD = fecha.split('T')
-    let fechaBD2 = fechaBD[0].split('-')
-    let fechaBD3 = fechaBD2[2] + '/' + fechaBD2[1] + '/' + fechaBD2[0]
-    let horaBD = fechaBD[1].split(':')
-    let horaBD2 = horaBD[0] + ':' + horaBD[1]
-    if (new Date(fecha) >= new Date()) {
-        estado = 'Por realizar'
+    if (compareAsc(fecha, new Date()) === 1) {
+        estado = "Terminadas"
     } else {
-        estado = 'Finalizado'
+        estado = "PorRealizar"
     }
-    let formateado = {
-        fecha: fechaBD3,
-        hora: horaBD2,
+    let format = {
+        fecha: fechaFormateada,
+        hora: horaFinal,
         estado: estado
     }
-    return formateado
+    return format
 
 }
 
+
 const validarCalendario = () => {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
-    var yyyy = today.getFullYear();
-    var th = today.getHours();
-    var m = today.getMinutes();
-
-
+    let today = new Date();
+    let dd = today.getDate();
+    let mm = today.getMonth() + 1; //January is 0 so need to add 1 to make it 1!
+    let yyyy = today.getFullYear();
+    let th = today.getHours();
+    let m = today.getMinutes();
     if (dd < 10) {
         dd = '0' + dd
     }
@@ -57,15 +45,11 @@ const validarCalendario = () => {
     if (m < 10) {
         m = '0' + m
     }
-
-
     today = yyyy + '-' + mm + '-' + dd + 'T' + th + ':' + m;
-
-
     document.getElementById("fecha").min = today;
 }
 
 module.exports = {
-    compararFechas,
-    formateoFechaBD
+    formateoFecha,
+    validarCalendario
 }
