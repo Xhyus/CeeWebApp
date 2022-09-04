@@ -1,15 +1,18 @@
 import React from "react";
 import styles from "../styles/rendicion_cuentas.module.css";
+import { ChakraProvider, HStack, Container, Box, Button, Heading } from "@chakra-ui/react";
+import { FaPlus, FaFilter } from "react-icons/fa";
+import SpinnerLoading from '../components/spinner/SpinnerLoading'
 import Card_gasto from "../components/card_rendicion_cuentas/Card_gasto";
 import Filtro from "../components/filtro/Filtro";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
-import { FaPlus } from 'react-icons/fa';
 export default function rendicion_cuentas() {
 
 	const [listaRendiciones, setListaRendiciones] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 	const router = useRouter()
 
 	useEffect(() => {
@@ -27,8 +30,7 @@ export default function rendicion_cuentas() {
 		}
 	}
 
-	//* .: LISTAR GASTOS :. *//
-
+	//* .: OBTENER GASTOS :. *//
 	const getRendiciones = async (tipoGetRendiciones) => {
 
 		try {
@@ -37,6 +39,7 @@ export default function rendicion_cuentas() {
 			// Estado: Ok
 			if (response.status === 200) {
 				setListaRendiciones(response.data);
+				setIsLoading(false);
 			}
 
 		} catch (error) {
@@ -44,86 +47,41 @@ export default function rendicion_cuentas() {
 		}
 	}
 
-	//* .: CREAR GASTO :. *//
-	const crearGasto = () => {
+	//* .: LISTAR GASTOS :. *//
+	const ListarRendiciones = () => {
+		if(listaRendiciones.length > 0){
+			return (
+				<Box>
+					{listaRendiciones.map((gasto, key) => {
+						return <Card_gasto key={key} datos_gasto={gasto} />
+					})}
+				</Box>
+			)
+		}else{
+			return (
+				<Text>No hay gastos registrados</Text>
+			)
+		}
+	}
 
-		console.log(".: Redirigiendo a pantalla crear_gasto :.");
-
-		router.push('/rendicion_cuentas/crear_gasto');
-
+	//* .: RENDERIZADO CONDICIONAL :. *//
+	if (isLoading) {
+		return (
+			<SpinnerLoading />
+		)
 	}
 
 	return (
-		<>
-			<div className={styles.fondo}>
-				<div className={styles.contenedor}>
-					<div className={styles.contenedorTitulo}>
-						<h1>Informe de gastos</h1>
-					</div>
-					<div className={styles.contenedorInferior}>
-						<div className={styles.contenedorSectorIzquierdo}>
-							{/* <button onClick={()=>{crearGasto()}} className={styles.Propiedades_boton}>
-								<FaPlus className={styles.Propiedades_iconoplus}/>
-								Crear gasto</button> */}
-							{/* Requerimiento para ENTREGA 2!! */}
-							{/* <div className={styles.filtros}>
-								<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
-								<div className={styles.ContainerFiltro}>
-									<Filtro tipo='rendicionesMenor10K' getRendiciones={getRendiciones} />
-									<Filtro tipo='rendicionesMenor3K' getRendiciones={getRendiciones} />
-									<Filtro tipo='rendicionesOficina' getRendiciones={getRendiciones} />
-									<Filtro tipo='rendicionesActividad' getRendiciones={getRendiciones} />
-								</div>
-							</div> */}
-						</div>
-						<div className={styles.contenedorSectorDerecho}>
-							{console.log(listaRendiciones[0])}
-							{
-								listaRendiciones.map((gasto, index) => (
-									<Card_gasto
-										key={index}
-										datos_gasto={gasto}
-									/>
-								))
-							}
-						</div>
-					</div>
-				</div>
-			</div>
-		</>
+		<ChakraProvider>
+			<Container maxW={"container.md"}>
+				<Box verticalAlign={"flex-start"}>
+					<HStack justify={"center"} mt={10}>
+						<Button colorScheme="green" w={"full"} onClick={() => router.push('rendicion_cuentas/crear_gasto')} leftIcon={<FaPlus />}>Crear gasto</Button>
+						<Button colorScheme="blue" w={"full"} onClick={() => console.log("Filtro")} leftIcon={<FaFilter />}>Abrir Filtro</Button>
+					</HStack>
+				</Box>
+				{ListarRendiciones()}
+			</Container>
+		</ChakraProvider>
 	)
-
-
-
-	// <meter todo lo de dentro en tu jsx>
-	// 	<div className = {styles.contenedorSectorIzquierdo}>
-	// 								<button onClick={()=> {console.log("Dirigiendo a página 'crear_gasto'")}} className = {styles.Propiedades_boton }><a href="/rendicion_cuentas/crear_gasto">Agregar nuevo gasto</a></button>
-	// 								<div className={styles.filtros}>
-	// 									<p className={styles.titulo_filtro}><strong>Filtro</strong></p>
-	// 									<div className={styles.ContainerFiltro}>
-	// 										<Filtro tipo='normal' />
-	// 										<Filtro tipo='normal' />
-	// 										<Filtro tipo='normal' />
-	// 										<Filtro tipo='fecha' />
-	// 										<Filtro tipo='fecha' />
-	// 									</div>
-	// 								</div>
-	// 						</div>
-
-	// 						<div className = {styles.contenedorSectorDerecho}>
-	// 								{
-	// 									listaRendiciones.map((gasto, index) => (
-	// 										<Card_gasto
-	// 											key = {index}
-	// 											tipo_gasto = {gasto.tipoGasto}
-	// 											asunto_gasto = {gasto.asunto}
-	// 											fecha_gasto = {gasto.fecha}
-	// 											total_gasto = {gasto.totalGastado}
-	// 										/>
-	// 									))
-	// 								}
-	// 						</div>
-	// </meter>
-
-
 }

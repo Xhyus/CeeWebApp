@@ -1,7 +1,8 @@
 import React from 'react'
 import styles from './card_gasto.module.css'
+import { Box, HStack, Heading, Text } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
-import { FaCalendarCheck } from 'react-icons/fa';
+import { FaCalendarCheck, FaDollarSign } from 'react-icons/fa';
 
 const Card_Gasto = ({datos_gasto}) => {
 
@@ -36,44 +37,26 @@ const Card_Gasto = ({datos_gasto}) => {
         })
     }
     return (
-        <div className = {styles.contenedorCard}>
-
-                <h2 className={styles.tipoGasto}>{datos_gasto.tipoGasto}</h2>
-                <h2 className={`${styles.tipoGasto} ${styles.datosGasto} `}>{datos_gasto.asunto}</h2>
-                <h2 className={styles.tipoGasto}>Total</h2>
-                <div className={styles.date}>
-                    <FaCalendarCheck />
-                    <p>{datos_gasto.fecha}</p>
-                </div>
-                <p className = {`${styles.Propiedades_total_gasto} ${styles.Propiedades_texto} ${styles.precioGasto}`}>${datos_gasto.totalGastado}</p>
-                <div className={styles.containerBoton}>
-                    <button onClick={()=>{verDetalleGasto()}} className = {`${styles.propiedadesBoton} ${styles.Propiedades_texto} ${styles.buttom}`}>Ver más</button>
-                </div>
-
-
-
-            {/* .: ICONO GASTO / INGRESO :. */}
-            {/* <div className = {styles.contenedorTipo}>
-                <h2 className={styles.tipoGasto}>{datos_gasto.tipoGasto}</h2>
-            </div> */}
-            {/* .: INFORMACIÓN DEL GASTO :. */}
-            {/* <div className = {styles.contenedorInfoGasto}>
-                <div className = {`${styles.Propiedades_asunto} ${styles.Propiedades_texto}`}>
-                    <h2>{datos_gasto.asunto}</h2>
-                </div>
-                <div className = {`${styles.Propiedades_fecha} ${styles.Propiedades_texto} ${styles.dateBox}`}>
-                    <FaCalendarCheck />
-                    <p>{datos_gasto.fecha}</p>
-                </div>
-            </div> */}
-            {/* .: TOTAL DEL GASTO y BOTON DETALLE :. */}
-            {/* <div className = {styles.contenedorDetalleGasto}> */}
-                {/* .: TOTAL :. */}
-                {/* <h2>Total</h2>
-                <p className = {`${styles.Propiedades_total_gasto} ${styles.Propiedades_texto}`}>${datos_gasto.totalGastado}</p>
-                <button onClick={()=>{verDetalleGasto()}} className = {`${styles.propiedadesBoton} ${styles.Propiedades_texto}`}>Ver más</button>
-            </div> */}
-        </div>
+        <Box mt={5} pt={5} pb={5} pr={10} pl={10} shadow="md" borderWidth="1px" borderRadius={'3xl'}>
+            <Box w={"md"}>
+                <HStack mt={5}>
+                    <Heading size={"md"}>{datos_gasto.asunto}</Heading>
+                </HStack>
+                <HStack mt={3}>
+					<Text fontSize={"md"}><strong>Tipo:</strong> {datos_gasto.tipoGasto}</Text>
+				</HStack>
+                <HStack mt={3} justify={"space-between"}>
+					<HStack>
+                        <FaCalendarCheck size={20}/>
+                        <Text fontSize={"md"}>{datos_gasto.fecha}</Text>
+                    </HStack>
+                    <HStack>
+                        <FaDollarSign size={20}/>
+                        <Text fontSize={"md"}>{datos_gasto.totalGastado}</Text>
+                    </HStack>
+				</HStack>
+            </Box>
+        </Box>
     )
 }
 

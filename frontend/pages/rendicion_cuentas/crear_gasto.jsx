@@ -76,7 +76,7 @@ export default function crear_gasto() {
         console.log("--------------------------------------");
 
         //? Validación de campos.
-        if (datosGasto.asunto === '' || datosGasto.total === '' || datosGasto.tipo === '' || datosGasto.fecha === '' || datosGasto.detalle === '') {
+        if (datosGasto.asunto === '' || datosGasto.total === '' || datosGasto.tipo === '' || datosGasto.fecha === '' || datosGasto.detalle === '' || datosGasto.tipo === 'Seleccione un tipo') {
         
             Swal.fire({
                 title: 'Error',
@@ -155,7 +155,7 @@ export default function crear_gasto() {
 
                 <FormControl isRequired mt={5}>
                     <FormLabel>Boleta</FormLabel>
-                    <Button colorScheme={"orange"} onClick={console.log("Subir archivo")} w={"full"}>Adjuntar boleta</Button>
+                    <Button colorScheme={"orange"} onClick={()=>console.log("Subir archivo")} w={"full"}>Adjuntar boleta</Button>
                 </FormControl>
 
                 <HStack mt={10} mb={10}>
