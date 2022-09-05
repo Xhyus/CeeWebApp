@@ -51,7 +51,7 @@ export default function rendicion_cuentas() {
 	const ListarRendiciones = () => {
 		if(listaRendiciones.length > 0){
 			return (
-				<Box>
+				<Box w={"full"} justify={"center"}>
 					{listaRendiciones.map((gasto, key) => {
 						return <Card_gasto key={key} datos_gasto={gasto} />
 					})}
@@ -77,10 +77,12 @@ export default function rendicion_cuentas() {
 				<Box verticalAlign={"flex-start"}>
 					<HStack justify={"center"} mt={10}>
 						<Button colorScheme="green" w={"full"} onClick={() => router.push('rendicion_cuentas/crear_gasto')} leftIcon={<FaPlus />}>Crear gasto</Button>
-						<Button colorScheme="blue" w={"full"} onClick={() => console.log("Filtro")} leftIcon={<FaFilter />}>Abrir Filtro</Button>
+						{/* <Button colorScheme="blue" w={"full"} onClick={() => console.log("Filtro")} leftIcon={<FaFilter />}>Abrir Filtro</Button> */}
 					</HStack>
 				</Box>
-				{ListarRendiciones()}
+				<Box mt={10} verticalAlign={"flex-start"}>
+					{ListarRendiciones()}
+				</Box>
 			</Container>
 		</ChakraProvider>
 	)

@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './card_gasto.module.css'
-import { Box, HStack, Heading, Text } from '@chakra-ui/react'
+import { Box, HStack, Heading, Text, Button } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
 import { FaCalendarCheck, FaDollarSign } from 'react-icons/fa';
 
@@ -38,7 +38,7 @@ const Card_Gasto = ({datos_gasto}) => {
     }
     return (
         <Box mt={5} pt={5} pb={5} pr={10} pl={10} shadow="md" borderWidth="1px" borderRadius={'3xl'}>
-            <Box w={"md"}>
+            <Box w={"Box"}>
                 <HStack mt={5}>
                     <Heading size={"md"}>{datos_gasto.asunto}</Heading>
                 </HStack>
@@ -55,6 +55,9 @@ const Card_Gasto = ({datos_gasto}) => {
                         <Text fontSize={"md"}>{datos_gasto.totalGastado}</Text>
                     </HStack>
 				</HStack>
+                <HStack mt={10} mb={10}>
+                    <Button colorScheme={"yellow"} onClick={()=>verDetalleGasto()} w={"full"}>Ver más</Button>
+                </HStack>
             </Box>
         </Box>
     )
