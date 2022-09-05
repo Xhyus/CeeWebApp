@@ -1,9 +1,9 @@
-# **`CeeWebApp`**
+# **CeeWebApp**
 
 Es un software dirigido a los CEES de la Universidad del Bío-Bío, el cual esta enfocado en ayudar a desarrollar parte de las actividades que se generan de forma habitual por parte de estos,
 
-## **`Software stack`**
-El proyecto "CeeWebAPP" es una aplicación web que corre sobre el siguiente software:
+## **Software stack**
+El proyecto "CeeWebApp" es una aplicación web que corre sobre el siguiente software:
 
 - Ubuntu 18.04
 - NodeJS 16.15.0
@@ -14,12 +14,13 @@ El proyecto "CeeWebAPP" es una aplicación web que corre sobre el siguiente soft
 - MongoDB 4.5.0
 - MongoAtlas
 
-## **`Configuraciones de Ejecución para Entorno de Desarrollo/Produccción`**
+## **Configuraciones de Ejecución para Entorno de Desarrollo/Produccción**
 
-### `Conexion a la base de datos`
-Para obtener un string de conexion de atlas lo primero que se debe hacer es ir a la página de [MongoAtlas](https://account.mongodb.com/account/login), se registra y le pedira que ingrese un nombre y contraseña para una base de datos, crea la nueva base de datos y luego en el menú de la izquierda selecciona `Clusters` y luego `Connect` y selecciona `Connect your application` y copia el string de conexion. Este string de conexion debe ser para el que se entrega con la siguiente configuracion:
+### Conexion a la base de datos
+Para obtener un string de conexion de atlas lo primero que se debe hacer es ir a la página de [MongoAtlas](https://account.mongodb.com/account/login), se registra y le pedira que ingrese un nombre y contraseña para una base de datos, crea la nueva base de datos y luego en el menú de la izquierda selecciona "Clusters" y luego "Connect" y selecciona "Connect your application" y copia el string de conexion. Este string de conexion debe ser para el que se entrega con la siguiente configuracion:
 - NodeJS
 - 2.2.12 or later
+
 Con esto deberia entregarse un string de conexion tal que asi:
 ```
 mongodb://tallerDesarrollo:<password>@tallerDesarrollo-shard-00-00.eziad.mongodb.net:27017,tallerDesarrollo-shard-00-01.eziad.mongodb.net:27017,tallerDesarrollo-shard-00-02.eziad.mongodb.net:27017/?ssl=true&replicaSet=atlas-li16kg-shard-0&authSource=admin&retryWrites=true&w=majority
@@ -29,21 +30,21 @@ Entre las etiquetas < > se debe reemplazar el password por el que se le entrega 
 
 Este string de conexion debe ser reemplazado en el archivo .env que se encuentra en la raiz del proyecto, en la variable de entorno `DB`.
 
-### `Clonación del repositorio`
+### Clonación del repositorio
 - Para obtener una copia del proyecto se debe clonar el repositorio de GitHub, para esto se debe ejecutar el siguiente comando en la terminal:
 
-**`En caso de https:`**
+**En caso de https:**
 ```bash
 git clone https://github.com/Xhyus/CeeWebApp
 ```
-**`En caso de ssh:`**
+**En caso de ssh:**
 ```bash
 git clone git@github.com:Xhyus/CeeWebApp.git
 ```
-### `Variables de entorno`
+### Variables de entorno
 - Se debe generar un archivo .env en la carpeta frontend y backend respectivamente, el cual debe contener las siguientes variables de entorno:
 
-**`Backend:`**
+**Backend:**
 ```.env
 DB=MONGOATLASURL
 PORT=3001
@@ -61,7 +62,7 @@ PASS_CPA=PASS_CPA
 - Para la variable `SECRET_TOKEN`, se debe ingresar una cadena de caracteres que se utilizará para la encriptación de las contraseñas de los usuarios.
 - Para las variables `MAIL_XXXX` y `PASS_XXXX`, se debe ingresar el correo y contraseña de los correos que se utilizarán para el envío de correos electrónicos, la contraseña corresponde a una que se obtiene siguiendo los pasos de la siguiente página: https://support.google.com/accounts/answer/185833?hl=es-419
 
-**`Frontend:`**
+**Frontend:**
 ```.env
 SERVIDOR=http://localhost:3001/api
 PORT=3000
@@ -72,12 +73,12 @@ SERVIDOR2=http://146.83.198.35:1124/api
 - **IMPORTANTE**: Por razones de Seguridad **NUNCA** debes guardar las credenciales y subirlas al repositorio
 
 
-## `Docker, Máquina Virtual, Sistema Operativo`
+## Docker, Máquina Virtual, Sistema Operativo
 Con una terminal situarse dentro del directorio raiz del proyecto.
 Una vez situado en la raiz del proyecto y ejecutar lo siguiente para construir la imagen docker:
 
 
-**`Frontend:`**
+**Frontend:**
 
 Para construir la imagen docker del frontend, se debe ejecutar el siguiente comando:
 ```bash
@@ -102,7 +103,7 @@ Una vez ejecutado el comando anterior, se debe ingresar a la carpeta Home, para 
  cd home/
 ```
 
-**`Backend:`**
+**Backend:**
 
 Para construir la imagen docker del backend, se debe ejecutar el siguiente comando:
 ```bash
@@ -127,7 +128,7 @@ Una vez ejecutado el comando anterior, se debe ingresar a la carpeta Home, para 
  cd home/
 ```
 
-### `Instalar dependencias del proyecto`
+### Instalar dependencias del proyecto
 
 Para instalar las dependencias del proyecto,se debe ejecutar el siguiente comando en la terminal, esto se hace en ambos contenedores de docker, frontend y backend:
 
@@ -156,7 +157,7 @@ pm2 start yarn -- dev
 
 Ir a un navegador web y ejecutar la siguiente url [CeeWebApp](https://localhost)
 
-## **`Credenciales de acceso`**
+## **Credenciales de acceso**
 | Correo electrónico | Contraseña | Tipo Usuario | Estado |
 |--------------------|------------|--------------|--------------|
 |pablo@comercial.cl| password|Alumno Comercial| Activo |
@@ -165,7 +166,7 @@ Ir a un navegador web y ejecutar la siguiente url [CeeWebApp](https://localhost)
 |juan@cpa.cl|password|Alumno CPA| Activo |
 |francisco@ieci.cl|password|Alumno CPA| Inactivo |
 
-## **`Construido con`**
+## **Construido con**
 
 - [ReactJS](https://es.reactjs.org/) - Framework Javascript para manejo de logica funcional de Frontend
 - [Next.JS](https://nextjs.org/) - Libreria de React para generación de proyectos Serverless y base del proyecto visual
@@ -191,11 +192,11 @@ Ir a un navegador web y ejecutar la siguiente url [CeeWebApp](https://localhost)
 - [Github](https://github.com) - Almacenador de control de versiones
 - [Git](https://github.com) - Sistema de control de versiones
 
-## **`Contribuidores del proyecto`**
+## **Contribuidores del proyecto**
 
-- `Integrante:` Ignacio González - [Correo Electrónico](ignacio.gonzalez1901@alumnos.ubiobio.cl)
-- `Integrante:` Pablo Montoya - [Correo Electrónico](pablo.montoya1801@alumnos.ubiobio.cl)
+- Integrante: Ignacio González - [Correo Electrónico](ignacio.gonzalez1901@alumnos.ubiobio.cl)
+- Integrante: Pablo Montoya - [Correo Electrónico](pablo.montoya1801@alumnos.ubiobio.cl)
 
-## **`Agradecimientos`**
+## **Agradecimientos**
 
 - Basado en el código de ejemplo de las paginas de documentación citadas previamente, foros de Stackoverflow, issues de Github issues, entre otro tipos de paginas que se utilizaron para recopilación de información y/o reconocimiento de errores.
