@@ -18,11 +18,11 @@ const Puntos = ({ handleChangePunto, id, handleDeletePunto, ultimo }) => {
 
     return (
         <>
-            <FormControl>
+            <FormControl >
                 <FormLabel htmlFor={id}>Punto a tratar: {id + 1}</FormLabel>
                 <HStack mb={5}>
                     <Tooltip label="Temas importantes a conversar" color={"white"} aria-label="Temas importantes a conversar">
-                        <Input type="text" name={id} placeholder="Punto a tratar" onChange={handleChangePunto} />
+                        <Input maxLength={250} minLength={10} type="text" name={id} placeholder="Punto a tratar" onChange={handleChangePunto} />
                     </Tooltip>
                     {handleDelete()}
                 </HStack>

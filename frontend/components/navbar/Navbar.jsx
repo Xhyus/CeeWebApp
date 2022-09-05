@@ -9,12 +9,12 @@ const Navbar = () => {
 	const path = router.pathname.split('/')
 	const currentPage = (boton) => {
 		if (path[1] === 'asambleas' && boton === 'asambleas') {
-			return "orange"
+			return "orange.300"
 		} else {
 			if (path[1] === 'rendicion_cuentas' && boton === 'rendicion_cuentas') {
-				return "orange"
+				return "orange.300"
 			} else {
-				return "white"
+				return "blue.500"
 			}
 		}
 	}
@@ -36,10 +36,10 @@ const Navbar = () => {
 			<Box backgroundColor={"blue.500"}>
 				<HStack justify={"space-between"} ml={5} mr={5}>
 					<Image src="/logo-ubb-blanco.png" width={'30'} height={'20'} />
-					<HStack >
-						<Link color={currentPage("asambleas")} fontWeight={"bold"} onClick={() => router.push('asambleas')} >Asambleas</Link>
-						<Link color={currentPage("rendicion_cuentas")} fontWeight={"bold"} borderBottom={currentPage} onClick={() => router.push('rendicion_cuentas')} >Rendición Cuentas</Link>
-						<Link color={"white"} fontWeight={"bold"} onClick={() => router.push('/')} >Cerrar Sesión</Link>
+					<HStack spacing={8}>
+						<Link _hover={"none"} color={"white"} borderBottom={"2px"} borderColor={currentPage("asambleas")} fontWeight={"bold"} onClick={() => router.push('asambleas')} >Asambleas</Link>
+						<Link _hover={"none"} color={"white"} fontWeight={"bold"} borderBottom={"2px"} borderColor={currentPage("rendicion_cuentas")} onClick={() => router.push('rendicion_cuentas')} >Rendición Cuentas</Link>
+						<Link _hover={"none"} color={"white"} fontWeight={"bold"} onClick={() => router.push('/')} >Cerrar Sesión</Link>
 					</HStack>
 				</HStack>
 			</Box>
