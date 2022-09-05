@@ -4,7 +4,7 @@ FROM ubuntu:bionic
 
 # nvm environment variables
 ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 16.15.0 
+ENV NODE_VERSION 16.15.0
 
 # add node and npm to path so the commands are available
 ENV NODE_PATH $NVM_DIR/v$NODE_VERSION/lib/node_modules
@@ -30,7 +30,8 @@ RUN source $NVM_DIR/nvm.sh \
     && nvm use default
 
 # install yarn
-RUN npm i -g yarn 
+RUN npm i -g yarn
+RUN npm i -g pm2
 
 # confirm installation
 RUN yarn -v

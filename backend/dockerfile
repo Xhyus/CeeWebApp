@@ -31,6 +31,7 @@ RUN source $NVM_DIR/nvm.sh \
 
 # install yarn
 RUN npm i -g yarn
+RUN npm i -g pm2
 
 # confirm installation
 RUN yarn -v
