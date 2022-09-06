@@ -1,7 +1,8 @@
 import React from 'react'
-import styles from './card_gasto.module.css'
+import axios from "axios";
+import { Box, HStack, Heading, Text, Button } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
-import { FaCalendarCheck } from 'react-icons/fa';
+import { FaCalendarCheck, FaDollarSign } from 'react-icons/fa';
 
 const Card_Gasto = ({datos_gasto}) => {
 
@@ -29,51 +30,75 @@ const Card_Gasto = ({datos_gasto}) => {
                         '<th align = "left">Total:</th>' + 
                         '<td align = "right">$' + datos_gasto.totalGastado + '</td>' + 
                     '</tr>' +
-                '</table>' +
-                //'<image src = "' + datos_gasto.imagen + '" width = "100%" height = "100%"></image>',
-                '<image src = "http://webface.ubiobio.cl/wp-content/uploads/2019/01/face-ubb-02.png" width = "90%" height = "80%"></image>',
+                '</table>',            
             confirmButtonText: 'Aceptar'
         })
     }
+
+    const eliminarGasto = () => {
+            Swal.fire({
+                title: '¿Está seguro que desea eliminar el gasto?',
+                text: "No podrá revertir esta acción.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+
+                    //* Eliminar gasto.
+                    axios.delete(process.env.SERVIDOR +'/rendicion/delete/' + datos_gasto._id)
+                        .then((respuesta) => {
+                            console.log("Solicitud eliminar gasto: " + respuesta);
+                        })
+                        .catch((error) => {
+                            console.log("Error al eliminar gasto: " + error);
+                        })
+
+                    Swal.fire({
+                        title: 'Eliminado!',
+                        text: 'El gasto ha sido eliminado.',
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Aceptar',
+                    }).then((result) => {
+                        if (result.value) {
+                            window.location.reload();
+                        }
+                    })
+
+                }
+            })
+    }
+
     return (
-        <div className = {styles.contenedorCard}>
-
-                <h2 className={styles.tipoGasto}>{datos_gasto.tipoGasto}</h2>
-                <h2 className={`${styles.tipoGasto} ${styles.datosGasto} `}>{datos_gasto.asunto}</h2>
-                <h2 className={styles.tipoGasto}>Total</h2>
-                <div className={styles.date}>
-                    <FaCalendarCheck />
-                    <p>{datos_gasto.fecha}</p>
-                </div>
-                <p className = {`${styles.Propiedades_total_gasto} ${styles.Propiedades_texto} ${styles.precioGasto}`}>${datos_gasto.totalGastado}</p>
-                <div className={styles.containerBoton}>
-                    <button onClick={()=>{verDetalleGasto()}} className = {`${styles.propiedadesBoton} ${styles.Propiedades_texto} ${styles.buttom}`}>Ver más</button>
-                </div>
-
-
-
-            {/* .: ICONO GASTO / INGRESO :. */}
-            {/* <div className = {styles.contenedorTipo}>
-                <h2 className={styles.tipoGasto}>{datos_gasto.tipoGasto}</h2>
-            </div> */}
-            {/* .: INFORMACIÓN DEL GASTO :. */}
-            {/* <div className = {styles.contenedorInfoGasto}>
-                <div className = {`${styles.Propiedades_asunto} ${styles.Propiedades_texto}`}>
-                    <h2>{datos_gasto.asunto}</h2>
-                </div>
-                <div className = {`${styles.Propiedades_fecha} ${styles.Propiedades_texto} ${styles.dateBox}`}>
-                    <FaCalendarCheck />
-                    <p>{datos_gasto.fecha}</p>
-                </div>
-            </div> */}
-            {/* .: TOTAL DEL GASTO y BOTON DETALLE :. */}
-            {/* <div className = {styles.contenedorDetalleGasto}> */}
-                {/* .: TOTAL :. */}
-                {/* <h2>Total</h2>
-                <p className = {`${styles.Propiedades_total_gasto} ${styles.Propiedades_texto}`}>${datos_gasto.totalGastado}</p>
-                <button onClick={()=>{verDetalleGasto()}} className = {`${styles.propiedadesBoton} ${styles.Propiedades_texto}`}>Ver más</button>
-            </div> */}
-        </div>
+        <Box mt={5} pt={5} pb={5} pr={10} pl={10} shadow="md" borderWidth="1px" borderRadius={'3xl'}>
+            <Box w={"Box"}>
+                <HStack mt={5}>
+                    <Heading size={"md"}>{datos_gasto.asunto}</Heading>
+                </HStack>
+                <HStack mt={3}>
+					<Text fontSize={"md"}><strong>Tipo:</strong> {datos_gasto.tipoGasto}</Text>
+				</HStack>
+                <HStack mt={3} justify={"space-between"}>
+					<HStack>
+                        <FaCalendarCheck size={20}/>
+                        <Text fontSize={"md"}>{datos_gasto.fecha}</Text>
+                    </HStack>
+                    <HStack>
+                        <FaDollarSign size={20}/>
+                        <Text fontSize={"md"}>{datos_gasto.totalGastado}</Text>
+                    </HStack>
+				</HStack>
+                <HStack mt={10} mb={10}>
+                    <Button colorScheme={"yellow"} onClick={()=>verDetalleGasto()} w={"full"}>Ver más</Button>
+                    <Button colorScheme={"red"} onClick={()=>eliminarGasto()} w={"full"}>Eliminar</Button>
+                </HStack>
+            </Box>
+        </Box>
     )
 }
 
