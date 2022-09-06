@@ -65,7 +65,7 @@ const crear = () => {
         )
     }
 
-    const postPunto = async (id) => {
+    const postPunto = async (id, values) => {
         await puntos.map(punto => {
             let data = {
                 asunto: punto.asunto,
@@ -82,12 +82,11 @@ const crear = () => {
                     })
                 })
         })
-        enviarCorreo()
+        enviarCorreo(values)
     }
 
-    const enviarCorreo = () => {
+    const enviarCorreo = (values) => {
         let carrera = localStorage.getItem('carrera')
-        let values = localStorage.getItem('values')
         axios.post(`${process.env.SERVIDOR}/asamblea/mail/${carrera}`, {
             asunto: values.asunto,
             fecha: values.fecha,
@@ -203,8 +202,7 @@ const crear = () => {
                                 url: values.url
                             })
                                 .then(res => {
-                                    postPunto(res.data._id)
-                                    localStorage.setItem("values", values)
+                                    postPunto(res.data._id, values)
                                 })
                                 .catch(err => {
                                     Swal.fire({

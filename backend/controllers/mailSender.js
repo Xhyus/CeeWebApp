@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const envioCorreo = (req, res) => {
+    console.log(req.body)
     let formatedData = handleInfo(req.body.asunto, req.body.fecha, req.body.contexto, req.body.tipoAsamblea, req.body.puntos, req.body.url, req.body.ubicacion, req.params.carrera);
     let credenciales = handleMail(formatedData.carrera);
     console.log(formatedData)
@@ -21,8 +22,9 @@ const envioCorreo = (req, res) => {
         }
     });
     let correos = [
-        "jsoto@ubiobio.cl",
-        "asegura@ubiobio.cl"
+        // "jsoto@ubiobio.cl",
+        // "asegura@ubiobio.cl",
+        "ignaciogonzalez1609@gmail.com"
     ]
     const mailOptions = {
         from: `Centro de Estudiantes ${formatedData.carrera} <${formatedData.correo}>`,
