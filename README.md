@@ -259,6 +259,11 @@ Instalar nvm para instalar NodeJS
 ```bash
 curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
 ```
+Reiniciar bash para que se puedan utilizar comandos de NVM
+
+```bash
+exec bash
+```
 
 Instalar version 16.15.0 de NodeJS
 ```bash
