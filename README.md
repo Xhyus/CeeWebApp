@@ -2,6 +2,22 @@
 
 Es un software dirigido a los CCEE de la Universidad del Bío-Bío, el cual esta enfocado en ayudar a desarrollar parte de las actividades que se generan de forma habitual por parte de estos.
 
+## **Tabla de contenidos**
+1. [Software Stack](#software-stack)
+2. [Conexión a la base de datos](#conexión-a-la-base-de-datos)
+3. [Importar base de datos](#importar-base-de-datos)
+4. [Clonación del repositorio](#clonación-del-repositorio)
+5. [Variables de entorno](#variables-de-entorno)
+6. [Entorno de desarrollo (Docker)](#docker)
+7. [Instalar dependencias del proyecto ambiente de desarrollo](#instalar-dependencias-del-proyecto-ambiente-de-desarrollo)
+9. [Entorno de producción (Servidor)](#servidor-de-producción)
+8. [Instalar dependencias del proyecto ambiente de producción](#instalar-dependencias-del-proyecto-ambiente-de-producción)
+10. [Credenciales de acceso](#credenciales-de-acceso)
+11. [Construido con](#construido-con)
+12. [Contribuidores del proyecto](#contribuidores-del-proyecto)
+13. [Agradecimientos](#agradecimientos)
+
+
 ## **Software stack**
 El proyecto "CeeWebApp" es una aplicación web que corre sobre el siguiente software:
 
@@ -13,8 +29,9 @@ El proyecto "CeeWebApp" es una aplicación web que corre sobre el siguiente soft
 - Mongoose 5.9.24
 - MongoDB 4.5.0
 - MongoAtlas
-
-## **Configuraciones de Ejecución para Entorno de Desarrollo/Produccción**
+- Yarn
+- NPM
+## **Configuraciones de Ejecución para Entorno de Desarrollo y Produccción**
 
 ### Conexión a la base de datos
 Para obtener un string de conexion de atlas lo primero que se debe hacer es ir a la página de [MongoAtlas](https://account.mongodb.com/account/login), se registra y le pedirá que ingrese un nombre y contraseña para una base de datos. Crea la nueva base de datos y luego en el menú de la izquierda selecciona "Clusters" y luego "Connect" y selecciona "Connect your application" y copia el string de conexion. Este string de conexion debe ser para el que se entrega con la siguiente configuracion:
@@ -43,7 +60,7 @@ Pulsar el botón "ADD DATA" y luego seleccionar la opcion "Import File"
 Agregar los archivos uno por uno dentro de la carpeta raíz del proyecto /backend/colecciones_bd
 ```
 
-### Clonación del repositorio
+### **Clonación del repositorio**
 - Para obtener una copia del proyecto se debe clonar el repositorio de GitHub, para esto se debe ejecutar el siguiente comando en la terminal:
 
 **En caso de https:**
@@ -54,13 +71,13 @@ git clone https://github.com/Xhyus/CeeWebApp
 ```bash
 git clone git@github.com:Xhyus/CeeWebApp.git
 ```
-### Variables de entorno
+### **Variables de entorno**
 - Se debe generar un archivo .env en la carpeta frontend y backend respectivamente, el cual debe contener las siguientes variables de entorno:
 
 **Backend:**
 ```.env
 DB=MONGOATLASURL
-PORT=3001
+PORT=PUERTO
 SECRET_TOKEN=SECRET_TOKEN
 MAIL_IECI=MAIL_IECI
 PASS_IECI=PASS_IECI
@@ -75,26 +92,28 @@ PASS_CPA=PASS_CPA
 - Para la variable `SECRET_TOKEN`, se debe ingresar una cadena de caracteres que se utilizará para la encriptación de las contraseñas de los usuarios.
 - Para las variables `MAIL_XXXX` y `PASS_XXXX`, se debe ingresar el correo y contraseña de los correos que se utilizarán para el envío de correos electrónicos, la contraseña corresponde a una que se obtiene siguiendo los pasos de la siguiente página: https://support.google.com/accounts/answer/185833?hl=es-419
 
+- Para la variable `PORT`, se debe ingresar el puerto en el que se ejecutará el servidor de backend. En desarrollo debera funcionar con el puerto 3001 y en producción con el puerto 80
 **Frontend:**
 ```.env
 SERVIDOR=http://localhost:3001/api
 PORT=3000
 SERVIDOR2=http://146.83.198.35:1124/api
 ```
-- Para la variable `SERVIDOR`, se debe ingresar la URL del servidor de backend, en este caso se utiliza localhost:3001/api para el entorno de desarrollo y la URL del servidor de producción para el entorno de producción.
-
-- **IMPORTANTE**: Por razones de Seguridad **NUNCA** debes guardar las credenciales y subirlas al repositorio
+- Para la variable `SERVIDOR`, se debe ingresar la URL del servidor de backend, en este caso se utiliza localhost:3001/api para el entorno de desarrollo y la URL del servidor de producción para el entorno de producción. Al momento de ejecutar el proyecto en producción, se debe cambiar esta variable a la URL del servidor de producción y la variable SERVIDOR2 debe renombrarse a SERVIDOR y la SERVIDOR a SERVIDOR2.
 
 
-## Docker, Máquina Virtual, Sistema Operativo
-Con una terminal situarse dentro del directorio raiz del proyecto.
-Una vez situado en la raiz del proyecto y ejecutar lo siguiente para construir la imagen docker:
-
+## Docker
+Con una terminal situarse dentro del directorio raiz del proyecto, para esto se debe estar en el mismo directorio donde se hizo el clon del proyecto y ejecutar el siguiente comando:
+```bash
+cd ceewebapp
+```
 
 **Frontend:**
 
-Para construir la imagen docker del frontend, se debe ejecutar el siguiente comando:
+Para construir la imagen docker del frontend, se debe ejecutar el siguiente comando desde la carpeta raiz del proyecto:
+
 ```bash
+cd frontend
 docker build -t ceewebappfront .
 ```
 
@@ -105,45 +124,181 @@ Una vez creado el contenedor de docker, se debe ejecutar el siguiente comando pa
  docker run --rm -ti -p 80:3000 -v ${pwd}:/home ceewebappfrontend
 ```
 
+- pwd: es la ruta del directorio raiz del frontend, asi que es importante ejecutar el comando desde la carpeta ceewebapp/frontend como se especifica.
+
 Cambiar permisos para permitir la correcta ejecución de la aplicación en entorno local
 ```bash
-chmod -R 777 home/
+chmod -R 777 ceewebapp/
 ```
-
-Una vez ejecutado el comando anterior, se debe ingresar a la carpeta Home, para esto debe ejecutar el comando:
-
+ Luego se debe acceder a la carpeta del proyecto, para esto se debe ejecutar el siguiente comando:
 ```bash
- cd home/
+cd ceewebapp
 ```
 
 **Backend:**
 
-Para construir la imagen docker del backend, se debe ejecutar el siguiente comando:
+Para construir la imagen docker del backend, se debe ejecutar el siguiente comando desde la carpeta raiz del proyecto:
+
 ```bash
-docker build -t ceewebappbackend .
+cd backend
+docker build -t ceewebappback .
 ```
 
 Una vez creado el contenedor de docker, se debe ejecutar el siguiente comando para correr el contenedor:
 
 
 ```bash
- docker run --rm -ti -p 3001:3001 -v ${pwd}:/home ceewebappbackend
+ docker run --rm -ti -p 80:3000 -v ${pwd}:/home ceewebappback
 ```
+
+- pwd: es la ruta del directorio raiz del backend, asi que es importante ejecutar el comando desde la carpeta ceewebapp/backend como se especifica.
 
 Cambiar permisos para permitir la correcta ejecución de la aplicación en entorno local
 ```bash
-chmod -R 777 home/
+chmod -R 777 ceewebapp/
 ```
-
-Una vez ejecutado el comando anterior, se debe ingresar a la carpeta Home, para esto debe ejecutar el comando:
-
+ Luego se debe acceder a la carpeta del proyecto, para esto se debe ejecutar el siguiente comando:
 ```bash
- cd home/
+cd ceewebapp
 ```
 
-### Instalar dependencias del proyecto
+### **Instalar dependencias del proyecto ambiente de desarrollo**
 
 Para instalar las dependencias del proyecto, se debe ejecutar el siguiente comando en la terminal, esto se hace en ambos contenedores de docker, frontend y backend:
+
+**Frontend:**
+
+Si se encuentra en la carpeta raiz del proyecto y desea instalar las dependencias del frontend, se debe ejecutar el siguiente comando:
+```bash
+cd frontend
+```
+
+```bash
+yarn install
+```
+
+Para poder ejecutar el proyecto se debe generar el .env en la carpeta frontend y backend respectivamente, el cual debe contener las variables mencionadas anteriormente. Para generar el .env mediante terminal se debe ejecutar el siguiente comando:
+
+```bash
+touch .env
+```
+
+Para modificar el archivo .env se debe ejecutar el siguiente comando:
+
+```bash
+nano .env
+```
+
+Para ejecutar el proyecto se debe ejecutar el siguiente comando en la terminal:
+
+```bash
+yarn run dev
+```
+
+
+**Backend:**
+
+Si se encuentra en la carpeta raiz del proyecto y desea instalar las dependencias del backend, se debe ejecutar el siguiente comando:
+```bash
+cd backend
+```
+
+```bash
+yarn install
+```
+
+Para poder ejecutar el proyecto se debe generar el .env en la carpeta backend, el cual debe contener las variables mencionadas anteriormente. Para generar el .env mediante terminal se debe ejecutar el siguiente comando:
+
+```bash
+touch .env
+```
+
+Para modificar el archivo .env se debe ejecutar el siguiente comando:
+
+```bash
+nano .env
+```
+
+Para ejecutar el proyecto se debe ejecutar el siguiente comando en la terminal:
+
+```bash
+yarn run dev
+```
+
+
+## **Servidor de producción**
+Para configurar el servidor de producción se debe seguir los siguientes pasos:
+
+
+Iniciar el modo root e ingresar las credenciales de administrador del servidor
+```bash
+sudo su
+```
+
+Actualizar el sistema operativo
+```bash
+apt-get update
+```
+
+Instalar curl para descargar paquetes
+```bash
+apt-get install -y curl
+```
+
+Instalar autoclean para limpiar el sistema
+```bash
+apt-get -y autoclean
+```
+
+Instalar git para clonar el repositorio
+```bash
+apt-get install git
+```
+
+Instalar nvm para instalar NodeJS
+```bash
+curl --silent -o- https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh | bash
+```
+
+Instalar version 16.15.0 de NodeJS
+```bash
+nvm install 16.15.0
+```
+Cambiar alias de NodeJS
+```bash
+nvm alias default 16.15.0
+```
+Cambiar la version de NodeJS
+```bash
+nvm use default
+```
+
+Instalar yarn para instalar dependencias y pm2 para correr la aplicación
+```bash
+npm install -g yarn
+npm install -g pm2
+```
+
+Clonar el repositorio del proyecto como se menciona en el apartado "Clonación del repositorio"
+
+
+Luego de haber clonado el repositorio se debe mover hacia la carpeta raiz del proyecto, para esto se debe ejecutar el siguiente comando:
+
+```bash
+cd ceewebapp
+```
+
+### **Instalar dependencias del proyecto ambiente de producción**
+
+Para instalar las dependencias del proyecto, se debe ejecutar el siguiente comando en la terminal, se debe estar en modo administrador:
+
+**Frontend:**
+
+Si se encuentra en la carpeta raiz del proyecto y desea instalar las dependencias del frontend, se debe ejecutar el siguiente comando:
+```bash
+rm -rf backend
+cd frontend
+```
 
 ```bash
 yarn install
@@ -167,6 +322,36 @@ Para ejecutar el proyecto se debe ejecutar el siguiente comando en la terminal:
 pm2 start yarn -- dev
 ```
 
+
+**Backend:**
+
+Si se encuentra en la carpeta raiz del proyecto y desea instalar las dependencias del backend, se debe ejecutar el siguiente comando:
+```bash
+rm -rf frontend
+cd backend
+```
+
+```bash
+yarn install
+```
+
+Para poder ejecutar el proyecto se debe generar el .env en la carpeta backend, el cual debe contener las variables mencionadas anteriormente. Para generar el .env mediante terminal se debe ejecutar el siguiente comando:
+
+```bash
+touch .env
+```
+
+Para modificar el archivo .env se debe ejecutar el siguiente comando:
+
+```bash
+nano .env
+```
+
+Para ejecutar el proyecto se debe ejecutar el siguiente comando en la terminal:
+
+```bash
+pm2 start yarn -- dev
+```
 
 Ir a un navegador web y ejecutar la siguiente url [CeeWebApp](https://localhost)
 
