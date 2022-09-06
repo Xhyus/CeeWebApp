@@ -77,7 +77,6 @@ export default function rendicion_cuentas() {
 				<Box verticalAlign={"flex-start"}>
 					<HStack justify={"center"} mt={10}>
 						<Button colorScheme="green" w={"full"} onClick={() => router.push('rendicion_cuentas/crear_gasto')} leftIcon={<FaPlus />}>Crear gasto</Button>
-						{/* <Button colorScheme="blue" w={"full"} onClick={() => console.log("Filtro")} leftIcon={<FaFilter />}>Abrir Filtro</Button> */}
 					</HStack>
 				</Box>
 				<Box mt={10} verticalAlign={"flex-start"}>

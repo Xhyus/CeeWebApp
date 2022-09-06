@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from './card_gasto.module.css'
+import axios from "axios";
 import { Box, HStack, Heading, Text, Button } from '@chakra-ui/react'
 import Swal from 'sweetalert2'
 import { FaCalendarCheck, FaDollarSign } from 'react-icons/fa';
@@ -30,12 +30,50 @@ const Card_Gasto = ({datos_gasto}) => {
                         '<th align = "left">Total:</th>' + 
                         '<td align = "right">$' + datos_gasto.totalGastado + '</td>' + 
                     '</tr>' +
-                '</table>' +
-                //'<image src = "' + datos_gasto.imagen + '" width = "100%" height = "100%"></image>',
-                '<image src = "http://webface.ubiobio.cl/wp-content/uploads/2019/01/face-ubb-02.png" width = "90%" height = "80%"></image>',
+                '</table>',            
             confirmButtonText: 'Aceptar'
         })
     }
+
+    const eliminarGasto = () => {
+            Swal.fire({
+                title: '¿Está seguro que desea eliminar el gasto?',
+                text: "No podrá revertir esta acción.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then((result) => {
+                if (result.value) {
+
+                    //* Eliminar gasto.
+                    axios.delete(process.env.SERVIDOR +'/rendicion/delete/' + datos_gasto._id)
+                        .then((respuesta) => {
+                            console.log("Solicitud eliminar gasto: " + respuesta);
+                        })
+                        .catch((error) => {
+                            console.log("Error al eliminar gasto: " + error);
+                        })
+
+                    Swal.fire({
+                        title: 'Eliminado!',
+                        text: 'El gasto ha sido eliminado.',
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#3085d6',
+                        confirmButtonText: 'Aceptar',
+                    }).then((result) => {
+                        if (result.value) {
+                            window.location.reload();
+                        }
+                    })
+
+                }
+            })
+    }
+
     return (
         <Box mt={5} pt={5} pb={5} pr={10} pl={10} shadow="md" borderWidth="1px" borderRadius={'3xl'}>
             <Box w={"Box"}>
@@ -57,6 +95,7 @@ const Card_Gasto = ({datos_gasto}) => {
 				</HStack>
                 <HStack mt={10} mb={10}>
                     <Button colorScheme={"yellow"} onClick={()=>verDetalleGasto()} w={"full"}>Ver más</Button>
+                    <Button colorScheme={"red"} onClick={()=>eliminarGasto()} w={"full"}>Eliminar</Button>
                 </HStack>
             </Box>
         </Box>

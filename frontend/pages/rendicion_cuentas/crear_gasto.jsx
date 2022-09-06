@@ -76,25 +76,25 @@ export default function crear_gasto() {
         console.log("--------------------------------------");
 
         //? Validación de campos.
-        // if (datosGasto.asunto === '' || datosGasto.total === '' || datosGasto.tipo === '' || datosGasto.fecha === '' || datosGasto.detalle === '' || datosGasto.tipo === 'Seleccione un tipo') {
+        if (datosGasto.asunto === '' || datosGasto.total === '' || datosGasto.tipo === '' || datosGasto.fecha === '' || datosGasto.detalle === '' || datosGasto.tipo === 'Seleccione un tipo') {
         
-            // Swal.fire({
-            //     title: 'Error',
-            //     text: 'Todos los campos son obligatorios',
-            //     icon: 'error',
-            //     confirmButtonText: 'Aceptar',
-            // })
+            Swal.fire({
+                title: 'Error',
+                text: 'Todos los campos son obligatorios',
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+            })
         
-        // } else {
+        } else {
 
             //? Crear gasto.
-            // axios.post(process.env.SERVIDOR +'/rendicion/', datosVerificados)
-            // .then((respuesta) => {
-            //     console.log("Solicitud creación Gasto: " + respuesta);
-            // })
-            // .catch((error) => {
-            //     console.log("Error al crear el gasto: " + error);
-            // })
+            axios.post(process.env.SERVIDOR +'/rendicion/', datosVerificados)
+            .then((respuesta) => {
+                console.log("Solicitud creación Gasto: " + respuesta);
+            })
+            .catch((error) => {
+                console.log("Error al crear el gasto: " + error);
+            })
 
             //* Mostrar alerta en pantalla.
             Swal.fire({
@@ -104,34 +104,35 @@ export default function crear_gasto() {
                 confirmButtonText: 'Aceptar'
             })
 
-        // }
+            //* Resetear valores de los input o enviar al usuario a pantalla "rendicion_cuentas".
+            Swal.fire({
+                title: '¿Desea agregar un nuevo gasto?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, agregar gasto',
+                cancelButtonText: 'Volver al inicio'
+            }).then((result) => {
 
-        //* Resetear valores de los input o enviar al usuario a pantalla "rendicion_cuentas".
-        Swal.fire({
-            title: '¿Desea agregar un nuevo gasto?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Sí, agregar gasto',
-            cancelButtonText: 'Volver al inicio'
-        }).then((result) => {
+                //? Resetear valores de los input.
+                if (result.isConfirmed) {
+                    setDatosGasto({
+                        asunto: '',
+                        total: '',
+                        tipo: '',
+                        fecha: '',
+                        detalle: '',
+                    })
+                    window.location.reload();
+                }
+                //? Enviar al usuario a pantalla "rendicion_cuentas".
+                else {
+                    router.push('/rendicion_cuentas')
+                }
+            })
 
-            //? Resetear valores de los input.
-            if (result.isConfirmed) {
-                setDatosGasto({
-                    asunto: '',
-                    total: '',
-                    tipo: '',
-                    fecha: '',
-                    detalle: '',
-                })
-            }
-            //? Enviar al usuario a pantalla "rendicion_cuentas".
-            else {
-                router.push('/rendicion_cuentas')
-            }
-        })
+        }
     }
 
     return (
