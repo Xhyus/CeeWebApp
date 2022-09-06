@@ -22,8 +22,8 @@ const envioCorreo = (req, res) => {
         }
     });
     let correos = [
-        // "jsoto@ubiobio.cl",
-        // "asegura@ubiobio.cl",
+        "jsoto@ubiobio.cl",
+        "asegura@ubiobio.cl",
         "ignaciogonzalez1609@gmail.com"
     ]
     const mailOptions = {
