@@ -1,6 +1,6 @@
 const handleDates = require('../utils/handleDates');
 const nodemailer = require('nodemailer');
-const handleUpperCase = require('../utils/handleUppercase');
+const handleUpperCase = require('../utils/handleUpperCase');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -20,9 +20,13 @@ const envioCorreo = (req, res) => {
             pass: credenciales.pass
         }
     });
+    let correos = [
+        "jsoto@ubiobio.cl",
+        "asegura@ubiobio.cl"
+    ]
     const mailOptions = {
         from: `Centro de Estudiantes ${formatedData.carrera} <${formatedData.correo}>`,
-        to: "ignaciogonzalez1609@gmail.com",
+        to: correos,
         subject: "Asamblea " + formatedData.tipoAsamblea + " " + formatedData.carrera + " || " + formatedData.asunto,
         text: "Hola, te enviamos este correo para informarte que la asamblea ha sido agendada",
         html: `

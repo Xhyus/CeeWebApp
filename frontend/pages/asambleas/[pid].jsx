@@ -9,6 +9,7 @@ import { Container, Heading, ChakraProvider, Button, Link, HStack, Text, Box } f
 import Archivos from '../../components/archivosList/Archivos'
 import SpinnerLoading from '../../components/spinner/SpinnerLoading'
 import UploadImages from '../../components/UploadImages/UploadImages'
+import compareAsc from 'date-fns/compareAsc'
 
 const verAsamblea = () => {
     const router = useRouter()
@@ -30,13 +31,16 @@ const verAsamblea = () => {
     const [archivos, setArchivos] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
+    console.log(asamblea.fecha)
+
     useEffect(() => {
         const getAsamblea = async (pid) => {
             await axios.get(process.env.SERVIDOR + '/asamblea/' + pid)
                 .then(res => {
+                    let fechaFormateada = formateoFecha(res.data.fecha)
                     setAsamblea({
                         asunto: handleUpperCase(res.data.asunto),
-                        fecha: formateoFecha(res.data.fecha),
+                        fecha: fechaFormateada,
                         tipoAsamblea: handleUpperCase(res.data.tipoAsamblea),
                         contexto: handleUpperCase(res.data.contexto),
                         acta: res.data.acta,
@@ -157,7 +161,7 @@ const verAsamblea = () => {
     }
 
     const color = () => {
-        if ((asamblea.horaTermino == '' || asamblea.horaTermino == undefined || asamblea.horaTermino == null) && asamblea.fecha.estado == 'Finalizado') {
+        if ((asamblea.horaTermino == '' || asamblea.horaTermino == undefined || asamblea.horaTermino == null) && compareAsc(new Date(), new Date(asamblea.fecha)) === 1) {
             return "orange"
         } else {
             return "gray"
@@ -165,7 +169,7 @@ const verAsamblea = () => {
     }
 
     const disable = () => {
-        if ((asamblea.horaTermino == '' || asamblea.horaTermino == undefined || asamblea.horaTermino == null) && asamblea.fecha.estado == 'Finalizado') {
+        if ((asamblea.horaTermino == '' || asamblea.horaTermino == undefined || asamblea.horaTermino == null) && new Date(asamblea.fecha) > new Date()) {
             return false
         } else {
             return true
@@ -199,11 +203,11 @@ const verAsamblea = () => {
                         {asamblea.url ? <Text fontSize="lg" fontWeight="bold">Plataforma: </Text> : <Text fontSize="xl" fontWeight="bold">Ubicacion: </Text>}
                         <Text fontSize="lg">{asamblea.ubicacion}</Text>
                     </HStack>
-                    <HStack spacing="24px" mt={5}>
+                    {/* <HStack spacing="24px" mt={5}>
                         <Text fontSize="lg" fontWeight="bold">Estado: </Text>
-                        <Text fontSize="lg" fontWeight={"bold"} color={asamblea.fecha.estado == "Finalizado" ? "red" : "green"}>{asamblea.fecha.estado == "Finalizado" ? "Finalizado" : "En proceso"}</Text>
+                        <Text fontSize="lg" fontWeight={"bold"} color={'black'}>{compareAsc(new Date(), new Date(asamblea.fecha)) === 1 ? "Terminadas" : "En proceso"}</Text>
                         {showHoraTermino()}
-                    </HStack>
+                    </HStack> */}
                     {asamblea.url ? <HStack mt={5}>
                         <Text fontSize="lg" fontWeight="bold">URL: </Text>
                         <Link href={asamblea.url} isExternal>

@@ -87,13 +87,14 @@ const crear = () => {
 
     const enviarCorreo = () => {
         let carrera = localStorage.getItem('carrera')
+        let values = localStorage.getItem('values')
         axios.post(`${process.env.SERVIDOR}/asamblea/mail/${carrera}`, {
-            asunto: asamblea.asunto,
-            fecha: asamblea.fecha,
-            tipoAsamblea: asamblea.tipoAsamblea,
-            contexto: asamblea.contexto,
-            ubicacion: asamblea.ubicacion,
-            url: asamblea.url,
+            asunto: values.asunto,
+            fecha: values.fecha,
+            tipoAsamblea: values.tipoAsamblea,
+            contexto: values.contexto,
+            ubicacion: values.ubicacion,
+            url: values.url,
             puntos: puntos
         })
             .then(res => {
@@ -203,6 +204,7 @@ const crear = () => {
                             })
                                 .then(res => {
                                     postPunto(res.data._id)
+                                    localStorage.setItem("values", values)
                                 })
                                 .catch(err => {
                                     Swal.fire({

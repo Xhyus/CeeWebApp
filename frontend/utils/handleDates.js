@@ -1,4 +1,5 @@
 import compareAsc from 'date-fns/compareAsc'
+import isPast from 'date-fns/isPast'
 
 const formateoFecha = (fecha) => {
     let newDate = fecha.split('T')[0].split('-');
@@ -10,16 +11,17 @@ const formateoFecha = (fecha) => {
     let hora = newHora[1]
     let horaFormateada = hora.split(':')
     let horaFinal = `${horaFormateada[0]}:${horaFormateada[1]}`
-    let estado
-    if (compareAsc(fecha, new Date()) === 1) {
-        estado = "Terminadas"
-    } else {
-        estado = "PorRealizar"
-    }
+    // let estado
+    console.log(compareAsc(fecha, new Date()) === 0)
+    // if (isPast(fecha, new Date()) === false) {
+    //     estado = "Terminadas"
+    // } else {
+    //     estado = "PorRealizar"
+    // }
     let format = {
         fecha: fechaFormateada,
         hora: horaFinal,
-        estado: estado
+        // estado: estado
     }
     return format
 
