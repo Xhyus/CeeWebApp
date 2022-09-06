@@ -1,15 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { FaClock, FaTag, FaCalendarCheck } from 'react-icons/fa'
-import { formateoFechaBD } from '../../utils/handleDates'
+import { formateoFecha } from '../../utils/handleDates'
 import { useRouter } from 'next/router'
 import handleUpperCase from '../../utils/handleUpperCase'
 import { Box, Heading, Text, Button, HStack, Tag, TagLabel } from "@chakra-ui/react"
 
 const Card = ({ id, asunto, fecha, tipoAsamblea, estado }) => {
-	const [format, setFormat] = useState('')
+	const [format, setFormat] = useState({
+		fecha: '',
+		hora: '',
+		estado: ''
+	})
 	const router = useRouter()
 	useEffect(() => {
-		setFormat(formateoFechaBD(fecha))
+		let fechaFormateada = formateoFecha(fecha)
+
+		setFormat({
+			fecha: fechaFormateada.fecha,
+			hora: fechaFormateada.hora,
+			estado: fechaFormateada.estado
+		})
 	}, [])
 	const getEstadoAsamblea = () => {
 		if (estado === "Terminadas") {
@@ -35,14 +45,14 @@ const Card = ({ id, asunto, fecha, tipoAsamblea, estado }) => {
 				<HStack >
 					{getEstadoAsamblea()}
 				</HStack>
-				<Heading mt={5} as="h4" size="md">{handleUpperCase(asunto)}</Heading>
+				<Heading mt={5} as="h4" size="md" maxW={"md"}>{handleUpperCase(asunto)}</Heading>
 				<HStack mt={3}>
 					<Text>Tipo: {handleUpperCase(tipoAsamblea)}</Text>
 				</HStack>
 				<HStack mt={3} justify={"space-between"}>
 					<HStack >
 						<FaCalendarCheck />
-						<Text>Fecha: {format.fecha}</Text>
+						<Text>Fecha: {format.fecha} </Text>
 					</HStack>
 					<HStack>
 						<FaClock />

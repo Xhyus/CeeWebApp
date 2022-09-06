@@ -10,7 +10,8 @@ const ceeSchema = Schema({
 			"comercial",
 			"cpa",
 			"icinf"
-		]
+		],
+		uniquie: true
 	},
 	asambleas: {
 		type: [Schema.ObjectId],

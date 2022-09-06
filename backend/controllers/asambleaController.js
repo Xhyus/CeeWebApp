@@ -1,6 +1,5 @@
 const asamblea = require('../models/asamblea.js')
 const cee = require('../models/cee.js')
-const mailSender = require('../controllers/mailSender.js')
 
 const crearAsamblea = (req, res) => {
     const carrera = req.params.carrera
@@ -45,7 +44,6 @@ const modificarAsamblea = (req, res) => {
 
 const eliminarAsamblea = (req, res) => {
     let { id, carrera } = req.params;
-
     asamblea.findById(id, (err, asamblea) => {
         if (err) {
             return res.status(400).send({ message: "Error al eliminar" })
@@ -116,8 +114,12 @@ const asambleasPorCarrera = (req, res) => {
                 return asamblea.fecha > new Date()
             })
             asambleas = {
-                asambleasTerminadas: asambleasTerminadas,
-                asambleasNoTerminadas: asambleasNoTerminadas
+                asambleasTerminadas: asambleasTerminadas.sort((a, b) => {
+                    return new Date(b.fecha) - new Date(a.fecha)
+                }),
+                asambleasNoTerminadas: asambleasNoTerminadas.sort((a, b) => {
+                    return new Date(a.fecha) - new Date(b.fecha)
+                })
             }
             res.status(200).json(asambleas)
         })
@@ -126,7 +128,7 @@ const asambleasPorCarrera = (req, res) => {
 
 const filtro = (req, res) => {
     let Filtro = {}, fechas = {}, tipos = {}
-    let { inicio, fin, estado, tipo } = req.query
+    let { inicio, fin, estado, tipoAsamblea } = req.body
     cee.find({ carrera: req.params.carrera }, (err, cee) => {
         if (cee.length === 0) {
             return res.status(404).send({ message: "No existen el cee" })
@@ -141,14 +143,14 @@ const filtro = (req, res) => {
             if (inicio && fin) {
                 fechas = { fecha: { $lte: new Date(fin), $gte: new Date(inicio) } }
             } else if (inicio) {
-                fechas = { fecha: { $lte: new Date(), $gte: new Date(inicio) } }
+                fechas = { fecha: { $lte: new Date(3000, 1, 1), $gte: new Date(inicio) } }
             } else if (fin) {
                 fechas = { fecha: { $lte: new Date(), $gte: new Date(2020, 1, 1) } }
             }
             Filtro = { ...fechas }
         }
-        if (tipo) {
-            if (tipo == "resolutiva") {
+        if (tipoAsamblea) {
+            if (tipoAsamblea == "resolutiva") {
                 tipos = { tipoAsamblea: "resolutiva" }
             } else {
                 tipos = { tipoAsamblea: "informativa" }
@@ -168,16 +170,16 @@ const filtro = (req, res) => {
             if (estado) {
                 if (estado == "terminada") {
                     asambleas = asambleas.filter(asamblea => {
-                        return asamblea.fecha < new Date()
+                        return asamblea.fecha <= new Date()
                     })
                 } else {
                     asambleas = asambleas.filter(asamblea => {
-                        return asamblea.fecha > new Date()
+                        return asamblea.fecha >= new Date()
                     })
                 }
                 return res.status(200).json(asambleas)
             } else {
-                res.status(200).json(asambleas)
+                return res.status(200).json(asambleas)
             }
         })
     })
