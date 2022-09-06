@@ -1,6 +1,6 @@
 # **CeeWebApp**
 
-Es un software dirigido a los CEES de la Universidad del Bío-Bío, el cual esta enfocado en ayudar a desarrollar parte de las actividades que se generan de forma habitual por parte de estos,
+Es un software dirigido a los CEES de la Universidad del Bío-Bío, el cual esta enfocado en ayudar a desarrollar parte de las actividades que se generan de forma habitual por parte de estos.
 
 ## **Software stack**
 El proyecto "CeeWebApp" es una aplicación web que corre sobre el siguiente software:
@@ -164,7 +164,6 @@ Ir a un navegador web y ejecutar la siguiente url [CeeWebApp](https://localhost)
 |ignacio@ieci.cl|password|Alumno IECI| Activo |
 |alejandra@icinf.cl|password|Alumno ICINF| Activo |
 |juan@cpa.cl|password|Alumno CPA| Activo |
-|francisco@ieci.cl|password|Alumno CPA| Inactivo |
 
 ## **Construido con**
 
