@@ -1,0 +1,343 @@
+[{
+  "_id": {
+    "$oid": "628c2bd39af558162462da0a"
+  },
+  "asambleas": [
+    {
+      "$oid": "62887cbb6f9cba4180f42c19"
+    },
+    {
+      "$oid": "6289c3fcc5eaee5de4600601"
+    },
+    {
+      "$oid": "62e4afec1b336246ccf867a9"
+    },
+    {
+      "$oid": "62e4c2c053cf1f53ccf6e5bb"
+    },
+    {
+      "$oid": "62e4cb1ad7d34b5cf8fe4ae6"
+    },
+    {
+      "$oid": "62e4cb62256e2a6db8d67b11"
+    },
+    {
+      "$oid": "62e4cc61b04677540c8f4707"
+    },
+    {
+      "$oid": "62e4cd42fb7cf96be00497ca"
+    },
+    {
+      "$oid": "62e4d7c4163f405cc820a76a"
+    },
+    {
+      "$oid": "62e4d978163f405cc820a77d"
+    },
+    {
+      "$oid": "62e4d97c163f405cc820a780"
+    },
+    {
+      "$oid": "62e6f28ca952d44424ef6c83"
+    },
+    {
+      "$oid": "62e6f292a952d44424ef6c86"
+    },
+    {
+      "$oid": "62e6f295a952d44424ef6c89"
+    },
+    {
+      "$oid": "62e6f2b8a952d44424ef6c90"
+    },
+    {
+      "$oid": "62e6f2bba952d44424ef6c93"
+    },
+    {
+      "$oid": "62e6f2bfa952d44424ef6c96"
+    },
+    {
+      "$oid": "62e6f30ba952d44424ef6c9f"
+    },
+    {
+      "$oid": "62e6f322a952d44424ef6ca4"
+    },
+    {
+      "$oid": "62e6f3e1a952d44424ef6cad"
+    },
+    {
+      "$oid": "62e704b5b06ca50ae0c49031"
+    },
+    {
+      "$oid": "62e704c1b06ca50ae0c49034"
+    },
+    {
+      "$oid": "63064c14d1691135047b04ab"
+    }
+  ],
+  "rendiciones": [
+    {
+      "$oid": "6279ad5e50b5473af857b058"
+    },
+    {
+      "$oid": "6279b4aa50b5473af857b05f"
+    }
+  ],
+  "usuarios": [
+    {
+      "$oid": "62e772180932384d3867e9ac"
+    }
+  ],
+  "carrera": "ieci",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62aec141bce257469cee4e56"
+  },
+  "asambleas": [
+    {
+      "$oid": "62aec0f7bce257469cee4e51"
+    },
+    {
+      "$oid": "6312937dfe760b2f68fd5c54"
+    },
+    {
+      "$oid": "63129e2ffe760b2f68fd5d4c"
+    },
+    {
+      "$oid": "63129efcfe760b2f68fd5d79"
+    },
+    {
+      "$oid": "6312a1f7fe760b2f68fd5dc2"
+    },
+    {
+      "$oid": "6312ab19fe760b2f68fd5de3"
+    },
+    {
+      "$oid": "6312d909b1c5a2277cb6b14d"
+    },
+    {
+      "$oid": "6312e37d0fa87a0488a9fddb"
+    },
+    {
+      "$oid": "6312e44cd834fb670c21f9ca"
+    },
+    {
+      "$oid": "63143bb97896586fa4dbd94a"
+    },
+    {
+      "$oid": "63143bf47896586fa4dbd954"
+    },
+    {
+      "$oid": "63143e2c7896586fa4dbd961"
+    },
+    {
+      "$oid": "63143eb17896586fa4dbd96c"
+    },
+    {
+      "$oid": "63158300aff81606fc09e78c"
+    },
+    {
+      "$oid": "631587d737744639cce47ffe"
+    },
+    {
+      "$oid": "63169296caeef43958e38a62"
+    },
+    {
+      "$oid": "6316ba130328e303565b93f8"
+    }
+  ],
+  "rendiciones": [
+    {
+      "$oid": "62fd3c197b0c17ac42fee8ab"
+    },
+    {
+      "$oid": "6279b4aa50b5473af857b05f"
+    },
+    {
+      "$oid": "6279ad5e50b5473af857b058"
+    }
+  ],
+  "usuarios": [
+    {
+      "$oid": "62e771b70932384d3867e9a6"
+    }
+  ],
+  "carrera": "comercial",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62aec152bce257469cee4e58"
+  },
+  "asambleas": [
+    null,
+    {
+      "$oid": "62e773700932384d3867e9c1"
+    },
+    {
+      "$oid": "62e773910932384d3867e9c4"
+    }
+  ],
+  "rendiciones": null,
+  "usuarios": [
+    {
+      "$oid": "62e772450932384d3867e9af"
+    },
+    {
+      "$oid": "62e772bc0932384d3867e9b2"
+    }
+  ],
+  "carrera": "icinf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62aec159bce257469cee4e5a"
+  },
+  "asambleas": [
+    null,
+    {
+      "$oid": "62e773b30932384d3867e9c7"
+    },
+    {
+      "$oid": "62e773c00932384d3867e9ca"
+    }
+  ],
+  "rendiciones": null,
+  "usuarios": [
+    {
+      "$oid": "62e771eb0932384d3867e9a9"
+    }
+  ],
+  "carrera": "cpa",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631698c9309fd9357842809a"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "ieci",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631698c9309fd9357842809b"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "comercial",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631698c9309fd9357842809c"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "icinf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631698c9309fd9357842809d"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "cpa",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631699119a3e7727b03d3ee0"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "ieci",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631699119a3e7727b03d3ee1"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "comercial",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631699119a3e7727b03d3ee2"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "icinf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631699119a3e7727b03d3ee3"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "cpa",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6316992971de2d3e8c63db2f"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "ieci",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6316992971de2d3e8c63db31"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "icinf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6316992971de2d3e8c63db32"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "cpa",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6316992971de2d3e8c63db30"
+  },
+  "asambleas": [],
+  "rendiciones": [],
+  "usuarios": [
+    null
+  ],
+  "carrera": "comercial",
+  "__v": 0
+}]

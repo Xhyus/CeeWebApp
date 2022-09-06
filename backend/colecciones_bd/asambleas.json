@@ -1,0 +1,558 @@
+[{
+  "_id": {
+    "$oid": "62e704b5b06ca50ae0c49031"
+  },
+  "puntos": [
+    {
+      "$oid": "62e76ae90932384d3867e98a"
+    },
+    {
+      "$oid": "62e7743d0932384d3867e9d8"
+    }
+  ],
+  "archivos": [],
+  "asunto": "asamblea Editada",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1653451200000"
+    }
+  },
+  "contexto": "Texto de prueba para campos descriptivos, VALIDACION DE FORMATEO NORMALIZACIÓN, VISUALIZACIÓN DE TEXTOS largos, STRIM de      espacios innecesarios,  indicación de caracteres restantes o ayuda con máximos de caracteres posibles de ingreso. Importante considerar el mínimo de largo, y considerar exista 1 espacio, eso quier decir que al menos hay 2 palabras.Texto de prueba para campos descriptivos, VALIDACION DE FORMATEO NORMALIZACIÓN, VISUALIZACIÓN DE TEXTOS largos, STRIM de      espacios innecesarios,  indicación de caracteres restantes o ayuda con máximos de caracteres posibles de ingreso. Importante considerar el mínimo de largo, y considerar exista 1 espacio, eso quier decir que al menos hay 2 palabras.",
+  "tipoAsamblea": "resolutiva",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e704c1b06ca50ae0c49034"
+  },
+  "puntos": [
+    {
+      "$oid": "62e7060eb06ca50ae0c4903f"
+    },
+    {
+      "$oid": "62e76ac90932384d3867e984"
+    }
+  ],
+  "archivos": [
+    {
+      "$oid": "62e7438896eeaa606ce30837"
+    },
+    {
+      "$oid": "63064ddbd1691135047b04ce"
+    }
+  ],
+  "asunto": "asamblea prueba no terminada",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1664074800000"
+    }
+  },
+  "contexto": "Texto de prueba para campos descriptivos, VALIDACION DE FORMATEO NORMALIZACIÓN, VISUALIZACIÓN DE TEXTOS largos, STRIM de      espacios innecesarios,  indicación de caracteres restantes o ayuda con máximos de caracteres posibles de ingreso. Importante considerar el mínimo de largo, y considerar exista 1 espacio, eso quier decir que al menos hay 2 palabras.Texto de prueba para campos descriptivos, VALIDACION DE FORMATEO NORMALIZACIÓN, VISUALIZACIÓN DE TEXTOS largos, STRIM de      espacios innecesarios,  indicación de caracteres restantes o ayuda con máximos de caracteres posibles de ingreso. Importante considerar el mínimo de largo, y considerar exista 1 espacio, eso quier decir que al menos hay 2 palabras. 62e704c1b06ca50ae0c49034 ",
+  "tipoAsamblea": "informativa",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e773700932384d3867e9c1"
+  },
+  "puntos": [
+    {
+      "$oid": "62e775930932384d3867ea08"
+    },
+    {
+      "$oid": "62e775a30932384d3867ea0b"
+    }
+  ],
+  "archivos": [],
+  "asunto": "asamblea si icinf de gatos voladores",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1653451200000"
+    }
+  },
+  "contexto": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+  "tipoAsamblea": "informativa",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e773910932384d3867e9c4"
+  },
+  "puntos": [
+    {
+      "$oid": "62e775d50932384d3867ea0e"
+    },
+    {
+      "$oid": "62e775eb0932384d3867ea13"
+    },
+    {
+      "$oid": "62fef610f29dee5e10319d47"
+    },
+    {
+      "$oid": "62ff09ecf29dee5e10319d73"
+    }
+  ],
+  "archivos": [],
+  "asunto": "asamblea de automatas icinf",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1664074800000"
+    }
+  },
+  "contexto": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+  "tipoAsamblea": "resolutiva",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e773b30932384d3867e9c7"
+  },
+  "puntos": [
+    {
+      "$oid": "62e7755e0932384d3867e9fe"
+    },
+    {
+      "$oid": "62e7756d0932384d3867ea03"
+    }
+  ],
+  "archivos": [],
+  "asunto": "asamblea de comercio contable cpa",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1664074800000"
+    }
+  },
+  "contexto": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+  "tipoAsamblea": "resolutiva",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e773c00932384d3867e9ca"
+  },
+  "puntos": [
+    {
+      "$oid": "62e7752b0932384d3867e9f8"
+    },
+    {
+      "$oid": "62e7754d0932384d3867e9fb"
+    }
+  ],
+  "archivos": [],
+  "asunto": "asamblea de comercio incontable cpa",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1653451200000"
+    }
+  },
+  "contexto": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+  "tipoAsamblea": "informativa",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62fd35fb70762ca61044da12"
+  },
+  "puntos": [
+    {
+      "$oid": "62e774cc0932384d3867e9e2"
+    },
+    {
+      "$oid": "62e774d40932384d3867e9e5"
+    }
+  ],
+  "archivos": [
+    {
+      "$oid": "62f9c02e3fc07525ac24fe98"
+    },
+    {
+      "$oid": "62fab84d779111538890bcf7"
+    },
+    {
+      "$oid": "62fabb721708030bb4ed0480"
+    },
+    {
+      "$oid": "62fabb951708030bb4ed0484"
+    }
+  ],
+  "asunto": "copia asamblea no comercial de comercial",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1663729200000"
+    }
+  },
+  "contexto": "copia Si yo te odiara, mi odio te daría\nen las palabras, rotundo y seguro;\n¡pero te amo y mi amor no se confía\na este hablar de los hombres tan oscuro!\n\nTú lo quisieras vuelto un alarido,\ny viene de tan hondo que ha deshecho\nsu quemante raudal, desfallecido,\nantes de la garganta, antes del pecho.\n\nEstoy lo mismo que estanque colmado\ny te parezco un surtidor inerte.\n¡Todo por mi callar atribulado\nque es más atroz que entrar en la muerte!",
+  "tipoAsamblea": "resolutiva",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62fd375870762ca61044da13"
+  },
+  "puntos": [
+    {
+      "$oid": "62e7756d0932384d3867ea03"
+    }
+  ],
+  "archivos": [],
+  "asunto": "asamblea de comercio contable cpa",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1664074800000"
+    }
+  },
+  "contexto": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+  "tipoAsamblea": "resolutiva",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63064c14d1691135047b04ab"
+  },
+  "puntos": [
+    {
+      "$oid": "63064c14d1691135047b04ae"
+    }
+  ],
+  "archivos": [],
+  "asunto": "asamblea de jorge",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1661465040000"
+    }
+  },
+  "contexto": "una simple asamblea de jorge",
+  "tipoAsamblea": "resolutiva",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312937dfe760b2f68fd5c54"
+  },
+  "puntos": [],
+  "archivos": [],
+  "asunto": "asunto asuntoso",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1662676560000"
+    }
+  },
+  "contexto": "asdasdasdasdasd",
+  "tipoAsamblea": "informativa",
+  "ubicacion": "FACE",
+  "url": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63129e2ffe760b2f68fd5d4c"
+  },
+  "puntos": [
+    {
+      "$oid": "63129e30fe760b2f68fd5d4f"
+    }
+  ],
+  "archivos": [],
+  "asunto": "czxcxzczxcz",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1662078060000"
+    }
+  },
+  "contexto": "asdasdasd",
+  "tipoAsamblea": "resolutiva",
+  "ubicacion": "face",
+  "url": "https://www.instagram.com/p/CH068C5gZRXBk6Dq3L17X699n0M2Q7uHXzOywQ0/",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63129efcfe760b2f68fd5d79"
+  },
+  "puntos": [],
+  "archivos": [],
+  "asunto": "online",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1661819100000"
+    }
+  },
+  "contexto": "askldjasdkljasdkjasdkjasdkljasdlaskldjasdkljasdkjasdkjasdkljasdlaskldjasdkljasdkjasdkjasdkljasdlaskldjasdkljasdkjasdkjasdkljasdlaskldjasdkljasdkjasdkjasdkljasdlaskldjasdkljasdkjasdkjasdkljasdlaskldjasdkljasdkjasdkjasdkljasdl",
+  "tipoAsamblea": "informativa",
+  "ubicacion": "Discord",
+  "url": "www.facebook.com",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312a1f7fe760b2f68fd5dc2"
+  },
+  "puntos": [],
+  "archivos": [],
+  "asunto": "Asunto de prueba para probar funcionalidades",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1662853020000"
+    }
+  },
+  "contexto": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+  "tipoAsamblea": "resolutiva",
+  "ubicacion": "FACE",
+  "url": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312ab19fe760b2f68fd5de3"
+  },
+  "puntos": [
+    {
+      "$oid": "62e774e30932384d3867e9ea"
+    },
+    {
+      "$oid": "62e774ef0932384d3867e9ed"
+    }
+  ],
+  "archivos": [
+    {
+      "$oid": "6312ab51fe760b2f68fd5de6"
+    },
+    {
+      "$oid": "6312ab51fe760b2f68fd5de7"
+    },
+    {
+      "$oid": "6312b9d6fe760b2f68fd5fd0"
+    },
+    {
+      "$oid": "6312b9fffe760b2f68fd5fe0"
+    },
+    {
+      "$oid": "6312c4c97e2585644c704d5c"
+    },
+    {
+      "$oid": "6312c5a361482f201c00cefb"
+    }
+  ],
+  "asunto": "asamblea de comercio incontable aszxczxcdas",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1653451200000"
+    }
+  },
+  "contexto": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+  "tipoAsamblea": "informativa",
+  "ubicacion": "Ratonera",
+  "__v": 0,
+  "horaTermino": "02:39"
+},{
+  "_id": {
+    "$oid": "6312d909b1c5a2277cb6b14d"
+  },
+  "puntos": [
+    {
+      "$oid": "62e774e30932384d3867e9ea"
+    },
+    {
+      "$oid": "62e774ef0932384d3867e9ed"
+    }
+  ],
+  "archivos": [],
+  "horaTermino": "02:35",
+  "asunto": "asamblea de comercio incontable aszxczxcdas",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1653451200000"
+    }
+  },
+  "contexto": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+  "tipoAsamblea": "informativa",
+  "ubicacion": "Ratonera",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312e37d0fa87a0488a9fddb"
+  },
+  "puntos": [
+    {
+      "$oid": "6312e37d0fa87a0488a9fde0"
+    }
+  ],
+  "archivos": [],
+  "horaTermino": "",
+  "asunto": "asunto asuntoso",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1662182220000"
+    }
+  },
+  "contexto": "asdasdasdasdasdasd asdasdasdasdasdasd asdasdasdasdasdasd",
+  "tipoAsamblea": "resolutiva",
+  "ubicacion": "face",
+  "url": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312e44cd834fb670c21f9ca"
+  },
+  "puntos": [
+    {
+      "$oid": "6312e44cd834fb670c21f9cd"
+    },
+    {
+      "$oid": "6312e44cd834fb670c21f9cf"
+    },
+    {
+      "$oid": "6312e44cd834fb670c21f9d1"
+    }
+  ],
+  "archivos": [],
+  "horaTermino": "",
+  "asunto": "asdasdas",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1662182460000"
+    }
+  },
+  "contexto": "asdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasdasd",
+  "tipoAsamblea": "resolutiva",
+  "ubicacion": "face",
+  "url": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63143bb97896586fa4dbd94a"
+  },
+  "puntos": [
+    {
+      "$oid": "63143bb97896586fa4dbd94d"
+    }
+  ],
+  "archivos": [
+    {
+      "$oid": "6316b9e00328e303565b93ef"
+    }
+  ],
+  "horaTermino": "",
+  "asunto": "asdas",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1662264000000"
+    }
+  },
+  "contexto": "zxczxczxc",
+  "tipoAsamblea": "resolutiva",
+  "ubicacion": "fasce",
+  "url": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63143bf47896586fa4dbd954"
+  },
+  "puntos": [
+    {
+      "$oid": "63143bf47896586fa4dbd957"
+    }
+  ],
+  "archivos": [],
+  "horaTermino": "",
+  "asunto": "asdadssdzxczxcczxzxc date",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1662264000000"
+    }
+  },
+  "contexto": "xcazxxzczxczxczxcczxczx",
+  "tipoAsamblea": "resolutiva",
+  "ubicacion": "zxczxc",
+  "url": null,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63143e2c7896586fa4dbd961"
+  },
+  "puntos": [],
+  "archivos": [],
+  "horaTermino": "",
+  "asunto": "<h1>HOLA TOMMY</h1>",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1662789360000"
+    }
+  },
+  "contexto": "<h1>HOLA TOMMY</h1><h1>HOLA TOMMY</h1><h1>HOLA TOMMY</h1>",
+  "tipoAsamblea": "resolutiva",
+  "ubicacion": "<h1>HOLA TOMMY</h1>",
+  "url": "<h1>HOLA TOMMY</h1>",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63143eb17896586fa4dbd96c"
+  },
+  "puntos": [],
+  "archivos": [],
+  "horaTermino": "",
+  "asunto": "<Button colorScheme=\"green\" onClick={() => handleSubmit()} w={\"full\"} > Crear Asamblea </Button>",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1663826340000"
+    }
+  },
+  "contexto": "<Button colorScheme=\"green\" onClick={() => handleSubmit()} w={\"full\"} > Crear Asamblea </Button>\n",
+  "tipoAsamblea": "resolutiva",
+  "ubicacion": "<Button colorScheme=\"green\" onClick={() => handleSubmit()} w={\"full\"} > Crear Asamblea </Button>",
+  "url": "<Button colorScheme=\"green\" onClick={() => handleSubmit()} w={\"full\"} > Crear Asamblea </Button>",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63158300aff81606fc09e78c"
+  },
+  "puntos": [
+    {
+      "$oid": "63158301aff81606fc09e78f"
+    }
+  ],
+  "archivos": [],
+  "horaTermino": "",
+  "asunto": "asunto asuntosoasunto asuntoso",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1662440520000"
+    }
+  },
+  "contexto": "asunto asuntosoasunto asuntosoasunto asuntoso",
+  "tipoAsamblea": "informativa",
+  "ubicacion": "asunto asuntosoasunto asuntoso",
+  "url": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "631587d737744639cce47ffe"
+  },
+  "puntos": [
+    {
+      "$oid": "631587d837744639cce48001"
+    }
+  ],
+  "archivos": [],
+  "horaTermino": "",
+  "asunto": "asunto asuntosoasunto asuntosoasunto asuntosoasunto asuntosoasunto asuntosoasunto asuntosoasunto asu",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1662528180000"
+    }
+  },
+  "contexto": "asunto asuntosoasunto asuntosoasunto asuntosoasunto asuntosoasunto asuntosoasunto asuntosoasunto asu",
+  "tipoAsamblea": "resolutiva",
+  "ubicacion": "asdasdasdasd",
+  "url": "",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63169296caeef43958e38a62"
+  },
+  "puntos": [
+    {
+      "$oid": "63169296caeef43958e38a65"
+    }
+  ],
+  "archivos": [],
+  "horaTermino": "",
+  "asunto": "asunto asuntoso",
+  "fecha": {
+    "$date": {
+      "$numberLong": "1662510060000"
+    }
+  },
+  "contexto": "asdasdasdasdasdas",
+  "tipoAsamblea": "resolutiva",
+  "ubicacion": "face",
+  "url": "",
+  "__v": 0
+}]

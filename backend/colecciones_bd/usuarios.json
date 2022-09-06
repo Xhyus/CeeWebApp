@@ -1,0 +1,133 @@
+[{
+  "_id": {
+    "$oid": "628081d2f90d3336a4b21bab"
+  },
+  "nombre": "Elvis",
+  "apellido": "Rodriguez",
+  "email": "elvis@mail.com",
+  "password": "$2b$10$y2LzIDfTfqMWMhyQFdoW6Olbx0u.zHHL9GuGK2290dH4UXQ9MjV.a",
+  "rol": "admin",
+  "estadoCuenta": "noRegular",
+  "carrera": "ieci",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "628703fed362bd4760ee2eb0"
+  },
+  "nombre": "pablo",
+  "apellido": "Rodriguez",
+  "email": "pablo@mail.com",
+  "password": "$2b$10$GdDm/rpD9wOPePuC4v9h6uOqYPct35.Z5sEckiJ6TGYZIU5tTuN.S",
+  "rol": "admin",
+  "estadoCuenta": "regular",
+  "carrera": "ieci",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "628c601be1146a50d087eae8"
+  },
+  "nombre": "Pablo",
+  "apellido": "Montoya",
+  "email": "pablo@pablo.com",
+  "password": "$2b$10$L5LKKrQp3mupEKouN/nsGeQ3P8jrOMy2kb9z5p0IfMKlirBaeBI1K",
+  "rol": "admin",
+  "estadoCuenta": "regular",
+  "carrera": "ieci",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "628f27fea18b8e0a044c4407"
+  },
+  "nombre": "Ignacio",
+  "apellido": "Gonzalez",
+  "email": "nacho@mail.com",
+  "password": "$2b$10$9ciJNyfrloG9trMi7cIePOlbqfdQZCgQJmqqhPLnvwvBrpciPCbWu",
+  "rol": "admin",
+  "estadoCuenta": "regular",
+  "carrera": "ieci",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e771b70932384d3867e9a6"
+  },
+  "nombre": "Ignacio",
+  "apellido": "Gonzalez",
+  "email": "ignacio@comercial.cl",
+  "password": "$2b$10$N.3yk5CGwyC3QuJQLQSBQO8Tv7t6DJcKOyhli8.4pGnpXyLaUU4Sa",
+  "rol": "admin",
+  "estadoCuenta": "regular",
+  "carrera": "comercial",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e772180932384d3867e9ac"
+  },
+  "nombre": "Pablo",
+  "apellido": "Montoya",
+  "email": "pablo@ieci.cl",
+  "password": "$2b$10$KWt7whJWR6tXGQRl.X0oz.Qo/goWQZFEMp14Z3NLWFr/09McAyCfG",
+  "rol": "admin",
+  "estadoCuenta": "regular",
+  "carrera": "ieci",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e772450932384d3867e9af"
+  },
+  "nombre": "Alejandra",
+  "apellido": "Segura",
+  "email": "alejandra@icinf.cl",
+  "password": "$2b$10$YrQ.eMIw/0Wjpn/sfpgIm.o5ZSnc1BoeChXocBvEW2erwV.9CDTNu",
+  "rol": "admin",
+  "estadoCuenta": "regular",
+  "carrera": "icinf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e772bc0932384d3867e9b2"
+  },
+  "nombre": "Homero",
+  "apellido": "Simpson",
+  "email": "homero@thesimpsons.com",
+  "password": "$2b$10$.BagSzUhD55IKNaCnJ9cg.Cc8E5MdGa3wJ1bNGcUa3cDkMWJQqaXe",
+  "rol": "admin",
+  "estadoCuenta": "noRegular",
+  "carrera": "icinf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63169752ca819a711431c876"
+  },
+  "nombre": "Ignacio",
+  "apellido": "Gonzalez",
+  "email": "ignacio@ieci.cl",
+  "password": "password",
+  "rol": "admin",
+  "estadoCuenta": "regular",
+  "carrera": "ieci",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63169752ca819a711431c877"
+  },
+  "nombre": "Pablo",
+  "apellido": "Montoya",
+  "email": "pablo@comercial.cl",
+  "password": "password",
+  "rol": "admin",
+  "estadoCuenta": "regular",
+  "carrera": "comercial",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6316978625a28b381c99b6c6"
+  },
+  "nombre": "Juan",
+  "apellido": "Soto",
+  "email": "juan@cpa.cl",
+  "password": "password",
+  "rol": "admin",
+  "estadoCuenta": "regular",
+  "carrera": "cpa",
+  "__v": 0
+}]

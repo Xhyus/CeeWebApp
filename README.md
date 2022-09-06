@@ -1,6 +1,6 @@
 # **CeeWebApp**
 
-Es un software dirigido a los CEES de la Universidad del Bío-Bío, el cual esta enfocado en ayudar a desarrollar parte de las actividades que se generan de forma habitual por parte de estos.
+Es un software dirigido a los CCEE de la Universidad del Bío-Bío, el cual esta enfocado en ayudar a desarrollar parte de las actividades que se generan de forma habitual por parte de estos.
 
 ## **Software stack**
 El proyecto "CeeWebApp" es una aplicación web que corre sobre el siguiente software:
@@ -16,8 +16,8 @@ El proyecto "CeeWebApp" es una aplicación web que corre sobre el siguiente soft
 
 ## **Configuraciones de Ejecución para Entorno de Desarrollo/Produccción**
 
-### Conexion a la base de datos
-Para obtener un string de conexion de atlas lo primero que se debe hacer es ir a la página de [MongoAtlas](https://account.mongodb.com/account/login), se registra y le pedira que ingrese un nombre y contraseña para una base de datos, crea la nueva base de datos y luego en el menú de la izquierda selecciona "Clusters" y luego "Connect" y selecciona "Connect your application" y copia el string de conexion. Este string de conexion debe ser para el que se entrega con la siguiente configuracion:
+### Conexión a la base de datos
+Para obtener un string de conexion de atlas lo primero que se debe hacer es ir a la página de [MongoAtlas](https://account.mongodb.com/account/login), se registra y le pedirá que ingrese un nombre y contraseña para una base de datos. Crea la nueva base de datos y luego en el menú de la izquierda selecciona "Clusters" y luego "Connect" y selecciona "Connect your application" y copia el string de conexion. Este string de conexion debe ser para el que se entrega con la siguiente configuracion:
 - NodeJS
 - 2.2.12 or later
 
@@ -29,6 +29,19 @@ mongodb://tallerDesarrollo:<password>@tallerDesarrollo-shard-00-00.eziad.mongodb
 Entre las etiquetas < > se debe reemplazar el password por el que se le entrega al crear la base de datos.
 
 Este string de conexion debe ser reemplazado en el archivo .env que se encuentra en la raiz del proyecto, en la variable de entorno `DB`.
+
+### Importar base de datos
+
+Para importar la base de datos a nuestro directorio local es necesario utilizar el software [MongoDB Compass](https://www.mongodb.com/try/download/compass) con el que realizaremos la importación de los archivos .json de la base de datos.
+
+**Los pasos a seguir son:**
+```bash
+Seleccionar la opción "Create database" donde ingresaremos el nombre de la base de datos junto con el de la colección.
+Seleccionar la base de datos creada.
+Seleccionar la colección creada.
+Pulsar el botón "ADD DATA" y luego seleccionar la opcion "Import File"
+Agregar los archivos uno por uno dentro de la carpeta raíz del proyecto /backend/colecciones_bd
+```
 
 ### Clonación del repositorio
 - Para obtener una copia del proyecto se debe clonar el repositorio de GitHub, para esto se debe ejecutar el siguiente comando en la terminal:
@@ -130,7 +143,7 @@ Una vez ejecutado el comando anterior, se debe ingresar a la carpeta Home, para 
 
 ### Instalar dependencias del proyecto
 
-Para instalar las dependencias del proyecto,se debe ejecutar el siguiente comando en la terminal, esto se hace en ambos contenedores de docker, frontend y backend:
+Para instalar las dependencias del proyecto, se debe ejecutar el siguiente comando en la terminal, esto se hace en ambos contenedores de docker, frontend y backend:
 
 ```bash
 yarn install
@@ -164,6 +177,7 @@ Ir a un navegador web y ejecutar la siguiente url [CeeWebApp](https://localhost)
 |ignacio@ieci.cl|password|Alumno IECI| Activo |
 |alejandra@icinf.cl|password|Alumno ICINF| Activo |
 |juan@cpa.cl|password|Alumno CPA| Activo |
+|francisco@ieci.cl|password|Alumno CPA| Inactivo |
 
 ## **Construido con**
 
@@ -181,6 +195,7 @@ Ir a un navegador web y ejecutar la siguiente url [CeeWebApp](https://localhost)
 - [bcrypt](https://openbase.com/js/bcrypt/documentation) - Libreria para encriptar información
 - [cors](https://www.npmjs.com/package/cors) - Libreria de control de acceso
 - [MongoDB](https://www.mongodb.com/) - Base de datos no relacional
+- [MongoDB Compass](https://www.mongodb.com/try/download/compass) - Administrador de base de datos
 - [Axios](https://axios-http.com/docs/intro) - Libreria de consultas con protocolo http y https
 - [date-fns](https://date-fns.org/) - Comparador de fechas de javascript
 - [fs](https://nodejs.org/api/fs.html) - Administrador de archivos en sistema para NodeJS

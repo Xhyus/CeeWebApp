@@ -1,0 +1,28 @@
+[{
+  "_id": {
+    "$oid": "6287375e1d98212c343c288c"
+  },
+  "nombre": "Ignacio",
+  "apellido": "Gonzalez",
+  "rut": "15.200.947-k",
+  "generacion": 2019,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62873ba908f53f066cfdc23c"
+  },
+  "nombre": "Francisco",
+  "apellido": "Ojeda",
+  "rut": "19.533.298-3",
+  "generacion": 2017,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6289bcfdc5eaee5de4600531"
+  },
+  "nombre": "Pablo",
+  "apellido": "Montoya",
+  "rut": "20.259.152-3",
+  "generacion": 2018,
+  "__v": 0
+}]

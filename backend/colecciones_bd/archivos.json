@@ -1,0 +1,278 @@
+[{
+  "_id": {
+    "$oid": "62e6fe09ac73c85e0c7c0a12"
+  },
+  "ruta": "uploads\\ieci\\asamblea\\62b15c375365947934307edb\\2022_7_31_18_11_21_Evolutiva.png",
+  "nombre": "Evolutiva.png",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e70a2fb06ca50ae0c49067"
+  },
+  "ruta": "uploads\\ieci\\asamblea\\62b15c375365947934307edb\\2022_7_31_19_3_11_My_Invitation.jpeg",
+  "nombre": "My Invitation.jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e726829d8e7b217882b01f"
+  },
+  "ruta": "uploads\\ieci\\asamblea\\62e704c1b06ca50ae0c49034\\2022_7_31_21_4_2_My_Invitation.jpeg",
+  "nombre": "My Invitation.jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e73b0aa9f962286cf7b45a"
+  },
+  "nombre": "Certificado alumno regular Ignacio GonzÃ¡lez.pdf",
+  "ruta": "uploads\\ieci\\asamblea\\62e704c1b06ca50ae0c49034\\2022_7_31_22_31_38_Certificado_alumno_regular_Ignacio_GonzÃ¡lez.pdf",
+  "tipo": "application/pdf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e73b0aa9f962286cf7b45b"
+  },
+  "nombre": "Estrategia .pdf",
+  "ruta": "uploads\\ieci\\asamblea\\62e704c1b06ca50ae0c49034\\2022_7_31_22_31_38_Estrategia_.pdf",
+  "tipo": "application/pdf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e73b0aa9f962286cf7b45c"
+  },
+  "nombre": "CotizaciÃ³n teclado mecanico.xlsx",
+  "ruta": "uploads\\ieci\\asamblea\\62e704c1b06ca50ae0c49034\\2022_7_31_22_31_38_CotizaciÃ³n_teclado_mecanico.xlsx",
+  "tipo": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62e7438896eeaa606ce30837"
+  },
+  "nombre": "hola.jpeg",
+  "ruta": "uploads\\ieci\\asamblea\\62e704c1b06ca50ae0c49034\\2022_7_31_23_7_52_hola.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f99d3b1e815221185bcb61"
+  },
+  "nombre": "hola.jpeg",
+  "ruta": "uploads\\ieci\\asamblea\\62e704c1b06ca50ae0c49034\\2022_8_14_21_11_23_hola.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62f9c02e3fc07525ac24fe98"
+  },
+  "nombre": "hola.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\62e773380932384d3867e9b5\\2022_8_14_23_40_30_hola.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62fab84d779111538890bcf7"
+  },
+  "nombre": "hola.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\62e773380932384d3867e9b5\\2022_8_15_17_19_9_hola.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62fab88d16e0e34f38e45797"
+  },
+  "nombre": "hola.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\62e773380932384d3867e9b5\\2022_8_15_17_20_13_hola.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62fab9cef3d967102c58366f"
+  },
+  "nombre": "hola.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\62e773380932384d3867e9b5\\2022_8_15_17_25_34_hola.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62faba491a8ab042a0b8cfb8"
+  },
+  "nombre": "hola.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\62e773380932384d3867e9b5\\2022_8_15_17_27_37_hola.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62faba891f0a203cf833adc3"
+  },
+  "nombre": "hola.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\62e773380932384d3867e9b5\\2022_8_15_17_28_41_hola.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62fabae30f33a76350ffc565"
+  },
+  "nombre": "hola.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\62e773380932384d3867e9b5\\2022_8_15_17_30_11_hola.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62fabb721708030bb4ed0480"
+  },
+  "nombre": "hola.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\62e773380932384d3867e9b5\\2022_8_15_17_32_34_hola.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "62fabb951708030bb4ed0484"
+  },
+  "nombre": "Estrategia .pdf",
+  "ruta": "uploads\\comercial\\asamblea\\62e773380932384d3867e9b5\\2022_8_15_17_33_9_Estrategia .pdf",
+  "tipo": "application/pdf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63064ddbd1691135047b04ce"
+  },
+  "nombre": "1.jpeg",
+  "ruta": "uploads\\ieci\\asamblea\\62e704c1b06ca50ae0c49034\\2022_8_24_12_12_11_1.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312ab51fe760b2f68fd5de6"
+  },
+  "nombre": "seba.jpg",
+  "ruta": "uploads\\comercial\\asamblea\\6312ab19fe760b2f68fd5de3\\2022_9_2_21_18_9_seba.jpg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312ab51fe760b2f68fd5de7"
+  },
+  "nombre": "elvis 2.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\6312ab19fe760b2f68fd5de3\\2022_9_2_21_18_9_elvis 2.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312b9d6fe760b2f68fd5fd0"
+  },
+  "nombre": "Foto con medidas externas.png",
+  "ruta": "uploads\\comercial\\asamblea\\6312ab19fe760b2f68fd5de3\\2022_9_2_22_20_6_Foto con medidas externas.png",
+  "tipo": "image/png",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312b9fffe760b2f68fd5fe0"
+  },
+  "nombre": "294048597_1477038889440210_5301361631635706156_n.jpg",
+  "ruta": "uploads\\comercial\\asamblea\\6312ab19fe760b2f68fd5de3\\2022_9_2_22_20_47_294048597_1477038889440210_5301361631635706156_n.jpg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312bb91fe760b2f68fd6009"
+  },
+  "nombre": "stringio.jpg",
+  "ruta": "uploads\\comercial\\asamblea\\undefined\\2022_9_2_22_27_29_stringio.jpg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312bc14176125432ceec74d"
+  },
+  "nombre": "WhatsApp Image 2022-08-23 at 16.50.55.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\undefined\\2022_9_2_22_29_39_WhatsApp Image 2022-08-23 at 16.50.55.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312bcc22392673ee8aa6060"
+  },
+  "nombre": "Foto con medidas externas (1).png",
+  "ruta": "uploads\\comercial\\asamblea\\undefined\\2022_9_2_22_32_34_Foto con medidas externas (1).png",
+  "tipo": "image/png",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312bea9f8ff742b282e4574"
+  },
+  "nombre": "Plano plano plano.jpg",
+  "ruta": "uploads\\comercial\\asamblea\\undefined\\2022_9_2_22_40_41_Plano plano plano.jpg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312bea9f8ff742b282e4575"
+  },
+  "nombre": "stringio.jpg",
+  "ruta": "uploads\\comercial\\asamblea\\undefined\\2022_9_2_22_40_41_stringio.jpg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312bea9f8ff742b282e4576"
+  },
+  "nombre": "WhatsApp Image 2022-08-23 at 16.50.55.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\undefined\\2022_9_2_22_40_41_WhatsApp Image 2022-08-23 at 16.50.55.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312bf3abf6dc151ec537dbb"
+  },
+  "nombre": "Plano plano plano.jpg",
+  "ruta": "uploads\\comercial\\asamblea\\undefined\\2022_9_2_22_43_6_Plano plano plano.jpg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312bf3abf6dc151ec537dbc"
+  },
+  "nombre": "stringio.jpg",
+  "ruta": "uploads\\comercial\\asamblea\\undefined\\2022_9_2_22_43_6_stringio.jpg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312bf3abf6dc151ec537dbd"
+  },
+  "nombre": "WhatsApp Image 2022-08-23 at 16.50.55.jpeg",
+  "ruta": "uploads\\comercial\\asamblea\\undefined\\2022_9_2_22_43_6_WhatsApp Image 2022-08-23 at 16.50.55.jpeg",
+  "tipo": "image/jpeg",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312c4c97e2585644c704d5c"
+  },
+  "nombre": "practica_ignacio_gonzalez-2_220901_181322.pdf",
+  "ruta": "uploads\\comercial\\asamblea\\6312ab19fe760b2f68fd5de3\\2022_9_2_23_6_49_practica_ignacio_gonzalez-2_220901_181322.pdf",
+  "tipo": "application/pdf",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6312c5a361482f201c00cefb"
+  },
+  "nombre": "Foto con medidas externas (1).png",
+  "ruta": "uploads\\comercial\\asamblea\\6312ab19fe760b2f68fd5de3\\2022_9_2_23_10_27_Foto con medidas externas (1).png",
+  "tipo": "image/png",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "63167884d4633d25f46a829b"
+  },
+  "nombre": "206103_car_road_to_worm_hole.png",
+  "ruta": "uploads\\ieci\\asamblea\\undefined\\2022_9_5_19_30_28_206103_car_road_to_worm_hole.png",
+  "tipo": "image/png",
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "6316b9e00328e303565b93ef"
+  },
+  "nombre": "Foto con medidas externas (1) (1).png",
+  "ruta": "uploads/comercial/asamblea/63143bb97896586fa4dbd94a/2022_9_6_3_9_20_Foto con medidas externas (1) (1).png",
+  "tipo": "image/png",
+  "__v": 0
+}]
