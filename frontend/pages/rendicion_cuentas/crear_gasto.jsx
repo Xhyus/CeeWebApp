@@ -76,16 +76,16 @@ export default function crear_gasto() {
         console.log("--------------------------------------");
 
         //? Validación de campos.
-        if (datosGasto.asunto === '' || datosGasto.total === '' || datosGasto.tipo === '' || datosGasto.fecha === '' || datosGasto.detalle === '' || datosGasto.tipo === 'Seleccione un tipo') {
+        // if (datosGasto.asunto === '' || datosGasto.total === '' || datosGasto.tipo === '' || datosGasto.fecha === '' || datosGasto.detalle === '' || datosGasto.tipo === 'Seleccione un tipo') {
         
-            Swal.fire({
-                title: 'Error',
-                text: 'Todos los campos son obligatorios',
-                icon: 'error',
-                confirmButtonText: 'Aceptar',
-            })
+            // Swal.fire({
+            //     title: 'Error',
+            //     text: 'Todos los campos son obligatorios',
+            //     icon: 'error',
+            //     confirmButtonText: 'Aceptar',
+            // })
         
-        } else {
+        // } else {
 
             //? Crear gasto.
             // axios.post(process.env.SERVIDOR +'/rendicion/', datosVerificados)
@@ -104,11 +104,34 @@ export default function crear_gasto() {
                 confirmButtonText: 'Aceptar'
             })
 
-        }
+        // }
 
-        //* Resetear valores de los input.
+        //* Resetear valores de los input o enviar al usuario a pantalla "rendicion_cuentas".
+        Swal.fire({
+            title: '¿Desea agregar un nuevo gasto?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, agregar gasto',
+            cancelButtonText: 'Volver al inicio'
+        }).then((result) => {
 
-        //* Enviar al usuario a pantalla "rendicion_cuentas".
+            //? Resetear valores de los input.
+            if (result.isConfirmed) {
+                setDatosGasto({
+                    asunto: '',
+                    total: '',
+                    tipo: '',
+                    fecha: '',
+                    detalle: '',
+                })
+            }
+            //? Enviar al usuario a pantalla "rendicion_cuentas".
+            else {
+                router.push('/rendicion_cuentas')
+            }
+        })
     }
 
     return (
@@ -151,11 +174,6 @@ export default function crear_gasto() {
                 <FormControl isRequired mt={5}>
                     <FormLabel>Total</FormLabel>
                     <Input type="number" name="total" onChange={handleInputChange}/>
-                </FormControl>
-
-                <FormControl isRequired mt={5}>
-                    <FormLabel>Boleta</FormLabel>
-                    <Button colorScheme={"orange"} onClick={()=>console.log("Subir archivo")} w={"full"}>Adjuntar boleta</Button>
                 </FormControl>
 
                 <HStack mt={10} mb={10}>
