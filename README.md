@@ -142,7 +142,7 @@ Una vez creado el contenedor de docker, se debe ejecutar el siguiente comando pa
 
  Luego se debe acceder a la carpeta del proyecto, para esto se debe ejecutar el siguiente comando:
 ```bash
-cd ceewebapp
+cd Ceewebapp
 ```
 
 ### **Instalar dependencias del proyecto ambiente de desarrollo**
@@ -279,7 +279,7 @@ Clonar el repositorio del proyecto como se menciona en el apartado "Clonación d
 Luego de haber clonado el repositorio se debe mover hacia la carpeta raiz del proyecto, para esto se debe ejecutar el siguiente comando:
 
 ```bash
-cd ceewebapp
+cd Ceewebapp
 ```
 
 ### **Instalar dependencias del proyecto ambiente de producción**
